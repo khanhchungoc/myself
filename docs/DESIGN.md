@@ -1,68 +1,49 @@
-# DESIGN.md — "Architectural Blueprint" Executive Design System (v2 — 4-Zone Interactive Architecture)
+# DESIGN.md — Executive Banking Design System
 
-An executive, editorial design system tailored for a Business Analyst Manager & Hands-On BA Lead in insurance and banking—combining leadership authority with technical/architectural precision, interactive `motion/react` exploration, and crisp A4 print output.
+An institutional, single-sheet design system tailored for **Ngoc Khanh Chu** (Business Analyst Manager & Hands-On BA Lead) applying for a **BA Manager position at a bank**—prioritizing 15-second executive scannability, governance rigor, and crisp A4 print output.
 
 ---
 
-## 1. Color Tokens (Parchment Light Default + CAD Night Blueprint Mode)
+## 1. Color Tokens (Institutional Banking Palette)
 
-### Light Mode (Default & `@media print` A4 Output)
 | Token | Hex | Role & Usage |
 | :--- | :--- | :--- |
-| **Primary Brand / Headers (`--color-navy`)** | `#2A2E3A` | Dark Navy — Name, section headers, and primary structural dividers. |
-| **Surface / Callout (`--color-cream`)** | `#FAF8F5` | Warm Cream / Parchment — Hero banner, telemetry strip, and blueprint callout surfaces. |
-| **Page Canvas (`--color-bg`)** | `#FFFFFF` | Pure White — Main page background for crisp screen reading and clean A4 print. |
-| **Body Text (`--color-text`)** | `#1E2229` | Deep Charcoal — High-contrast (`15.9:1`), softer than pure black for effortless scannability. |
-| **Muted Metadata (`--color-text-muted`)** | `#5A6270` | Slate Gray — Dates, locations, and specification coordinates. |
-| **Accent / Technical Tag (`--color-accent`)** | `#2563EB` | Blueprint Blue — Active lens indicators, telemetry highlights, and technical tags. |
-| **Warm Principle Accent (`--color-accent-warm`)** | `#9A3412` | Deep Amber (`6.4:1` AA contrast on cream) — Operating principle callout and SWAT/leadership accents. |
-| **Hairline Rule (`--color-border`)** | `#D1D5DB` | Graphite — Thin `1px` (`0.5pt` in print) blueprint dividers. |
-| **Focus Ring (`--color-ring`)** | `#2563EB` | Accessible `2px` keyboard focus ring with `2px` offset. |
-
-### CAD Night Blueprint Mode (`[data-theme="dark"]` — Web-Only `.no-print` Toggle)
-- **Canvas (`--color-bg`):** `#0B1120` (Deep CAD Navy)
-- **Surface / Callout (`--color-cream` / `--color-surface`):** `#111827` / `#1E293B`
-- **Primary Headers (`--color-navy`):** `#F8FAFC`
-- **Body Text (`--color-text`):** `#E2E8F0`
-- **Muted Metadata (`--color-text-muted`):** `#94A3B8`
-- **Blueprint Accent (`--color-accent`):** `#38BDF8` (CAD Cyan)
-- **Border (`--color-border`):** `#334155`
+| **Primary Brand / Headers (`--color-navy`)** | `#182232` | Deep Institutional Navy — Name, section titles, role titles, and top sheet border. |
+| **Page Backdrop (`--color-bg`)** | `#F4F5F7` | Cool Stone Gray — Web backdrop framing the single white CV sheet. |
+| **Document Sheet (`--color-sheet`)** | `#FFFFFF` | Pure White — Main document surface for high-contrast reading and clean A4 print. |
+| **Subtle Callout (`--color-surface-subtle`)** | `#F8F9FB` | Light Slate Tint — 4-metric scope strip, career progression bar, and credential pills. |
+| **Body Text (`--color-text`)** | `#1E2530` | Charcoal — High-contrast body copy for effortless scanning. |
+| **Muted Metadata (`--color-text-muted`)** | `#525D6F` | Slate Gray — Dates, locations, and secondary captions. |
+| **Executive Accent (`--color-accent`)** | `#1D4ED8` | Banking Royal Blue — Role subtitle, workstream metadata, and active links. |
+| **Hairline Rule (`--color-border`)** | `#E2E8F0` | Clean `1px` (`0.5pt` in print) horizontal dividers. |
 
 ---
 
-## 2. Typography Scale & Pairing
+## 2. Typography Scale & Pairing (2-Font Executive Banking System)
 
-* **Headings — `Plus Jakarta Sans` (fallback `Inter`):**
-  * **Name:** `22pt` (`2rem–2.25rem` desktop web) Bold, tight tracking (`-0.02em`), `text-wrap: balance`.
-  * **Section Headers:** `11pt` Bold Uppercase, `0.08em` letter-spacing, paired with `JetBrains Mono` specification index tags (`SPEC // 01`–`04`).
-* **Body Copy — `Inter`:**
-  * **Size & Leading:** `15px–16px` mobile-first web base (`9.5pt` in print), `1.5` line-height, constrained to `60–72ch` measure in structured spec rows.
-* **Technical & Telemetry Tags — `JetBrains Mono`:**
-  * **Size & Weight:** `8.5pt` (`0.76rem–0.82rem`) Medium with `font-variant-numeric: tabular-nums` for metrics, timelines, API standards, and blueprint coordinates.
+Selected via `ui-ux-pro-max` (**Financial Trust + Editorial Authority**) with zero monospace coding fonts:
+
+* **Display & Section Headings — `Newsreader` (Optical-Size Serif, `opsz 6..72`, fallback `Georgia`):**
+  * **Name (`h1`):** `2.35rem` desktop (`20pt` print) Bold (`700`), `font-optical-sizing: auto`, tight tracking (`-0.02em`).
+  * **Section Headers (`h2`) & Company Titles (`h3`):** `1.18rem–1.28rem` Bold (`700`), lending institutional authority without decorative clutter.
+* **Body Copy, UI, Dates & Tabular Metrics — `IBM Plex Sans`:**
+  * **Role Subtitle & Workstream Leads:** `600–700` SemiBold/Bold.
+  * **Body & Scannable Bullets:** `0.9rem–0.95rem` (`8.6pt–9pt` in print), `1.5` line-height, structured as **Bold 2–4 Word Lead + 1-Line Impact**.
+  * **Numeric Alignment:** Uses `font-variant-numeric: tabular-nums` natively in `IBM Plex Sans` for metrics (`23 BAs`, `100%`, `~20 → >40`, `~100 HC`) and dates.
 
 ---
 
-## 3. 4-Zone Spatial Architecture (Web & A4 Print)
+## 3. Single-Sheet Document Architecture
 
-1. **Zone 0 — Sticky Blueprint Command Bar (`.no-print`):**
-   * Top `2px` scroll-linked progress ruler (`useScroll` + `useSpring`).
-   * **5-Pillar Executive Lens Switcher** (`All Specs`, `21-BA Leadership`, `Tech + Biz Delivery`, `SWAT Recovery`, `Pre-Sales`, `AI Agent Harness`) with shared-layout spring pill (`layoutId="active-lens-pill"`).
-   * Quick section jumpers, **Parchment / CAD Night** theme toggle, and **Download / Print A4 PDF** actions.
-
-2. **Zone 1 — Asymmetric Hero Banner + 5-Metric Blueprint Telemetry Strip:**
-   * **Left Column:** Company/location eyebrow, Name, Role, framed Operating Principle (`OPERATING PRINCIPLE // “Anything that can go wrong will go wrong”`), non-overlapping Executive Thesis, and tactile contact pills (with 1-click copy for Email & Phone + subtle spec metadata for DOB).
-   * **Right Column:** Framed portrait photo + **Interactive System Blueprint SVG** (`HeroIllustration`) where hovering/clicking nodes inspects `21-BA Dept & SWAT`, `Finance & FCA Domain`, `BA Lead + AI Harness Hub`, and `B2B Microservices & EDW`.
-   * **Bottom Full-Width Telemetry Strip:** 5 tabular metric cells (`21 BAs`, `100% Full-Time ODC`, `~20 → >40 HC`, `~100 HC`, `4-Stage AI Harness`) with spring count-up on initial viewport entry.
-
-3. **Zone 2 — 5-Pillar Operating Model (Asymmetric Bento Grid):**
-   * Replaces generic summary boxes with 5 numbered blueprint modules (`01` to `05`) mapped 1:1 to the candidate's core positioning pillars.
-   * **Module 05 (BA AI Agent & Skill Harness)** features an interactive **4-Stage Harness Lifecycle Strip** (`Human-in-Control` → `Quick Operation` → `Token Optimization` → `Monitor Dashboard`).
-
-4. **Zone 3 — Synchronized 2D Experience Matrix (Spine + Structured Workstream Cards):**
-   * **Desktop (`≥ 960px`):** `Dimension 1 · Role Progression Spine` sits in a **sticky left rail (`270px`)** while `Dimension 2 · Core Workstream Tracks` occupies the main right column (`1fr`). Clicking or hovering a role era on the Spine highlights the corresponding tracks and era rows.
-   * **Structured Spec Rows:** Inside each Workstream Card, each highlight renders as a 2-column specification row (`Capability Lead + Era Tag` on the left, `65ch Outcome Copy` on the right) to eliminate wall-of-text fatigue.
-   * **Mobile (`< 960px`) & `@media print`:** Linearizes cleanly into a vertical stack with `break-inside: avoid`.
-
-5. **Zone 4 — Competency Bento Matrix & Verified Credentials:**
-   * **6-Column Skill Bento Grid:** Groups the 5 BA Manager competency domains; clicking any `.tech-tag` triggers an **Evidence X-Ray** that highlights where that skill was proven in Experience.
-   * **2-Column Credentials Grid:** Licenses & Certifications (IIBA CBDA, IELTS 8.0), Honors & Awards, Education (Hasselt University Master's with Distinction, Banking Academy), and Languages.
+1. **Minimal Top Utility Bar (`.no-print`):**
+   * Clean document label plus **Download PDF** and **Print A4** actions.
+2. **Profile Header:**
+   * Name, Role (`Business Analyst Manager & BA Lead · NashTech`), single-line Contact Bar, Framed Portrait, and grounded 2-sentence Summary—free of duplicate credential pills or repeated summary cards.
+3. **Professional Experience (Left Vertical Timeline):**
+   * **NashTech (`Oct 2017 – Present`):** 3 chronological/workstream entries with zero duplication:
+     * `May 2024 – Present` (`BA Team Manager & BA Lead`) — Team management & coaching (23 BAs), RMO staffing/hiring/training, project health checks & recovery (SWAT), pre-sales discovery & estimation, and the BA AI Agent & Skill Harness (`01 Human-in-Control Decision-Making`, `02 Quick Operation`, `03 Token Optimization`, `04 Full Agent Monitor Dashboard Lifecycle`).
+     * `Mar 2021 – Present` (`Senior BA → ODC BA Lead`) — UK Non-Life Insurtech Platform (hands-on ODC BA Lead, account growth ~20 to >40 members, Proxy PO, B2B microservices & UI Design System).
+     * `Oct 2017 – Feb 2021` (`Business Analyst`) — Enterprise Reporting & Data Warehouse Migration (Oracle DW to SQL Server EDW across 5 time zones).
+   * **ETC Technology Systems JSC (`Aug 2014 – Sep 2016`):** Commercial Banking Collateral & Credit Limit Management System delivery.
+4. **Core Competencies & Verified Credentials:**
+   * 3-row Competency Matrix (`Leadership & Operations`, `Domain & Architecture`, `Methods, Data & Tooling`) and 2-column Education, Certifications & Awards footer.

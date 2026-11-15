@@ -1,207 +1,555 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import {
   AnimatePresence,
   MotionConfig,
-  animate,
   motion,
-  useInView,
+  useMotionTemplate,
   useMotionValue,
   useReducedMotion,
-  useScroll,
   useSpring,
   useTransform,
 } from 'motion/react';
 import { cvData } from './data/cvData';
-import { HeroIllustration, PillarIcon } from './components/Illustrations';
+import { Icon } from './components/Illustrations';
 import profilePhoto from './assets/profile.jpg';
 
-const sectionReveal = {
-  initial: { opacity: 0, y: 14 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.08 },
-  transition: { duration: 0.35, ease: 'easeOut' },
-};
-
-const pillSpring = {
+const criticalSpring = {
   type: 'spring',
-  bounce: 0.18,
-  visualDuration: 0.32,
+  bounce: 0,
+  visualDuration: 0.24,
 };
 
-function TelemetryCounter({ item, isActiveLens, onSelectLens }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.4 });
-  const prefersReducedMotion = useReducedMotion();
-  const count = useMotionValue(prefersReducedMotion ? item.numericValue : 0);
-  const rounded = useTransform(count, (latest) => Math.round(latest));
+const portraitModalTransition = {
+  duration: 0.45,
+  ease: [0.22, 1, 0.36, 1],
+};
 
-  useEffect(() => {
-    if (!isInView) return;
-    if (prefersReducedMotion) {
-      count.set(item.numericValue);
-      return;
-    }
-    const controls = animate(count, item.numericValue, {
-      duration: 0.9,
-      ease: 'easeOut',
-    });
-    return () => controls.stop();
-  }, [count, isInView, item.numericValue, prefersReducedMotion]);
+function MagneticButton({
+  as = 'button',
+  strength = 3,
+  className,
+  children,
+  ...props
+}) {
+  const shouldReduceMotion = useReducedMotion();
+  const pullX = useMotionValue(0);
+  const pullY = useMotionValue(0);
+
+  const smoothX = useSpring(pullX, { stiffness: 320, damping: 24 });
+  const smoothY = useSpring(pullY, { stiffness: 320, damping: 24 });
+
+  const handlePointerMove = (e) => {
+    if (shouldReduceMotion) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const relX = (e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2);
+    const relY = (e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2);
+    const clampedX = Math.max(-1, Math.min(1, relX));
+    const clampedY = Math.max(-1, Math.min(1, relY));
+    pullX.set(clampedX * strength);
+    pullY.set(clampedY * strength);
+  };
+
+  const handlePointerLeave = () => {
+    pullX.set(0);
+    pullY.set(0);
+  };
+
+  const Component = as === 'a' ? motion.a : motion.button;
 
   return (
-    <motion.button
-      ref={ref}
-      type="button"
-      className={`telemetry-cell ${isActiveLens ? 'telemetry-cell--active' : ''}`}
-      onClick={() => onSelectLens(isActiveLens ? 'all' : item.lens)}
-      whileHover={{ y: -2 }}
-      whileTap={{ scale: 0.98 }}
-      title={`Filter blueprint by ${item.label}`}
+    <motion.div
+      className="magnetic-wrap"
+      onPointerMove={handlePointerMove}
+      onPointerLeave={handlePointerLeave}
+      style={shouldReduceMotion ? undefined : { x: smoothX, y: smoothY }}
     >
-      <div className="telemetry-cell__value">
-        <span>{item.prefix}</span>
-        <motion.span>{rounded}</motion.span>
-        <span>{item.suffix}</span>
-      </div>
-      <div className="telemetry-cell__label">{item.label}</div>
-      <div className="telemetry-cell__sub">{item.sub}</div>
-    </motion.button>
+      <Component
+        className={className}
+        whileHover={{ y: -2 }}
+        whileTap={{ scale: 0.98 }}
+        transition={criticalSpring}
+        {...props}
+      >
+        {children}
+      </Component>
+    </motion.div>
   );
 }
 
-function HarnessPipeline({ stages }) {
-  const [activeStageId, setActiveStageId] = useState(stages[0].id);
-  const activeStage = stages.find((s) => s.id === activeStageId) || stages[0];
+function PortraitQuoteModal({
+  modalState,
+  isMounted,
+  src,
+  alt,
+  onClose,
+  onExitComplete,
+  shouldReduceMotion,
+}) {
+  const cardRef = useRef(null);
+
+  useEffect(() => {
+    if (!modalState) return;
+
+    const frameId = requestAnimationFrame(() => {
+      cardRef.current?.focus({ preventScroll: true });
+    });
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        onClose();
+      } else if (
+        e.key === 'ArrowUp' ||
+        e.key === 'ArrowDown' ||
+        e.key === 'PageUp' ||
+        e.key === 'PageDown'
+      ) {
+        e.preventDefault();
+      }
+    };
+
+    const preventWheel = (e) => e.preventDefault();
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('wheel', preventWheel, { passive: false });
+    return () => {
+      cancelAnimationFrame(frameId);
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('wheel', preventWheel);
+    };
+  }, [modalState, onClose]);
+
+  if (typeof document === 'undefined' || !isMounted) return null;
+
+  return createPortal(
+    <div
+      className="portrait-modal no-print"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Murphy's Law quote"
+    >
+      <AnimatePresence onExitComplete={onExitComplete}>
+        {modalState && (
+          <motion.div
+            key="backdrop"
+            className="portrait-modal__backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+            onClick={onClose}
+            aria-hidden="true"
+          />
+        )}
+
+        {modalState && (
+          <motion.div
+            key="stage"
+            className="portrait-modal__stage"
+            style={{
+              width: modalState.targetWidth,
+              height: modalState.targetHeight,
+            }}
+            initial={
+              shouldReduceMotion
+                ? { opacity: 0 }
+                : {
+                    x: modalState.deltaX,
+                    y: modalState.deltaY,
+                    scale: modalState.startScale,
+                  }
+            }
+            animate={
+              shouldReduceMotion ? { opacity: 1 } : { x: 0, y: 0, scale: 1 }
+            }
+            exit={
+              shouldReduceMotion
+                ? { opacity: 0 }
+                : {
+                    x: modalState.deltaX,
+                    y: modalState.deltaY,
+                    scale: modalState.startScale,
+                  }
+            }
+            transition={portraitModalTransition}
+          >
+            <motion.div
+              ref={cardRef}
+              role="button"
+              tabIndex={0}
+              aria-label="Close Murphy's Law quote"
+              className="portrait-modal__card"
+              style={
+                shouldReduceMotion ? undefined : { transformStyle: 'preserve-3d' }
+              }
+              initial={shouldReduceMotion ? false : { rotateY: 0 }}
+              animate={shouldReduceMotion ? undefined : { rotateY: 180 }}
+              exit={shouldReduceMotion ? undefined : { rotateY: 0 }}
+              transition={portraitModalTransition}
+              onClick={onClose}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  onClose();
+                }
+              }}
+            >
+              {!shouldReduceMotion && (
+                <div
+                  className="portrait-modal__face portrait-modal__face--front"
+                  aria-hidden="true"
+                >
+                  <img
+                    src={src}
+                    alt={alt}
+                    className="portrait-modal__photo"
+                  />
+                </div>
+              )}
+
+              <div
+                className={`portrait-modal__face portrait-modal__face--back ${
+                  shouldReduceMotion ? 'portrait-modal__face--flat' : ''
+                }`}
+              >
+                <p className="portrait-modal__note">My Operating Principle</p>
+                <blockquote className="portrait-modal__quote">
+                  &ldquo;Anything that can go wrong,{' '}
+                  <span className="portrait-modal__quote-tail">
+                    will go wrong&rdquo;
+                  </span>
+                </blockquote>
+                <p className="portrait-modal__attribution">- Murphy&apos;s Law</p>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>,
+    document.body,
+  );
+}
+
+function InteractivePortrait({ src, alt }) {
+  const shouldReduceMotion = useReducedMotion();
+  const slotRef = useRef(null);
+  const buttonRef = useRef(null);
+  const [modalState, setModalState] = useState(null);
+  const [isPortraitHidden, setIsPortraitHidden] = useState(false);
+  const normX = useMotionValue(0);
+  const normY = useMotionValue(0);
+  const hoverTarget = useMotionValue(0);
+
+  const smoothX = useSpring(normX, { stiffness: 260, damping: 28 });
+  const smoothY = useSpring(normY, { stiffness: 260, damping: 28 });
+  const glareOpacity = useSpring(hoverTarget, { stiffness: 240, damping: 28 });
+
+  const rotateX = useTransform(smoothY, [-0.5, 0.5], [6, -6]);
+  const rotateY = useTransform(smoothX, [-0.5, 0.5], [-6, 6]);
+  const glareX = useTransform(smoothX, [-0.5, 0.5], [12, 88]);
+  const glareY = useTransform(smoothY, [-0.5, 0.5], [12, 88]);
+  const glareBackground = useMotionTemplate`radial-gradient(125px circle at ${glareX}% ${glareY}%, rgba(255, 255, 255, 0.42), rgba(219, 234, 254, 0.16) 44%, transparent 72%)`;
+
+  const handlePointerEnter = () => {
+    if (shouldReduceMotion) return;
+    hoverTarget.set(1);
+  };
+
+  const handlePointerMove = (e) => {
+    if (shouldReduceMotion) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    normX.set((e.clientX - rect.left) / rect.width - 0.5);
+    normY.set((e.clientY - rect.top) / rect.height - 0.5);
+    hoverTarget.set(1);
+  };
+
+  const handlePointerLeave = () => {
+    normX.set(0);
+    normY.set(0);
+    hoverTarget.set(0);
+  };
+
+  const handleOpen = () => {
+    const rect = (slotRef.current || buttonRef.current)?.getBoundingClientRect();
+    const aspect = rect && rect.width > 0 ? rect.height / rect.width : 0.875;
+
+    let targetWidth = Math.min(440, Math.round(window.innerWidth * 0.86));
+    let targetHeight = Math.round(targetWidth * aspect);
+    const maxHeight = Math.round(window.innerHeight * 0.82);
+    if (targetHeight > maxHeight) {
+      targetHeight = maxHeight;
+      targetWidth = Math.round(targetHeight / aspect);
+    }
+
+    if (!rect) {
+      setIsPortraitHidden(true);
+      setModalState({
+        deltaX: 0,
+        deltaY: 0,
+        startScale: 0.5,
+        targetWidth,
+        targetHeight,
+      });
+      return;
+    }
+
+    const srcCenterX = rect.left + rect.width / 2;
+    const srcCenterY = rect.top + rect.height / 2;
+    const vpCenterX = window.innerWidth / 2;
+    const vpCenterY = window.innerHeight / 2;
+
+    normX.set(0);
+    normY.set(0);
+    hoverTarget.set(0);
+
+    setIsPortraitHidden(true);
+    setModalState({
+      deltaX: srcCenterX - vpCenterX,
+      deltaY: srcCenterY - vpCenterY,
+      startScale: rect.width / targetWidth,
+      targetWidth,
+      targetHeight,
+    });
+  };
+
+  const handleClose = useCallback(() => {
+    setModalState(null);
+  }, []);
+
+  const handleExitComplete = useCallback(() => {
+    setIsPortraitHidden(false);
+    requestAnimationFrame(() => {
+      buttonRef.current?.focus({ preventScroll: true });
+    });
+  }, []);
 
   return (
-    <div className="harness-pipeline">
-      <div className="harness-pipeline__header">
-        <span className="harness-pipeline__label">
-          BA AGENT HARNESS ARCHITECTURE // 4-STAGE LIFECYCLE
-        </span>
-        <span className="harness-pipeline__hint no-print">
-          Click stage to inspect specification
-        </span>
-      </div>
+    <div ref={slotRef} className="exec-header__portrait-slot">
+      <motion.button
+        ref={buttonRef}
+        type="button"
+        className={`exec-header__portrait ${
+          isPortraitHidden ? 'exec-header__portrait--expanded' : ''
+        }`}
+        onPointerEnter={handlePointerEnter}
+        onPointerMove={handlePointerMove}
+        onPointerLeave={handlePointerLeave}
+        onClick={handleOpen}
+        whileHover={{ scale: 1.03 }}
+        whileTap={{ scale: 0.98 }}
+        transition={criticalSpring}
+        aria-label="Expand profile photo to view Murphy's Law quote"
+        aria-haspopup="dialog"
+        aria-expanded={Boolean(modalState)}
+        style={
+          shouldReduceMotion
+            ? undefined
+            : {
+                rotateX,
+                rotateY,
+                transformPerspective: 650,
+                transformStyle: 'preserve-3d',
+              }
+        }
+      >
+        <img
+          src={src}
+          alt={alt}
+          width="244"
+          height="214"
+          className="exec-header__photo"
+        />
+        <motion.div
+          className="exec-header__portrait-glare no-print"
+          style={{ background: glareBackground, opacity: glareOpacity }}
+          aria-hidden="true"
+        />
+      </motion.button>
 
-      <div className="harness-steps" role="tablist" aria-label="BA AI Agent Harness Stages">
-        {stages.map((stage) => {
-          const isSelected = stage.id === activeStageId;
-          return (
-            <motion.button
-              key={stage.id}
-              type="button"
-              role="tab"
-              aria-selected={isSelected}
-              className={`harness-step ${isSelected ? 'harness-step--active' : ''}`}
-              onClick={() => setActiveStageId(stage.id)}
-              whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              {isSelected && (
-                <motion.span
-                  layoutId="harness-stage-outline"
-                  className="harness-step__indicator no-print"
-                  transition={pillSpring}
-                />
-              )}
-              <div className="harness-step__top">
-                <span className="harness-step__num">STAGE {stage.step}</span>
+      <PortraitQuoteModal
+        modalState={modalState}
+        isMounted={Boolean(modalState) || isPortraitHidden}
+        src={src}
+        alt={alt}
+        onClose={handleClose}
+        onExitComplete={handleExitComplete}
+        shouldReduceMotion={shouldReduceMotion}
+      />
+    </div>
+  );
+}
+
+function ExperienceTimeline({ items }) {
+  const [hoveredTimelineId, setHoveredTimelineId] = useState(null);
+
+  return (
+    <div
+      className="exp-timeline"
+      onPointerLeave={() => setHoveredTimelineId(null)}
+    >
+      {items.map((item, idx) => {
+        const isHovered = hoveredTimelineId === item.id;
+        const isPrimaryCurrent = idx === 0;
+
+        return (
+          <div key={item.id} className="exp-timeline__group">
+            {item.isCompanyStart && (
+              <div
+                className={`exp-org-banner ${
+                  idx > 0 ? 'exp-org-banner--spaced' : ''
+                }`}
+              >
+                <h3 className="exp-org-banner__name">{item.company}</h3>
+                <span className="exp-org-banner__meta">{item.companyMeta}</span>
               </div>
-              <div className="harness-step__title">{stage.title}</div>
-              <div className="harness-step__short">{stage.short}</div>
-            </motion.button>
-          );
-        })}
-      </div>
+            )}
 
-      {/* Interactive detail panel on web */}
-      <div className="harness-detail no-print" role="tabpanel">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeStage.id}
-            initial={{ opacity: 0, y: 4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
-            transition={{ duration: 0.18 }}
-            className="harness-detail__inner"
-          >
-            <span className="harness-detail__badge">STAGE {activeStage.step} SPEC</span>
-            <p className="harness-detail__text">{activeStage.detail}</p>
-          </motion.div>
-        </AnimatePresence>
-      </div>
+            <div
+              className={`timeline-row ${
+                isHovered ? 'timeline-row--hovered' : ''
+              }`}
+              onPointerEnter={() => setHoveredTimelineId(item.id)}
+            >
+              <div className="timeline-row__left">
+                <div className="timeline-row__period">{item.period}</div>
+                <div className="timeline-row__role">{item.role}</div>
+                {item.badge && (
+                  <span className="timeline-row__badge">{item.badge}</span>
+                )}
+              </div>
+
+              <div className="timeline-row__axis" aria-hidden="true">
+                {isHovered && (
+                  <motion.span
+                    layoutId="timeline-axis-active"
+                    className="timeline-row__axis-glow no-print"
+                    transition={criticalSpring}
+                  />
+                )}
+                <motion.span
+                  className="timeline-row__node-ring no-print"
+                  initial={false}
+                  animate={{
+                    scale: isHovered ? 1.85 : isPrimaryCurrent ? 1.4 : 0.75,
+                    opacity: isHovered ? 1 : isPrimaryCurrent ? 0.5 : 0,
+                  }}
+                  transition={criticalSpring}
+                />
+                <motion.span
+                  className={`timeline-row__dot ${
+                    isPrimaryCurrent ? 'timeline-row__dot--current' : ''
+                  }`}
+                  animate={{
+                    scale: isHovered ? 1.25 : 1,
+                  }}
+                  transition={criticalSpring}
+                />
+              </div>
+
+              <div className="timeline-row__body">
+                <h4 className="workstream__title">
+                  <span className="workstream__icon">
+                    <Icon name={item.icon} size={15} />
+                  </span>
+                  <span>{item.trackTitle}</span>
+                </h4>
+
+                {item.context && (
+                  <p className="workstream__context">{item.context}</p>
+                )}
+
+                <ul className="exec-bullets">
+                  {item.bullets.map((b) => (
+                    <li key={b.lead}>
+                      <strong>{b.lead}</strong> {b.text}
+                      {b.tags && (
+                        <ul
+                          className="harness-tags"
+                          aria-label="AI Harness Operating Principles"
+                        >
+                          {b.tags.map((tag, tagIdx) => (
+                            <li key={tag} className="harness-tag">
+                              <span className="harness-tag__content">
+                                <span className="harness-tag__step">
+                                  0{tagIdx + 1}
+                                </span>
+                                <span>{tag}</span>
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
 
 export default function App() {
-  const [activeLens, setActiveLens] = useState('all');
-  const [activeEra, setActiveEra] = useState(null);
-  const [selectedSkill, setSelectedSkill] = useState(null);
-  const [theme, setTheme] = useState('light');
-  const [copiedField, setCopiedField] = useState(null);
+  const shouldReduceMotion = useReducedMotion();
+  const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
 
-  const { scrollYProgress } = useScroll();
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 140,
-    damping: 26,
-    restDelta: 0.001,
-  });
+  const handleDownloadPdf = async (e) => {
+    e.preventDefault();
+    if (isDownloadingPdf) return;
+    setIsDownloadingPdf(true);
 
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
-
-  const handleCopy = async (value, key) => {
     try {
-      await navigator.clipboard.writeText(value);
-      setCopiedField(key);
-      setTimeout(() => {
-        setCopiedField((prev) => (prev === key ? null : prev));
-      }, 2000);
+      const response = await fetch('./cv.pdf', { cache: 'no-store' });
+      if (!response.ok) {
+        window.print();
+        return;
+      }
+
+      const blob = await response.blob();
+      const signature = await blob.slice(0, 5).text();
+      if (signature !== '%PDF-') {
+        // Vite dev/preview and SPA hosts fall back to index.html for missing files.
+        window.print();
+        return;
+      }
+
+      const blobUrl = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = 'Ngoc-Khanh-Chu-CV.pdf';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
     } catch {
-      window.location.href = key === 'email' ? `mailto:${value}` : `tel:${value}`;
+      window.print();
+    } finally {
+      setIsDownloadingPdf(false);
     }
   };
 
-  const handleSelectLens = (lensId) => {
-    setActiveLens(lensId);
-    setSelectedSkill(null);
+  // GPU-translated pointer spotlight across .cv-sheet (avoids per-frame gradient/mask repaints)
+  const sheetMouseX = useMotionValue(-300);
+  const sheetMouseY = useMotionValue(-300);
+  const sheetActive = useMotionValue(0);
+  const smoothSheetX = useSpring(sheetMouseX, { stiffness: 220, damping: 30 });
+  const smoothSheetY = useSpring(sheetMouseY, { stiffness: 220, damping: 30 });
+  const sheetOpacity = useSpring(sheetActive, { stiffness: 220, damping: 30 });
+
+  const handleSheetPointerMove = (e) => {
+    if (shouldReduceMotion) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    sheetMouseX.set(e.clientX - rect.left - 240);
+    sheetMouseY.set(e.clientY - rect.top - 240);
+    sheetActive.set(1);
   };
 
-  const handleSelectSkill = (skill) => {
-    setSelectedSkill((prev) => (prev === skill ? null : skill));
+  const handleSheetPointerLeave = () => {
+    sheetActive.set(0);
   };
-
-  const resetAllFilters = () => {
-    setActiveLens('all');
-    setActiveEra(null);
-    setSelectedSkill(null);
-  };
-
-  const isRowHighlighted = (row) => {
-    if (selectedSkill) {
-      return row.skills && row.skills.includes(selectedSkill);
-    }
-    if (activeEra) {
-      return row.eras && row.eras.includes(activeEra);
-    }
-    if (activeLens !== 'all') {
-      return row.lenses && row.lenses.includes(activeLens);
-    }
-    return true;
-  };
-
-  const isFilteringActive =
-    activeLens !== 'all' || Boolean(activeEra) || Boolean(selectedSkill);
-
-  // Count matching experience highlights when a skill or lens is active
-  const allHighlights = [
-    ...cvData.nashtech.tracks.flatMap((t) => t.highlights),
-    ...cvData.earlierExperience.flatMap((e) => e.highlights),
-  ];
-  const matchedHighlightCount = allHighlights.filter(isRowHighlighted).length;
 
   return (
     <MotionConfig reducedMotion="user">
@@ -209,698 +557,301 @@ export default function App() {
         Skip to CV content
       </a>
 
-      {/* Top Scroll-Linked Blueprint Ruler */}
-      <motion.div
-        className="scroll-ruler no-print"
-        style={{ scaleX: smoothProgress }}
-        aria-hidden="true"
-      />
+      <div className="page-wrapper">
+        {/* Minimal Web Utility Bar (Hidden in Print) */}
+        <header className="utility-bar no-print" aria-label="Document actions">
+          <div className="utility-bar__title">
+            <strong>{cvData.name}</strong>
+            <span>- Curriculum Vitae</span>
+          </div>
+          <div className="utility-bar__actions">
+            <MagneticButton
+              as="a"
+              href="./cv.pdf"
+              download="Ngoc-Khanh-Chu-CV.pdf"
+              onClick={handleDownloadPdf}
+              aria-busy={isDownloadingPdf || undefined}
+              className="btn btn--secondary"
+            >
+              <Icon name="download" size={14} />
+              <span>{isDownloadingPdf ? 'Preparing PDF...' : 'Download PDF'}</span>
+            </MagneticButton>
+            <MagneticButton
+              as="button"
+              type="button"
+              onClick={() => window.print()}
+              className="btn btn--primary"
+            >
+              <Icon name="print" size={14} />
+              <span>Print A4</span>
+            </MagneticButton>
+          </div>
+        </header>
 
-      <div className="page-shell">
-        {/* ZONE 0: Sticky Blueprint Command Bar (Web Only) */}
-        <motion.header
-          className="command-bar no-print"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
+        {/* Single-Sheet Document */}
+        <main
+          id="main-content"
+          className="cv-sheet"
+          onPointerMove={handleSheetPointerMove}
+          onPointerLeave={handleSheetPointerLeave}
         >
-          <div className="command-bar__top">
-            <div className="command-bar__brand">
-              <motion.span
-                className="status-dot"
-                animate={{ scale: [1, 1.25, 1] }}
-                transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-              />
-              <span className="command-bar__id">
-                BLUEPRINT // NKC-CV · {cvData.location}
-              </span>
-            </div>
+          <div className="cv-sheet__blueprint no-print" aria-hidden="true" />
+          <motion.div
+            className="cv-sheet__sheen no-print"
+            style={{
+              x: smoothSheetX,
+              y: smoothSheetY,
+              opacity: sheetOpacity,
+            }}
+            aria-hidden="true"
+          />
 
-            <nav className="command-bar__jumps" aria-label="Section navigation">
-              <a href="#operating-model" className="jump-link">
-                01. Pillars
-              </a>
-              <a href="#experience" className="jump-link">
-                02. Experience
-              </a>
-              <a href="#skills" className="jump-link">
-                03. Skills
-              </a>
-              <a href="#credentials" className="jump-link">
-                04. Credentials
-              </a>
-            </nav>
-
-            <div className="command-bar__actions">
-              <motion.button
-                type="button"
-                className="btn btn--icon"
-                onClick={() => setTheme((t) => (t === 'light' ? 'dark' : 'light'))}
-                whileHover={{ y: -1 }}
-                whileTap={{ scale: 0.96 }}
-                aria-label={
-                  theme === 'light'
-                    ? 'Switch to CAD Night Blueprint mode'
-                    : 'Switch to Parchment Light Blueprint mode'
-                }
-                title={
-                  theme === 'light'
-                    ? 'Switch to CAD Night Blueprint'
-                    : 'Switch to Parchment Light'
-                }
-              >
-                <PillarIcon type={theme === 'light' ? 'moon' : 'sun'} />
-                <span>{theme === 'light' ? 'CAD Night' : 'Parchment'}</span>
-              </motion.button>
-
-              <motion.a
-                href="./cv.pdf"
-                download="Ngoc-Khanh-Chu-CV.pdf"
-                className="btn"
-                whileHover={{ y: -1 }}
-                whileTap={{ scale: 0.97 }}
-              >
-                Download PDF
-              </motion.a>
-
-              <motion.button
-                type="button"
-                onClick={() => window.print()}
-                className="btn btn--primary"
-                whileHover={{ y: -1 }}
-                whileTap={{ scale: 0.97 }}
-              >
-                Print A4
-              </motion.button>
-            </div>
-          </div>
-
-          {/* Interactive 5-Pillar Executive Lens Bar */}
-          <div className="lens-bar" role="toolbar" aria-label="Executive Perspective Lens">
-            <span className="lens-bar__label">INSPECT LENS:</span>
-            <div className="lens-bar__pills">
-              {cvData.lenses.map((lens) => {
-                const isSelected = activeLens === lens.id && !selectedSkill && !activeEra;
-                return (
-                  <button
-                    key={lens.id}
-                    type="button"
-                    className={`lens-pill ${isSelected ? 'lens-pill--active' : ''}`}
-                    onClick={() => {
-                      setActiveEra(null);
-                      handleSelectLens(lens.id);
-                    }}
-                    aria-pressed={isSelected}
-                  >
-                    {isSelected && (
-                      <motion.span
-                        layoutId="active-lens-pill"
-                        className="lens-pill__bg"
-                        transition={pillSpring}
-                      />
-                    )}
-                    <span className="lens-pill__code">{lens.code}</span>
-                    <span className="lens-pill__text">{lens.label}</span>
-                  </button>
-                );
-              })}
-            </div>
-
-            <AnimatePresence>
-              {isFilteringActive && (
-                <motion.div
-                  className="filter-status"
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.16 }}
-                >
-                  <span className="filter-status__count">
-                    {selectedSkill
-                      ? `Skill X-Ray: "${selectedSkill}" (${matchedHighlightCount} matches)`
-                      : activeEra
-                        ? `Era Filter Active (${matchedHighlightCount} matches)`
-                        : `${matchedHighlightCount} specs highlighted`}
-                  </span>
-                  <button
-                    type="button"
-                    className="filter-status__reset"
-                    onClick={resetAllFilters}
-                  >
-                    Reset
-                  </button>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        </motion.header>
-
-        <main id="main-content">
-          {/* ZONE 1: Asymmetric Executive Hero + Telemetry Bar */}
-          <motion.section
-            className="hero"
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.38, ease: 'easeOut' }}
+          {/* 1. Profile Header */}
+          <section
+            className="exec-header"
+            aria-label="Profile"
           >
-            <div className="hero__grid">
-              <div className="hero__main">
-                <div className="hero__eyebrow-row">
-                  <span className="hero__eyebrow">
-                    {cvData.company} · {cvData.location}
+            <div className="exec-header__top">
+              <InteractivePortrait src={profilePhoto} alt={cvData.name} />
+
+              <div className="exec-header__identity">
+                <h1 className="exec-header__name">{cvData.name}</h1>
+                <p className="exec-header__role">
+                  {cvData.role} <span className="exec-header__sep">·</span>{' '}
+                  <span>{cvData.company}</span>
+                </p>
+
+                {/* Clean Single-Line Contact Bar */}
+                <div className="exec-header__contacts">
+                  <span className="contact-item">
+                    <Icon name="location" size={14} />
+                    <span>{cvData.location}</span>
                   </span>
-                  <span className="hero__spec-meta">
-                    SPEC // REV-2026 · DOB: {cvData.dob}
-                  </span>
-                </div>
-
-                <h1 className="hero__name">{cvData.name}</h1>
-                <p className="hero__title">{cvData.role}</p>
-
-                <div className="hero__principle">
-                  <span className="hero__principle-tag">{cvData.quoteLabel} //</span>
-                  <span className="hero__principle-quote">“{cvData.quote}”</span>
-                  <span className="hero__principle-sub">— {cvData.quoteSub}</span>
-                </div>
-
-                <p className="hero__summary">{cvData.summary}</p>
-
-                {/* Tactile Contact Pills + Print-Clean Links */}
-                <div className="hero__contacts">
+                  <motion.a
+                    href={cvData.phoneHref}
+                    className="contact-item"
+                    whileHover={{ y: -2 }}
+                    transition={criticalSpring}
+                  >
+                    <Icon name="phone" size={14} />
+                    <span>{cvData.phone}</span>
+                  </motion.a>
+                  <motion.a
+                    href={`mailto:${cvData.email}`}
+                    className="contact-item"
+                    whileHover={{ y: -2 }}
+                    transition={criticalSpring}
+                  >
+                    <Icon name="mail" size={14} />
+                    <span>{cvData.email}</span>
+                  </motion.a>
                   <motion.a
                     href={cvData.linkedin}
                     target="_blank"
                     rel="noreferrer"
-                    className="contact-pill"
+                    className="contact-item"
                     whileHover={{ y: -2 }}
-                    whileTap={{ scale: 0.98 }}
+                    transition={criticalSpring}
                   >
-                    <span className="contact-pill__tag">IN</span>
-                    <span>linkedin.com/in/khanhchungoc</span>
+                    <Icon name="linkedin" size={14} />
+                    <span>{cvData.linkedinLabel}</span>
                   </motion.a>
-
-                  <div className="contact-pill-group">
-                    <a href={`mailto:${cvData.email}`} className="contact-pill">
-                      <span className="contact-pill__tag">MAIL</span>
-                      <span>{cvData.email}</span>
-                    </a>
-                    <motion.button
-                      type="button"
-                      className="contact-copy-btn no-print"
-                      onClick={() => handleCopy(cvData.email, 'email')}
-                      whileTap={{ scale: 0.92 }}
-                      aria-label="Copy email address"
-                      title="Copy email address"
-                    >
-                      <PillarIcon type={copiedField === 'email' ? 'check' : 'copy'} />
-                      <span>{copiedField === 'email' ? 'Copied' : 'Copy'}</span>
-                    </motion.button>
-                  </div>
-
-                  <div className="contact-pill-group">
-                    <a href={cvData.phoneHref} className="contact-pill">
-                      <span className="contact-pill__tag">TEL</span>
-                      <span>{cvData.phone}</span>
-                    </a>
-                    <motion.button
-                      type="button"
-                      className="contact-copy-btn no-print"
-                      onClick={() => handleCopy(cvData.phone, 'phone')}
-                      whileTap={{ scale: 0.92 }}
-                      aria-label="Copy phone number"
-                      title="Copy phone number"
-                    >
-                      <PillarIcon type={copiedField === 'phone' ? 'check' : 'copy'} />
-                      <span>{copiedField === 'phone' ? 'Copied' : 'Copy'}</span>
-                    </motion.button>
-                  </div>
                 </div>
+
+                <p className="exec-header__summary">{cvData.summary}</p>
               </div>
+            </div>
+          </section>
 
-              <div className="hero__visual">
-                <div className="hero__portrait-row">
-                  <div className="hero__photo-frame">
-                    <img
-                      src={profilePhoto}
-                      alt={cvData.name}
-                      width="136"
-                      height="136"
-                      className="hero__photo"
-                    />
-                  </div>
-                  <div className="hero__badge-stack">
-                    <div className="hero__mini-stat">
-                      <span className="hero__mini-stat-code">ROLE // DUAL-HAT</span>
-                      <strong>Line Manager + Full-Time ODC Lead</strong>
-                    </div>
-                    <div className="hero__mini-stat">
-                      <span className="hero__mini-stat-code">CREDENTIALS</span>
-                      <strong>IIBA CBDA · IELTS 8.0 · MSc Distinction</strong>
-                    </div>
-                  </div>
-                </div>
-
-                <HeroIllustration onSelectLens={handleSelectLens} />
+          {/* 2. Professional Experience (Left Vertical Timeline) */}
+          <section className="cv-section" aria-labelledby="heading-experience">
+            <div className="section-head">
+              <div className="section-head__group">
+                <span className="section-head__icon">
+                  <Icon name="briefcase" size={17} />
+                </span>
+                <h2 id="heading-experience" className="section-head__title">
+                  Professional Experience
+                </h2>
               </div>
             </div>
 
-            {/* 5-Metric Blueprint Telemetry Strip */}
-            <div className="telemetry-strip" aria-label="Executive Scope Telemetry">
-              {cvData.telemetry.map((item) => (
-                <TelemetryCounter
-                  key={item.id}
-                  item={item}
-                  isActiveLens={activeLens === item.lens}
-                  onSelectLens={handleSelectLens}
-                />
+            <ExperienceTimeline items={cvData.timeline} />
+          </section>
+
+          {/* 3. Side Projects (BA & AI Workflows) */}
+          <section className="cv-section" aria-labelledby="heading-projects">
+            <div className="section-head">
+              <div className="section-head__group">
+                <span className="section-head__icon">
+                  <Icon name="cpu" size={17} />
+                </span>
+                <h2 id="heading-projects" className="section-head__title">
+                  Side Projects &mdash; BA &amp; AI Workflows
+                </h2>
+              </div>
+            </div>
+
+            <ul className="exec-bullets">
+              {cvData.sideProjects.map((proj) => (
+                <li key={proj.name}>
+                  <strong>
+                    {proj.url ? (
+                      <a
+                        href={proj.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="cred-link"
+                      >
+                        <span>{proj.repoLabel || proj.name}</span>
+                        <Icon name="external" size={13} />
+                      </a>
+                    ) : (
+                      proj.name
+                    )}
+                    :
+                  </strong>{' '}
+                  {proj.description}
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          {/* 4. Core Competencies */}
+          <section className="cv-section" aria-labelledby="heading-skills">
+            <div className="section-head">
+              <div className="section-head__group">
+                <span className="section-head__icon">
+                  <Icon name="layers" size={17} />
+                </span>
+                <h2 id="heading-skills" className="section-head__title">
+                  Core Competencies &amp; Domain Expertise
+                </h2>
+              </div>
+            </div>
+
+            <div className="competency-table">
+              {cvData.skillGroups.map((group) => (
+                <div key={group.category} className="competency-row">
+                  <h3 className="competency-row__label">
+                    <span className="competency-row__icon">
+                      <Icon name={group.icon} size={15} />
+                    </span>
+                    <span>{group.category}</span>
+                  </h3>
+                  <ul className="competency-row__tags">
+                    {group.items.map((item) => (
+                      <motion.li
+                        key={item}
+                        className="skill-pill"
+                        whileHover={{ y: -2, scale: 1.015 }}
+                        transition={criticalSpring}
+                      >
+                        {item}
+                      </motion.li>
+                    ))}
+                  </ul>
+                </div>
               ))}
             </div>
-          </motion.section>
+          </section>
 
-          {/* ZONE 2: 5-Pillar Operating Model (Asymmetric Bento Grid) */}
-          <motion.section
-            id="operating-model"
-            className="cv-section"
-            aria-labelledby="heading-operating-model"
-            {...sectionReveal}
-          >
-            <div className="cv-section__header">
-              <div className="cv-section__title-group">
-                <span className="cv-section__index">SECTION // 01</span>
-                <h2 id="heading-operating-model" className="cv-section__title">
-                  Executive Operating Model — 5 Core Pillars
+          {/* 5. Education, Certifications, Awards & Languages */}
+          <section className="cv-section cv-section--last" aria-labelledby="heading-credentials">
+            <div className="section-head">
+              <div className="section-head__group">
+                <span className="section-head__icon">
+                  <Icon name="graduation" size={17} />
+                </span>
+                <h2 id="heading-credentials" className="section-head__title">
+                  Education, Certifications &amp; Honors
                 </h2>
               </div>
-              <span className="cv-section__tag">
-                Leadership · Delivery · SWAT · Pre-Sales · AI Harness
-              </span>
             </div>
 
-            <div className="pillar-bento">
-              {cvData.pillars.map((pillar) => {
-                const isMatched =
-                  activeLens === 'all' || pillar.lens === activeLens;
-                const isSelected = activeLens === pillar.lens;
-
-                return (
-                  <motion.article
-                    key={pillar.id}
-                    layout
-                    className={`pillar-card ${pillar.wide ? 'pillar-card--wide' : ''} ${
-                      isSelected ? 'pillar-card--active' : ''
-                    } ${!isMatched ? 'pillar-card--dimmed' : ''}`}
-                    whileHover={{ y: -2 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <header className="pillar-card__header">
-                      <div className="pillar-card__meta">
-                        <span className="pillar-card__code">{pillar.specCode}</span>
-                        <span className="pillar-card__badge">{pillar.badge}</span>
-                      </div>
-                      <button
-                        type="button"
-                        className="pillar-card__lens-btn no-print"
-                        onClick={() =>
-                          handleSelectLens(isSelected ? 'all' : pillar.lens)
-                        }
-                        title={`Filter CV by ${pillar.title}`}
-                      >
-                        <PillarIcon type={pillar.iconType} />
-                        <span>{isSelected ? 'Showing Lens' : 'Focus Lens'}</span>
-                      </button>
-                    </header>
-
-                    <h3 className="pillar-card__title">{pillar.title}</h3>
-                    <p className="pillar-card__desc">{pillar.description}</p>
-
-                    {pillar.harnessStages && (
-                      <HarnessPipeline stages={pillar.harnessStages} />
-                    )}
-                  </motion.article>
-                );
-              })}
-            </div>
-          </motion.section>
-
-          {/* ZONE 3: Synchronized 2D Experience Matrix */}
-          <motion.section
-            id="experience"
-            className="cv-section"
-            aria-labelledby="heading-experience"
-            {...sectionReveal}
-          >
-            <div className="cv-section__header">
-              <div className="cv-section__title-group">
-                <span className="cv-section__index">SECTION // 02</span>
-                <h2 id="heading-experience" className="cv-section__title">
-                  Experience — 2D Progression &amp; Workstream Architecture
-                </h2>
-              </div>
-              <span className="cv-section__tag">
-                Dimension 1 (Role Spine) × Dimension 2 (Workstream Tracks)
-              </span>
-            </div>
-
-            {/* NashTech 2D Matrix */}
-            <div className="company-block">
-              <div className="company-banner">
-                <div>
-                  <h3 className="company-banner__title">{cvData.nashtech.company}</h3>
-                  <div className="company-banner__org">{cvData.nashtech.location}</div>
-                </div>
-                <span className="company-banner__period">{cvData.nashtech.period}</span>
-              </div>
-
-              <div className="experience-matrix">
-                {/* Dimension 1: Sticky Left Role Progression Spine */}
-                <aside className="spine-rail" aria-label="Role Progression Spine">
-                  <div className="dimension-panel">
-                    <div className="dimension-panel__head">
-                      <span className="dimension-label">
-                        Dimension 1 · Role Progression
-                      </span>
-                      <span className="dimension-hint no-print">
-                        Click era to filter tracks
-                      </span>
-                    </div>
-
-                    <ol className="spine">
-                      {cvData.nashtech.progression.map((step, index) => {
-                        const isEraSelected = activeEra === step.id;
-                        const isEraMatched =
-                          !activeEra || isEraSelected;
-
-                        return (
-                          <li
-                            key={step.id}
-                            className={`spine__item ${
-                              isEraSelected ? 'spine__item--selected' : ''
-                            } ${!isEraMatched ? 'spine__item--dimmed' : ''}`}
-                          >
-                            <span
-                              className={`spine__dot ${
-                                index === 0 || isEraSelected ? 'spine__dot--active' : ''
-                              }`}
-                              aria-hidden="true"
-                            />
-                            <button
-                              type="button"
-                              className="spine__button"
-                              onClick={() =>
-                                setActiveEra((prev) =>
-                                  prev === step.id ? null : step.id
-                                )
-                              }
-                              aria-pressed={isEraSelected}
-                            >
-                              <div className="spine__meta-row">
-                                <span className="spine__code">{step.code}</span>
-                                <span className="spine__duration">{step.duration}</span>
-                              </div>
-                              <div className="spine__title">{step.title}</div>
-                              <div className="spine__period">{step.period}</div>
-                              <p className="spine__summary">{step.summary}</p>
-                            </button>
-                          </li>
-                        );
-                      })}
-                    </ol>
-                  </div>
-                </aside>
-
-                {/* Dimension 2: Right Column Full Workstream Cards */}
-                <div className="tracks-column">
-                  <div className="dimension-label dimension-label--tracks">
-                    Dimension 2 · Core Workstream Tracks (Continuous &amp; Cross-Role)
-                  </div>
-
-                  <div className="track-list">
-                    {cvData.nashtech.tracks.map((track) => {
-                      const matchingRows = track.highlights.filter(isRowHighlighted);
-                      const isTrackDimmed =
-                        isFilteringActive && matchingRows.length === 0;
-
-                      return (
-                        <motion.article
-                          key={track.id}
-                          layout
-                          className={`track-card ${
-                            isTrackDimmed ? 'track-card--dimmed' : ''
-                          }`}
-                        >
-                          <header className="track-card__header">
-                            <div className="track-card__title-row">
-                              <span className="track-card__code">{track.specCode}</span>
-                              <h4 className="track-card__title">{track.title}</h4>
-                            </div>
-                            <div className="badge-row">
-                              {track.badges.map((badge) => (
-                                <span
-                                  key={badge.label}
-                                  className={`meta-badge ${
-                                    badge.accent ? 'meta-badge--accent' : ''
-                                  }`}
-                                >
-                                  {badge.label}
-                                </span>
-                              ))}
-                            </div>
-                          </header>
-
-                          {track.context && (
-                            <p className="track-card__context">{track.context}</p>
-                          )}
-
-                          <div className="spec-rows">
-                            {track.highlights.map((item) => {
-                              const matched = isRowHighlighted(item);
-                              const activelySpotlit = isFilteringActive && matched;
-
-                              return (
-                                <motion.div
-                                  key={item.id}
-                                  layout
-                                  className={`spec-row ${
-                                    activelySpotlit ? 'spec-row--highlighted' : ''
-                                  } ${!matched ? 'spec-row--dimmed' : ''}`}
-                                >
-                                  <div className="spec-row__lead-col">
-                                    <div className="spec-row__lead">{item.lead}</div>
-                                    <span className="spec-row__era">{item.eraTag}</span>
-                                  </div>
-                                  <div className="spec-row__body-col">
-                                    <p className="spec-row__text">{item.text}</p>
-                                  </div>
-                                </motion.div>
-                              );
-                            })}
-                          </div>
-                        </motion.article>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Earlier Chronological Experience */}
-            {cvData.earlierExperience.map((item) => (
-              <div key={item.id} className="role-block">
-                <div className="role-block__top">
-                  <div>
-                    <div className="track-card__title-row">
-                      <span className="track-card__code">{item.specCode}</span>
-                      <h3 className="role-block__title">{item.title}</h3>
-                    </div>
-                    <div className="role-block__org">{item.organization}</div>
-                  </div>
-                  <span className="company-banner__period">{item.period}</span>
-                </div>
-
-                {item.project && (
-                  <p className="role-block__project">{item.project}</p>
-                )}
-
-                <div className="spec-rows">
-                  {item.highlights.map((point) => {
-                    const matched = isRowHighlighted(point);
-                    const activelySpotlit = isFilteringActive && matched;
-
-                    return (
-                      <div
-                        key={point.id}
-                        className={`spec-row ${
-                          activelySpotlit ? 'spec-row--highlighted' : ''
-                        } ${!matched ? 'spec-row--dimmed' : ''}`}
-                      >
-                        <div className="spec-row__lead-col">
-                          <div className="spec-row__lead">{point.lead}</div>
-                          <span className="spec-row__era">{point.eraTag}</span>
-                        </div>
-                        <div className="spec-row__body-col">
-                          <p className="spec-row__text">{point.text}</p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            ))}
-          </motion.section>
-
-          {/* ZONE 4: Competency Bento Matrix & Interactive Skill X-Ray */}
-          <motion.section
-            id="skills"
-            className="cv-section"
-            aria-labelledby="heading-skills"
-            {...sectionReveal}
-          >
-            <div className="cv-section__header">
-              <div className="cv-section__title-group">
-                <span className="cv-section__index">SECTION // 03</span>
-                <h2 id="heading-skills" className="cv-section__title">
-                  Skills &amp; Tooling — Interactive Competency Matrix
-                </h2>
-              </div>
-              <span className="cv-section__tag">
-                Click any tag to X-Ray Experience evidence
-              </span>
-            </div>
-
-            <div className="skill-bento">
-              {cvData.skillGroups.map((group) => {
-                const isGroupMatched =
-                  activeLens === 'all' || group.lenses.includes(activeLens);
-
-                return (
-                  <div
-                    key={group.category}
-                    className={`skill-card skill-card--${group.bentoSpan} ${
-                      !isGroupMatched && !selectedSkill ? 'skill-card--dimmed' : ''
-                    }`}
-                  >
-                    <div className="skill-card__head">
-                      <span className="skill-card__code">{group.specCode}</span>
-                      <h3 className="skill-card__title">{group.category}</h3>
-                    </div>
-
-                    <ul className="tag-list">
-                      {group.items.map((skill) => {
-                        const isSkillSelected = selectedSkill === skill;
-                        return (
-                          <li key={skill}>
-                            <motion.button
-                              type="button"
-                              className={`tech-tag ${
-                                isSkillSelected ? 'tech-tag--active' : ''
-                              }`}
-                              onClick={() => handleSelectSkill(skill)}
-                              whileHover={{ y: -2 }}
-                              whileTap={{ scale: 0.96 }}
-                              aria-pressed={isSkillSelected}
-                            >
-                              <span>{skill}</span>
-                            </motion.button>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
-                );
-              })}
-            </div>
-          </motion.section>
-
-          {/* Credentials, Education, Honors & Languages */}
-          <motion.section
-            id="credentials"
-            className="cv-section"
-            aria-labelledby="heading-credentials"
-            {...sectionReveal}
-          >
-            <div className="cv-section__header">
-              <div className="cv-section__title-group">
-                <span className="cv-section__index">SECTION // 04</span>
-                <h2 id="heading-credentials" className="cv-section__title">
-                  Credentials, Education &amp; Recognition
-                </h2>
-              </div>
-              <span className="cv-section__tag">Verified Qualifications</span>
-            </div>
-
-            <div className="credentials-grid">
-              <div className="cred-box">
-                <h3 className="cred-box__heading">Licenses &amp; Certifications</h3>
-                <ul className="cred-list">
-                  {cvData.certifications.map((cert) => (
-                    <li key={cert.name} className="cred-list__item">
-                      <div className="cred-list__title">
-                        {cert.url ? (
-                          <a href={cert.url} target="_blank" rel="noreferrer">
-                            {cert.name} ↗
-                          </a>
-                        ) : (
-                          cert.name
-                        )}
-                      </div>
-                      <div className="cred-list__meta">
-                        {cert.issuer} · Issued {cert.issued}
-                        {cert.credentialId ? ` · Credential ID ${cert.credentialId}` : ''}
-                      </div>
-                      {cert.skills && (
-                        <div className="cred-list__sub">{cert.skills}</div>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-
-                <h3 className="cred-box__heading cred-box__heading--spaced">
-                  Honors &amp; Awards
+            <div className="credentials-columns">
+              {/* Left Column: Education & Languages */}
+              <div className="cred-col">
+                <h3 className="cred-col__heading">
+                  <Icon name="graduation" size={14} />
+                  <span>Academic Education</span>
                 </h3>
-                <ul className="cred-list">
-                  {cvData.awards.map((award) => (
-                    <li key={award.title} className="cred-list__item">
-                      <div className="cred-list__title">{award.title}</div>
-                      <div className="cred-list__meta">{award.detail}</div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="cred-box">
-                <h3 className="cred-box__heading">Education</h3>
-                <ul className="cred-list">
+                <ul className="cred-entries">
                   {cvData.education.map((edu) => (
-                    <li key={edu.school} className="cred-list__item">
-                      <div className="cred-list__title">{edu.school}</div>
-                      <div className="cred-list__sub">{edu.degree}</div>
-                      <div className="cred-list__meta">
-                        {edu.period} · {edu.detail}
+                    <li key={edu.school} className="cred-entry">
+                      <div className="cred-entry__top">
+                        <strong className="cred-entry__title">{edu.degree}</strong>
+                        <span className="cred-entry__date">{edu.period}</span>
                       </div>
+                      <div className="cred-entry__org">{edu.school}</div>
+                      <div className="cred-entry__detail">{edu.detail}</div>
                     </li>
                   ))}
                 </ul>
 
-                <h3 className="cred-box__heading cred-box__heading--spaced">
-                  Languages
+                <h3 className="cred-col__heading cred-col__heading--spaced">
+                  <Icon name="globe" size={14} />
+                  <span>Languages</span>
                 </h3>
-                <ul className="cred-list">
+                <ul className="cred-entries cred-entries--compact">
                   {cvData.languages.map((lang) => (
-                    <li key={lang.name} className="cred-list__item">
-                      <div className="cred-list__title">{lang.name}</div>
-                      <div className="cred-list__meta">{lang.level}</div>
+                    <li key={lang.language} className="cred-entry cred-entry--inline">
+                      <strong>{lang.language}:</strong> <span>{lang.proficiency}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Right Column: Licenses & Honors */}
+              <div className="cred-col">
+                <h3 className="cred-col__heading">
+                  <Icon name="award" size={14} />
+                  <span>Licenses &amp; Certifications</span>
+                </h3>
+                <ul className="cred-entries">
+                  {cvData.certifications.map((cert) => (
+                    <li key={cert.name} className="cred-entry">
+                      <div className="cred-entry__top">
+                        <strong className="cred-entry__title">
+                          {cert.url ? (
+                            <motion.a
+                              href={cert.url}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="cred-link"
+                              whileHover={{ y: -1.5 }}
+                              transition={criticalSpring}
+                            >
+                              <span>{cert.name}</span>
+                              <Icon name="external" size={13} />
+                            </motion.a>
+                          ) : (
+                            cert.name
+                          )}
+                        </strong>
+                      </div>
+                      <div className="cred-entry__org">{cert.issuer}</div>
+                      <div className="cred-entry__detail">{cert.date}</div>
+                    </li>
+                  ))}
+                </ul>
+
+                <h3 className="cred-col__heading cred-col__heading--spaced">
+                  <Icon name="trophy" size={14} />
+                  <span>Honors &amp; Awards</span>
+                </h3>
+                <ul className="cred-entries cred-entries--compact">
+                  {cvData.awards.map((award) => (
+                    <li key={award.title} className="cred-entry">
+                      <strong className="cred-entry__title">{award.title}</strong>
+                      <div className="cred-entry__detail">{award.issuer}</div>
                     </li>
                   ))}
                 </ul>
               </div>
             </div>
-          </motion.section>
+          </section>
         </main>
-
-        <footer className="footer no-print">
-          <span>Architectural Blueprint Design System · Web Interactive + A4 Print</span>
-          <span>Ngoc Khanh Chu · NashTech Hanoi</span>
-        </footer>
       </div>
     </MotionConfig>
   );

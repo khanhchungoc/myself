@@ -1,32 +1,24 @@
 # SPEC.md — Project & Product Specification
 
 ## Overview
-Personal CV & interactive architectural portfolio for **Ngoc Khanh Chu** (Business Analyst Manager & Hands-On BA Lead at NashTech, Hanoi, Vietnam), hosted at [`khanhchungoc/myself`](https://github.com/khanhchungoc/myself).
+Personal CV for **Ngoc Khanh Chu** (Business Analyst Manager & Hands-On BA Lead at NashTech, Hanoi, Vietnam), tailored for a **BA Manager position at a bank** and hosted at [`khanhchungoc/myself`](https://github.com/khanhchungoc/myself).
 
 - **Primary Host:** GitHub Pages (portable to Cloudflare Pages / custom domain via relative paths `./`).
-- **Dual Output:** Highly interactive web experience (`motion/react`) + clean, A4-printable executive specification (`@media print` + automated `dist/cv.pdf` build via GitHub Actions).
+- **Dual Output:** Clean single-sheet web experience + crisp 2-page A4-printable executive brief (`@media print` + automated `dist/cv.pdf` build via GitHub Actions).
 
 ## Product & UX Requirements
-1. **Mobile-First, Accessible & Responsive (`320px+` → `1440px+`)**
-   - Mobile-first CSS with comfortable `40px–44px` touch targets, `:focus-visible` keyboard rings, `tabular-nums` data alignment, and zero horizontal overflow.
-   - Constrained reading measure (`60–72ch`) via structured 2-column specification rows inside Experience tracks.
-
-2. **Content & Executive Positioning (Zero Redundancy)**
-   - **Tone:** Professional, friendly, honest, and grounded—clear and confident without corporate fluff or fabricated claims.
-   - **Non-Overlapping Hierarchy:**
-     - **Zone 1 (Hero + Telemetry):** Identity, Operating Principle, Executive Thesis, and 5 quantified scope anchors.
-     - **Zone 2 (5-Pillar Operating Model Bento):** Dedicated modules for (1) Close, Hands-On Leadership of 21 BAs, (2) Full-Time ODC Delivery (Technical Integration + Business Functionalities), (3) SWAT Intervention for Projects in Need, (4) Pre-Sales Leadership, and (5) BA-Specific AI Agent & Skill Harness (with interactive 4-stage lifecycle explorer).
-     - **Zone 3 (2D Experience Matrix):** Sticky Role Progression Spine (Dimension 1) cross-linked to Core Workstream Tracks (Dimension 2) and Earlier Banking Experience.
-     - **Zone 4 (Skill Bento & Credentials):** Interactive Skill-to-Evidence X-Ray tags and verified qualifications.
-
-3. **Interactive Motion Architecture (`motion/react` v12)**
-   - **Sticky 5-Pillar Executive Lens Switcher:** Shared-layout spring pill (`layoutId="active-lens-pill"`) that filters/highlights matching Bento pillars, Experience rows, and Skill tags.
-   - **Interactive System Blueprint SVG (`HeroIllustration`):** Hover/tap nodes with live SVG data-flow pulse and `AnimatePresence` specification readout.
-   - **Interactive 4-Stage BA AI Harness Pipeline:** Expandable stage readout inside Pillar 05.
-   - **2D Spine ↔ Workstream Synchronizer:** Clicking/hovering a role era on the Spine highlights corresponding tracks and bullets.
-   - **Skill-to-Evidence X-Ray:** Clicking any skill chip highlights matching Experience rows and displays an active filter banner.
-   - **Scroll Ruler & Spring Telemetry Counters:** Hardware-accelerated `useScroll` + `useSpring` progress bar and `useMotionValue` + `useTransform` numeric counters.
-   - **Accessibility & Print Safety:** Root `<MotionConfig reducedMotion="user">` and `@media print` overrides (`opacity: 1 !important; transform: none !important;`) so exported PDFs never clip, dim, or hide content.
+1. **Executive Scannability (15-Second Banking Hiring Manager Test)**
+   - Single-sheet paper layout with generous whitespace, horizontal hairline dividers, and zero nested box clutter or confusing filter buttons.
+   - Bullet-first Experience workstreams (`Bold Outcome Lead:` + concise 1-line impact statement) with zero word-for-word duplication between sections.
+2. **Core Candidate Positioning (5 Pillars)**
+   - **Close, Hands-On Leadership (23 BAs):** Direct coaching, deliverable reviews, annual KPI appraisals, junior-to-independent mentoring, and RMO staffing alignment.
+   - **Full-Time ODC Delivery (Technical + Domain):** Active hands-on BA Lead owning Policy Service APIs, B2B microservices, and EDW/ETL migrations alongside UK FCA compliance and banking/insurance domain logic.
+   - **SWAT Project Recovery:** Stepping into high-priority or troubled deliveries across the organization to stabilize requirements and clear bottlenecks.
+   - **Pre-Sales Leadership:** Leading client discovery workshops, financial domain consulting, solution framing, and effort sizing.
+   - **AI Transformation (BA Agent & Skill Harness):** Architected around **Human-in-Control Decision-Making**, **Quick Operation**, **Token Optimization**, and **Full Agent Monitor Dashboard Lifecycle**.
+3. **Mobile-First, Accessible & Print-Safe**
+   - Mobile-first CSS (`320px+` → desktop) with keyboard focus rings, `tabular-nums` alignment, and zero scroll-hidden `opacity: 0` gates.
+   - Root `<MotionConfig reducedMotion="user">` and `.no-print` utility controls for clean A4 PDF export.
 
 ## Technical Architecture
 - **Stack:** Vite + React 19 + `motion` (`motion/react` v12).

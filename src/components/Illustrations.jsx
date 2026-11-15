@@ -1,424 +1,168 @@
-import { useState } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
-
-const drawTransition = {
-  duration: 0.85,
-  ease: 'easeInOut',
-};
-
-const BLUEPRINT_NODES = [
-  {
-    id: 'dept',
-    code: 'NODE // 01',
-    short: '21 BAs & SWAT',
-    title: '21-BA Line, SWAT & Pre-Sales',
-    spec: 'Close, hands-on coaching · SWAT project recovery · Discovery & sizing',
-    lens: 'leadership',
-  },
-  {
-    id: 'domain',
-    code: 'NODE // 02',
-    short: 'FCA & Finance',
-    title: 'Insurance & Finance Domain Logic',
-    spec: '2nd largest UK insurer (~20→>40 HC) · Top-50 Global AUM (~100 HC)',
-    lens: 'delivery',
-  },
-  {
-    id: 'hub',
-    code: 'CORE // HUB',
-    short: 'BA Lead + AI',
-    title: 'Hands-On BA Lead & AI Agent Harness',
-    spec: '100% full-time delivery · Human-in-control AI harness · Monitor dashboard',
-    lens: 'ai',
-  },
-  {
-    id: 'systems',
-    code: 'OUT // 03',
-    short: 'API & EDW',
-    title: 'B2B Microservices, Policy APIs & EDW',
-    spec: 'Clean architecture · Policy Service APIs · Oracle DW → SQL Server EDW',
-    lens: 'delivery',
-  },
-];
-
-export function HeroIllustration({ onSelectLens }) {
-  const [activeNodeId, setActiveNodeId] = useState('hub');
-  const activeNode =
-    BLUEPRINT_NODES.find((node) => node.id === activeNodeId) || BLUEPRINT_NODES[2];
-
-  const handleNodeInteract = (node) => {
-    setActiveNodeId(node.id);
-    if (onSelectLens && node.lens) {
-      onSelectLens(node.lens);
-    }
-  };
-
-  return (
-    <div className="blueprint-widget">
-      <div className="blueprint-widget__bar no-print">
-        <span className="blueprint-widget__code">SYS // ARCH-01</span>
-        <span className="blueprint-widget__hint">Interactive — tap node</span>
-      </div>
-
-      <motion.svg
-        viewBox="0 0 280 188"
-        width="280"
-        height="188"
-        fill="none"
-        role="img"
-        aria-label="Interactive system architecture diagram connecting 21-BA Leadership and Insurance/Finance Domain through the Hands-On BA Lead and AI Harness Hub to B2B Microservices and EDW delivery"
-        initial="hidden"
-        animate="visible"
-      >
-        {/* Outer blueprint frame */}
-        <motion.rect
-          x="8"
-          y="8"
-          width="264"
-          height="172"
-          rx="10"
-          stroke="var(--color-border)"
-          strokeWidth="1.25"
-          fill="var(--color-surface)"
-          initial={{ opacity: 0, scale: 0.97 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.4 }}
-        />
-
-        {/* Corner registration ticks */}
-        <path
-          d="M16 20V14H22M258 14H264V20M16 168V174H22M258 174H264V168"
-          stroke="var(--color-text-muted)"
-          strokeWidth="1.2"
-          strokeLinecap="round"
-          opacity="0.55"
-        />
-
-        {/* Connecting flow paths */}
-        <motion.path
-          d="M74 56 C106 56, 106 94, 132 94"
-          stroke={activeNodeId === 'dept' || activeNodeId === 'hub' ? 'var(--color-accent)' : 'var(--color-border)'}
-          strokeWidth={activeNodeId === 'dept' || activeNodeId === 'hub' ? '2.6' : '1.8'}
-          strokeLinecap="round"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ ...drawTransition, delay: 0.15 }}
-        />
-        <motion.path
-          d="M74 132 C106 132, 106 94, 132 94"
-          stroke={activeNodeId === 'domain' || activeNodeId === 'hub' ? 'var(--color-accent)' : 'var(--color-border)'}
-          strokeWidth={activeNodeId === 'domain' || activeNodeId === 'hub' ? '2.6' : '1.8'}
-          strokeLinecap="round"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ ...drawTransition, delay: 0.28 }}
-        />
-        <motion.path
-          d="M176 94 L210 94"
-          stroke={activeNodeId === 'systems' || activeNodeId === 'hub' ? 'var(--color-accent)' : 'var(--color-navy)'}
-          strokeWidth="2.6"
-          strokeLinecap="round"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ ...drawTransition, delay: 0.42 }}
-        />
-
-        {/* Animated data packet pulse along top/bottom -> hub -> output */}
-        <motion.circle
-          r="3.2"
-          fill="var(--color-accent)"
-          className="no-print"
-          animate={{
-            cx: [74, 108, 154, 210],
-            cy: [56, 75, 94, 94],
-            opacity: [0, 1, 1, 0],
-          }}
-          transition={{
-            duration: 2.8,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-        />
-        <motion.circle
-          r="3.2"
-          fill="var(--color-accent)"
-          className="no-print"
-          animate={{
-            cx: [74, 108, 154, 210],
-            cy: [132, 113, 94, 94],
-            opacity: [0, 1, 1, 0],
-          }}
-          transition={{
-            duration: 2.8,
-            delay: 1.4,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-        />
-
-        {/* Node 1: 21 BAs & SWAT */}
-        <motion.g
-          style={{ cursor: 'pointer' }}
-          onMouseEnter={() => setActiveNodeId('dept')}
-          onClick={() => handleNodeInteract(BLUEPRINT_NODES[0])}
-          whileHover={{ scale: 1.06 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <motion.rect
-            x="22"
-            y="36"
-            width="52"
-            height="40"
-            rx="8"
-            fill={activeNodeId === 'dept' ? 'var(--color-accent)' : 'var(--color-accent-soft)'}
-            stroke="var(--color-accent)"
-            strokeWidth="1.8"
-          />
-          <text
-            x="48"
-            y="54"
-            textAnchor="middle"
-            fontSize="9"
-            fontWeight="700"
-            fontFamily="var(--font-mono)"
-            fill={activeNodeId === 'dept' ? '#ffffff' : 'var(--color-navy)'}
-          >
-            21 BAs
-          </text>
-          <text
-            x="48"
-            y="66"
-            textAnchor="middle"
-            fontSize="7.5"
-            fontFamily="var(--font-mono)"
-            fill={activeNodeId === 'dept' ? '#ffffff' : 'var(--color-text-muted)'}
-          >
-            + SWAT
-          </text>
-        </motion.g>
-
-        {/* Node 2: Insurance & Finance Domain */}
-        <motion.g
-          style={{ cursor: 'pointer' }}
-          onMouseEnter={() => setActiveNodeId('domain')}
-          onClick={() => handleNodeInteract(BLUEPRINT_NODES[1])}
-          whileHover={{ scale: 1.06 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <motion.rect
-            x="22"
-            y="112"
-            width="52"
-            height="40"
-            rx="8"
-            fill={activeNodeId === 'domain' ? 'var(--color-accent)' : 'var(--color-accent-soft)'}
-            stroke="var(--color-accent)"
-            strokeWidth="1.8"
-          />
-          <text
-            x="48"
-            y="130"
-            textAnchor="middle"
-            fontSize="8.5"
-            fontWeight="700"
-            fontFamily="var(--font-mono)"
-            fill={activeNodeId === 'domain' ? '#ffffff' : 'var(--color-navy)'}
-          >
-            DOMAIN
-          </text>
-          <text
-            x="48"
-            y="142"
-            textAnchor="middle"
-            fontSize="7.5"
-            fontFamily="var(--font-mono)"
-            fill={activeNodeId === 'domain' ? '#ffffff' : 'var(--color-text-muted)'}
-          >
-            FCA · AUM
-          </text>
-        </motion.g>
-
-        {/* Center Hub: Hands-On BA Lead + AI Agent Harness */}
-        <motion.g
-          style={{ cursor: 'pointer' }}
-          onMouseEnter={() => setActiveNodeId('hub')}
-          onClick={() => handleNodeInteract(BLUEPRINT_NODES[2])}
-          whileHover={{ scale: 1.06 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <motion.rect
-            x="128"
-            y="66"
-            width="52"
-            height="56"
-            rx="10"
-            fill="var(--color-navy)"
-            stroke={activeNodeId === 'hub' ? 'var(--color-accent)' : 'var(--color-navy)'}
-            strokeWidth="2.2"
-          />
-          <text
-            x="154"
-            y="89"
-            textAnchor="middle"
-            fontSize="8.5"
-            fontWeight="700"
-            fontFamily="var(--font-mono)"
-            fill="var(--color-bg)"
-          >
-            BA LEAD
-          </text>
-          <text
-            x="154"
-            y="102"
-            textAnchor="middle"
-            fontSize="7.5"
-            fontFamily="var(--font-mono)"
-            fill="var(--color-accent-soft)"
-          >
-            AI HARNESS
-          </text>
-          <circle cx="154" cy="112" r="2.5" fill="var(--color-accent)" />
-        </motion.g>
-
-        {/* Right Node: B2B Microservices & EDW */}
-        <motion.g
-          style={{ cursor: 'pointer' }}
-          onMouseEnter={() => setActiveNodeId('systems')}
-          onClick={() => handleNodeInteract(BLUEPRINT_NODES[3])}
-          whileHover={{ scale: 1.06 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <motion.rect
-            x="208"
-            y="68"
-            width="50"
-            height="52"
-            rx="8"
-            fill={activeNodeId === 'systems' ? 'var(--color-accent)' : 'var(--color-cream)'}
-            stroke={activeNodeId === 'systems' ? 'var(--color-accent)' : 'var(--color-navy)'}
-            strokeWidth="1.8"
-          />
-          <text
-            x="233"
-            y="90"
-            textAnchor="middle"
-            fontSize="8.5"
-            fontWeight="700"
-            fontFamily="var(--font-mono)"
-            fill={activeNodeId === 'systems' ? '#ffffff' : 'var(--color-navy)'}
-          >
-            API · B2B
-          </text>
-          <text
-            x="233"
-            y="103"
-            textAnchor="middle"
-            fontSize="7.5"
-            fontFamily="var(--font-mono)"
-            fill={activeNodeId === 'systems' ? '#ffffff' : 'var(--color-text-muted)'}
-          >
-            ETL · EDW
-          </text>
-        </motion.g>
-      </motion.svg>
-
-      {/* Live interactive node readout */}
-      <div className="blueprint-widget__readout no-print" aria-live="polite">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeNode.id}
-            initial={{ opacity: 0, y: 4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
-            transition={{ duration: 0.16 }}
-          >
-            <div className="blueprint-widget__readout-top">
-              <span className="blueprint-widget__node-code">{activeNode.code}</span>
-              <span className="blueprint-widget__node-title">{activeNode.title}</span>
-            </div>
-            <p className="blueprint-widget__node-spec">{activeNode.spec}</p>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-    </div>
-  );
-}
-
-export function PillarIcon({ type }) {
+export function Icon({ name, size = 15 }) {
   const paths = {
-    team: (
+    location: (
       <>
-        <circle cx="9" cy="7" r="3" />
-        <path d="M3 19c0-3 2.7-5 6-5s6 2 6 5" />
-        <circle cx="16.5" cy="8.5" r="2.2" />
-        <path d="M16 14c2.4.3 4.5 1.8 4.5 4.5" />
+        <path d="M12 21s-6-5.2-6-10a6 6 0 1 1 12 0c0 4.8-6 10-6 10z" />
+        <circle cx="12" cy="11" r="2.2" />
       </>
     ),
-    architecture: (
+    phone: (
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" />
+    ),
+    mail: (
       <>
-        <rect x="3" y="4" width="7" height="6" rx="1.5" />
-        <rect x="14" y="4" width="7" height="6" rx="1.5" />
-        <rect x="8.5" y="14" width="7" height="6" rx="1.5" />
-        <path d="M6.5 10v2h11v-2M12 12v2" />
+        <rect x="2" y="4" width="20" height="16" rx="2" />
+        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
       </>
     ),
-    swat: (
+    linkedin: (
       <>
-        <path d="M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6l7-3z" />
-        <path d="M9.5 12l2 2 3.5-4" />
+        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+        <rect x="2" y="9" width="4" height="12" />
+        <circle cx="4" cy="4" r="2" />
       </>
     ),
-    presales: (
+    calendar: (
       <>
-        <circle cx="12" cy="12" r="9" />
-        <polygon points="14.5 9.5 9.5 11.5 7.5 16.5 12.5 14.5 14.5 9.5" />
+        <rect x="3" y="4" width="18" height="18" rx="2" />
+        <line x1="16" y1="2" x2="16" y2="6" />
+        <line x1="8" y1="2" x2="8" y2="6" />
+        <line x1="3" y1="10" x2="21" y2="10" />
       </>
     ),
-    ai: (
+    download: (
       <>
-        <rect x="7" y="7" width="10" height="10" rx="2" />
-        <path d="M9 3v4M15 3v4M9 17v4M15 17v4M3 9h4M3 15h4M17 9h4M17 15h4" />
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+        <polyline points="7 10 12 15 17 10" />
+        <line x1="12" y1="15" x2="12" y2="3" />
       </>
     ),
-    copy: (
+    print: (
       <>
-        <rect x="9" y="9" width="11" height="11" rx="2" />
-        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+        <polyline points="6 9 6 2 18 2 18 9" />
+        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+        <rect x="6" y="14" width="12" height="8" />
       </>
     ),
-    check: (
+    external: (
       <>
-        <path d="M20 6L9 17l-5-5" />
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+        <polyline points="15 3 21 3 21 9" />
+        <line x1="10" y1="14" x2="21" y2="3" />
       </>
     ),
-    sun: (
+    users: (
       <>
-        <circle cx="12" cy="12" r="4" />
-        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+        <circle cx="9" cy="7" r="4" />
+        <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
       </>
     ),
-    moon: (
+    layers: (
       <>
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        <polygon points="12 2 2 7 12 12 22 7 12 2" />
+        <polyline points="2 17 12 22 22 17" />
+        <polyline points="2 12 12 17 22 12" />
+      </>
+    ),
+    shield: (
+      <>
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        <path d="m9 12 2 2 4-4" />
+      </>
+    ),
+    compass: (
+      <>
+        <circle cx="12" cy="12" r="10" />
+        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
+      </>
+    ),
+    cpu: (
+      <>
+        <rect x="4" y="4" width="16" height="16" rx="2" />
+        <rect x="9" y="9" width="6" height="6" />
+        <path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3" />
+      </>
+    ),
+    globe: (
+      <>
+        <circle cx="12" cy="12" r="10" />
+        <line x1="2" y1="12" x2="22" y2="12" />
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+      </>
+    ),
+    database: (
+      <>
+        <ellipse cx="12" cy="5" rx="9" ry="3" />
+        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+      </>
+    ),
+    building: (
+      <>
+        <rect x="4" y="2" width="16" height="20" rx="2" />
+        <path d="M9 22v-4h6v4" />
+        <path d="M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01" />
+      </>
+    ),
+    briefcase: (
+      <>
+        <rect x="2" y="7" width="20" height="14" rx="2" />
+        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+      </>
+    ),
+    graduation: (
+      <>
+        <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+        <path d="M6 12v5c3 3 9 3 12 0v-5" />
+      </>
+    ),
+    award: (
+      <>
+        <circle cx="12" cy="8" r="6" />
+        <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
+      </>
+    ),
+    trophy: (
+      <>
+        <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+        <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+        <path d="M4 22h16" />
+        <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
+        <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
+        <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
+      </>
+    ),
+    sliders: (
+      <>
+        <line x1="4" y1="21" x2="4" y2="14" />
+        <line x1="4" y1="10" x2="4" y2="3" />
+        <line x1="12" y1="21" x2="12" y2="12" />
+        <line x1="12" y1="8" x2="12" y2="3" />
+        <line x1="20" y1="21" x2="20" y2="16" />
+        <line x1="20" y1="12" x2="20" y2="3" />
+        <line x1="2" y1="14" x2="6" y2="14" />
+        <line x1="10" y1="8" x2="14" y2="8" />
+        <line x1="18" y1="16" x2="22" y2="16" />
       </>
     ),
   };
 
   return (
-    <motion.svg
-      width="20"
-      height="20"
+    <svg
+      width={size}
+      height={size}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.8"
+      strokeWidth="1.9"
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
-      whileHover={{ scale: 1.12, rotate: 3 }}
-      transition={{ type: 'spring', stiffness: 320, damping: 16 }}
+      className="inline-icon"
     >
-      {paths[type] || paths.swat}
-    </motion.svg>
+      {paths[name] || null}
+    </svg>
   );
 }
