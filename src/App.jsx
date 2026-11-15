@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import {
   AnimatePresence,
@@ -482,8 +482,8 @@ function ExperienceTimeline({ items }) {
                           {b.tags.map((tag, tagIdx) => (
                             <motion.li
                               key={tag}
-                              className="harness-tag"
-                              whileHover={{ y: -1.5 }}
+                              className="skill-pill"
+                              whileHover={{ y: -2, scale: 1.015 }}
                               transition={criticalSpring}
                             >
                               <span className="harness-tag__content">
@@ -734,7 +734,17 @@ export default function App() {
                   </motion.a>
                 </div>
 
-                <p className="exec-header__summary">{cvData.summary}</p>
+                <p className="exec-header__summary">
+                  {(Array.isArray(cvData.summary)
+                    ? cvData.summary
+                    : cvData.summary.split('\n')
+                  ).map((line, idx) => (
+                    <Fragment key={line}>
+                      {idx > 0 && <br />}
+                      {line}
+                    </Fragment>
+                  ))}
+                </p>
               </div>
             </div>
           </section>

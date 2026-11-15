@@ -554,29 +554,10 @@ a.contact-item:hover svg {
 .harness-tags {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.38rem;
+  gap: 0.42rem 0.55rem;
   list-style: none;
   padding: 0;
-  margin: 0.45rem 0 0.1rem;
-}
-
-.harness-tag {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.3rem 0.65rem;
-  background: var(--color-accent-soft);
-  border: 1px solid #bfdbfe;
-  border-radius: var(--radius-sm);
-  font-size: 0.84rem;
-  font-weight: 400;
-  color: var(--color-navy);
-  cursor: default;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-}
-
-.harness-tag:hover {
-  border-color: #93c5fd;
-  box-shadow: 0 2px 6px rgba(24, 34, 50, 0.06);
+  margin: 0.48rem 0 0.1rem;
 }
 
 .harness-tag__content {
@@ -586,7 +567,7 @@ a.contact-item:hover svg {
 }
 
 .harness-tag__step {
-  font-size: 0.76rem;
+  font-size: 0.82rem;
   font-weight: 600;
   color: var(--color-accent);
   font-variant-numeric: tabular-nums;
@@ -887,9 +868,13 @@ a.contact-item:hover svg {
   margin: 0;
 }
 
-.skill-pill {
+.competency-row__tags .skill-pill,
+.harness-tags .skill-pill {
+  display: inline-flex;
+  align-items: center;
   font-size: 0.86rem;
   font-weight: 400;
+  line-height: 1.54;
   color: var(--color-text);
   background: var(--color-surface-subtle);
   border: 1px solid var(--color-border);
@@ -900,11 +885,17 @@ a.contact-item:hover svg {
     box-shadow 0.15s ease;
 }
 
-.skill-pill:hover {
+.competency-row__tags .skill-pill:hover,
+.harness-tags .skill-pill:hover {
   border-color: var(--color-accent);
   background: var(--color-accent-soft);
   color: var(--color-navy);
   box-shadow: 0 2px 8px rgba(29, 78, 216, 0.08);
+}
+
+.harness-tags .skill-pill {
+  font-size: 0.92rem;
+  padding: 0.28rem 0.72rem;
 }
 
 /* ==========================================================================
@@ -1220,14 +1211,9 @@ a.contact-item:hover svg {
 
   .harness-tags {
     grid-template-columns: repeat(2, 1fr);
-    gap: 3pt 6pt;
+    gap: 3.5pt 6pt;
     margin-top: 3pt;
     break-inside: avoid;
-  }
-
-  .harness-tag {
-    font-size: 7.5pt;
-    padding: 1.5pt 5pt;
   }
 
   .timeline-row {
@@ -1285,9 +1271,15 @@ a.contact-item:hover svg {
     padding-bottom: 4pt;
   }
 
-  .skill-pill {
+  .competency-row__tags .skill-pill,
+  .harness-tags .skill-pill {
     font-size: 7.5pt;
     padding: 1pt 4.5pt;
+  }
+
+  .harness-tags .skill-pill {
+    font-size: 8pt;
+    padding: 1.5pt 5pt;
   }
 
   .credentials-columns {

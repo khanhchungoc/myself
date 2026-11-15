@@ -1,6 +1,6 @@
 export const cvData = {
   name: 'Ngoc Khanh Chu',
-  role: 'Business Analyst Manager & BA Lead',
+  role: 'BA Team Manager',
   company: 'NashTech',
   location: 'Hanoi, Vietnam',
   phone: '+84 869 628 692',
@@ -9,17 +9,19 @@ export const cvData = {
   linkedin: 'https://www.linkedin.com/in/khanhchungoc/',
   linkedinLabel: 'linkedin.com/in/khanhchungoc',
 
-  summary:
-    'Business Analyst Manager and Lead BA with 10+ years across international insurance, global asset management, and commercial banking projects. Leads a 23-BA department in Hanoi while remaining full-time on project delivery - combining BA practice governance, system integration, troubled-project recovery (SWAT), and AI-native BA workflows.',
+  summary: [
+    'Business Analyst Manager and Lead BA with 10+ years across international insurance, global asset management, and commercial banking projects.',
+    'Leads a 23-BA department in Hanoi while remaining full-time on project delivery - combining BA practice governance, system integration, troubled-project recovery (SWAT), and AI-native BA workflows.',
+  ],
 
   timeline: [
     {
       id: 'tl-bam',
       company: 'NashTech',
-      companyMeta: 'Hanoi, Vietnam · Oct 2017 - Present',
+      companyMeta: 'Hanoi · Oct 2017 - Present',
       isCompanyStart: true,
       period: 'May 2024 - Present',
-      role: 'BA Team Manager & BA Lead',
+      role: 'Hanoi BA Manager & BA Lead',
       badge: '23-BA Department',
       icon: 'users',
       trackTitle: 'BA Department & Practice Leadership',
@@ -58,10 +60,10 @@ export const cvData = {
             },
           ],
           tags: [
-            'Human-in-Control Decisions',
-            'Fast Workflow Operation',
-            'Token & Context Optimization',
-            'End-to-End Agent Monitoring',
+            'Human-Owned Decisions',
+            'Streamlined Workflow Operation',
+            'Token Optimization',
+            'Monitoring & Improvement Loop',
           ],
         },
       ],
@@ -127,7 +129,7 @@ export const cvData = {
     {
       id: 'tl-etc',
       company: 'ETC Technology Systems JSC',
-      companyMeta: 'Hanoi, Vietnam · Banking & Enterprise Systems Integrator',
+      companyMeta: 'Hanoi · Aug 2014 - Sep 2016',
       isCompanyStart: true,
       period: 'Aug 2014 - Sep 2016',
       role: 'Project Coordinator / BA',
