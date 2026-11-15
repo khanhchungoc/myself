@@ -1,4 +1,4 @@
-# AGENT.md — Agent Behavior & Working Rules
+# AGENTS.md — Agent Behavior & Working Rules
 
 Read [docs/SPEC.md](./docs/SPEC.md) and [docs/DESIGN.md](./docs/DESIGN.md) before making changes to understand the product requirements, visual design system, and architecture.
 
