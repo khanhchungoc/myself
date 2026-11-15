@@ -1,6 +1,14 @@
 # AGENTS.md — Agent Behavior & Working Rules
 
-Read [docs/SPEC.md](./docs/SPEC.md) and [docs/DESIGN.md](./docs/DESIGN.md) before making changes to understand the product requirements, visual design system, and architecture.
+Read [docs/content.md](./docs/content.md), [docs/SPEC.md](./docs/SPEC.md), and [docs/DESIGN.md](./docs/DESIGN.md) before making changes to understand the confirmed CV content, product requirements, visual design system, and architecture.
+
+## Core Candidate Positioning & Profile Directives
+When writing, updating, or tailoring CV copy and structure, preserve and emphasize these core pillars of Ngoc Khanh Chu's profile:
+1. **Leadership & Close, Hands-On Management Style:** Leads a 21-BA department with a close, hands-on management style—working directly alongside team members to coach, unblock, review deliverables, run annual performance assessments, mentor juniors toward independence, and coordinate training/RMO alignment.
+2. **Full-Time Project Delivery (Technical Integration + Business Functionalities):** Still works full-time on project delivery as a hands-on ODC BA Lead, focusing equally on **technical integration** (B2B microservices, Policy Service API specifications, EDW/ETL, payment migrations) and **business functionalities** (insurance & finance domain logic, UK FCA compliance, product ownership).
+3. **SWAT Activities (Helping Projects in Need):** Steps into high-priority or troubled projects across the organization for SWAT support—stabilizing requirements, performing BA quality check-ups, unblocking delivery bottlenecks, and helping project teams recover.
+4. **Pre-Sales Leadership:** Actively leads and supports pre-sales across client opportunities—driving discovery, solution framing, domain consulting, and effort estimation.
+5. **AI Transformation (BA-Specific Agent & Skill Harness):** Designed and built a BA-specific AI agent and skill harness for the BA lines, focused on **human-in-control decision-making**, **quick operation**, **token optimization**, and a **full agent monitor dashboard lifecycle**.
 
 ## Behavioral Guidelines
 1. **Honesty & Grounding**

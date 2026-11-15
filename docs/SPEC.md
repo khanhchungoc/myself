@@ -13,8 +13,8 @@ Personal CV & professional profile website for **Ngoc Khanh Chu** (Business Anal
 
 2. **Tone & Content**
    - **Tone:** Professional, friendly, honest, and grounded—clear and confident without corporate fluff or exaggerated claims.
-   - **Scope:** Leading >20 BAs, mentoring & training (freshers and QC-to-BA transitions), RMO support, ODC BA leadership for B2B microservices, pre-sales, and domain work in insurance & finance (Policy Service API specs, UK FCA compliance, SWIFT MT103 to ISO 20022 PAIN migrations).
-   - **Missing details:** Dates, email, and unconfirmed credentials remain marked `TBD` until provided.
+   - **Scope:** Close, hands-on leadership of 21 BAs (mentoring, annual assessments, fresher & QC-to-BA training, RMO alignment), ongoing full-time project delivery (hands-on ODC BA Lead focusing on both technical integration and business functionalities across B2B microservices, Policy Service API specs, UK FCA compliance, and ETL/EDW), SWAT activities (helping projects in need), pre-sales leadership, and AI transformation (a BA-specific agent & skill harness centered on human-in-control decision-making, quick operation, token optimization, and a full agent monitor dashboard lifecycle).
+   - **Missing details:** Any unconfirmed dates, metrics, or credentials remain marked `TBD` until provided.
 
 3. **Illustrated & Animated (`motion.dev`)**
    - Custom, lightweight inline SVG illustrations reflecting BA leadership, system architecture, and fintech/insurance workflows (`src/components/Illustrations.jsx`).
