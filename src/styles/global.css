@@ -1,0 +1,425 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--color-navy);
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent);
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--color-accent);
+}
+
+/* Mobile-first container */
+.page-shell {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-4);
+}
+
+/* Top action bar (web only) */
+.action-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-cream);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.action-bar__status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background-color: var(--color-accent);
+  display: inline-block;
+}
+
+.action-bar__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.45rem 0.85rem;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-navy);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn--primary {
+  background: var(--color-navy);
+  border-color: var(--color-navy);
+  color: #ffffff;
+}
+
+.btn--primary:hover {
+  color: #ffffff;
+  filter: brightness(1.1);
+}
+
+/* Full-width Warm Cream Header Banner */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+  padding: var(--space-5);
+  background: var(--color-cream);
+  border-top: 3px solid var(--color-navy);
+  border-bottom: 1px solid var(--color-border);
+  border-left: 1px solid var(--color-border);
+  border-right: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-5);
+}
+
+.hero__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--color-accent);
+  margin: 0 0 var(--space-1);
+}
+
+.hero__name {
+  font-family: var(--font-heading);
+  font-size: 1.85rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--color-navy);
+  margin: 0 0 var(--space-1);
+  letter-spacing: -0.02em;
+}
+
+.hero__title {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-3);
+}
+
+.hero__summary {
+  margin: 0 0 var(--space-4);
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: var(--color-text);
+}
+
+.hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.hero__illustration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+}
+
+/* Section layout with blueprint hairline rules */
+.cv-section {
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.cv-section:last-of-type {
+  border-bottom: none;
+}
+
+.cv-section__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-2);
+  border-bottom: 1.5px solid var(--color-navy);
+}
+
+.cv-section__title {
+  font-family: var(--font-heading);
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-navy);
+}
+
+.cv-section__tag {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+/* Asymmetric 2-Column Executive Core */
+.exec-core {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+.exec-core__box {
+  padding: var(--space-4);
+  background: var(--color-cream);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.exec-core__heading {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-navy);
+  margin: 0 0 var(--space-3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.exec-core__item + .exec-core__item {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+
+.exec-core__sub {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-navy);
+  margin: 0 0 var(--space-1);
+}
+
+.exec-core__desc {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--color-text);
+}
+
+/* Full-width Chronological Experience */
+.role-block + .role-block {
+  margin-top: 12pt;
+  padding-top: 12pt;
+  border-top: 1px solid var(--color-border);
+}
+
+.role-block__top {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-2);
+}
+
+.role-block__title {
+  font-family: var(--font-heading);
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-navy);
+}
+
+.role-block__org {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.role-block__list {
+  margin: 0;
+  padding-left: 1.2rem;
+  font-size: 0.94rem;
+  line-height: 1.45;
+}
+
+.role-block__list li + li {
+  margin-top: var(--space-2);
+}
+
+/* Technical & Metric Tags (JetBrains Mono) */
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tech-tag {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  border: 1px solid #bfdbfe;
+}
+
+.footer {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  padding: var(--space-5) 0 var(--space-6);
+}
+
+/* Tablet & Desktop breakpoints */
+@media (min-width: 768px) {
+  .page-shell {
+    padding: var(--space-6) var(--space-5);
+  }
+
+  .hero {
+    grid-template-columns: 1.75fr 1fr;
+    align-items: center;
+    padding: var(--space-6);
+  }
+
+  .hero__name {
+    font-size: 2rem;
+  }
+
+  .exec-core {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .role-block__top {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+}
+
+/* A4 Print & PDF Export Styles (16mm margins, 0.5pt hairline rules) */
+@page {
+  size: A4;
+  margin: 16mm;
+}
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+
+  body {
+    background: #ffffff;
+    font-size: 9.5pt;
+    line-height: 1.4;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .page-shell {
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  .hero {
+    grid-template-columns: 2fr 1fr;
+    padding: 12pt 14pt;
+    margin-bottom: 10pt;
+    border-width: 0.5pt;
+    border-top-width: 2pt;
+    break-inside: avoid;
+  }
+
+  .hero__name {
+    font-size: 22pt;
+  }
+
+  .cv-section {
+    padding: 8pt 0;
+    border-bottom-width: 0.5pt;
+    break-inside: avoid;
+  }
+
+  .cv-section__title {
+    font-size: 11pt;
+  }
+
+  .exec-core {
+    grid-template-columns: 1fr 1fr;
+    gap: 10pt;
+  }
+
+  .exec-core__box {
+    padding: 10pt;
+    border-width: 0.5pt;
+  }
+
+  .exec-core__item + .exec-core__item {
+    border-top-width: 0.5pt;
+  }
+
+  .tech-tag {
+    font-size: 8.5pt;
+    border-width: 0.5pt;
+  }
+
+  a {
+    color: var(--color-navy);
+    text-decoration: none;
+  }
+}

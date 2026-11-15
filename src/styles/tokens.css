@@ -1,0 +1,35 @@
+/* "Architectural Blueprint" Executive Design System (see DESIGN.md) */
+:root {
+  /* Color Tokens */
+  --color-navy: #2a2e3a;
+  --color-cream: #faf8f5;
+  --color-bg: #ffffff;
+  --color-surface: #ffffff;
+  --color-surface-callout: #faf8f5;
+
+  --color-text: #1e2229;
+  --color-text-muted: #5a6270;
+  --color-accent: #2563eb;
+  --color-accent-warm: #b45309;
+  --color-accent-soft: #eff6ff;
+  --color-border: #d1d5db;
+
+  /* Typography */
+  --font-heading: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Spacing & Layout */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.625rem;
+
+  --max-width: 54rem;
+}
