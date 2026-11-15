@@ -1,25 +1,30 @@
 # Ngoc Khanh Chu — CV Content Source of Truth
 
-> "Anything that can go wrong will go wrong"
+> **Operating Principle:** "Anything that can go wrong will go wrong"
 
 ## Profile & Contact Information
 - **Name:** Ngoc Khanh Chu
-- **Current Role:** BA Team Manager & BA Lead at NashTech
+- **Current Role:** BA Team Manager & Hands-On BA Lead at NashTech
 - **Date of Birth:** 29/09/1992
 - **Location:** Hanoi Capital Region, Vietnam (Hybrid)
-- **Phone:** +84869628692 (Mobile)
+- **Phone:** +84 869 628 692 (Mobile)
 - **Email:** khanhcn.299@gmail.com
 - **LinkedIn:** https://www.linkedin.com/in/khanhchungoc/
 - **Photo:** `src/assets/profile.jpg`
 
 ## Executive Summary & Confirmed Scope
-Business Analyst Manager and BA Lead at NashTech in Hanoi, Vietnam, specializing in insurance and finance domain solutions. Combines close, hands-on leadership of Hanoi's BA department (21 BAs) with **full-time project delivery**—staying directly involved alongside team members across both technical integration and business functionalities, SWAT support for projects in need, pre-sales, and AI transformation.
+Hands-on BA Team Manager and ODC BA Lead with 10+ years delivering enterprise insurance, banking, and data platforms. Leads a **21-BA department** at NashTech in Hanoi through close, side-by-side coaching while remaining **100% active on full-time project delivery**—bridging deep insurance and finance domain logic with technical system integration, stepping into troubled projects for **SWAT recovery**, leading **pre-sales discovery**, and building **BA-specific AI agent harnesses**.
 
-- **Hands-On Leadership & Management Style:** Close, hands-on manager who works directly alongside team members to mentor, unblock, and review work—combining line management (21 BAs), annual assessments, training (freshers and QC-to-BA transitions), and Resource Management Office (RMO) alignment with full-time project delivery.
-- **Full-Time Delivery — Technical Integration & Business Functionalities:** Bridges deep business domain logic (2nd largest UK insurance company—scaling the account from ~20 to >40 headcount—Top-50 global AUM asset manager at ~100 headcount) with technical system integration (B2B microservices, Policy Service API specifications, UK FCA compliance, and ETL/EDW).
-- **SWAT Activities (Projects in Need):** Steps into high-priority or troubled projects for SWAT intervention—stabilizing requirements, conducting BA health check-ups, and unblocking delivery bottlenecks.
-- **Pre-Sales Leadership:** Active partner in pre-sales activities—supporting discovery, solution framing, domain consulting, and effort estimation for prospective clients.
-- **AI Transformation & BA Agent Harness:** Designed and built a **BA-specific AI agent and skill harness** for the BA line, engineered around **human-in-control decision-making**, **quick operation**, **token optimization**, and a **full agent monitor dashboard lifecycle**.
+### Core Operating Pillars
+1. **Close, Hands-On Department Leadership (21 BAs):** Coaches, unblocks, and reviews deliverables directly alongside team members while staying active on full-time delivery; runs annual KPI & performance assessments, mentors junior BAs to independence, coordinates fresher & QC-to-BA transition programs, and aligns staffing with the Resource Management Office (RMO).
+2. **Full-Time ODC Delivery — Technical Integration & Business Functionalities:** Continues full-time as hands-on ODC BA Lead for the 2nd largest UK insurance company (scaling the account from ~20 to >40 headcount) and previously delivered for a Top-50 global AUM asset manager (~100 headcount)—owning B2B microservices, Policy Service API specifications, UK FCA regulatory compliance, UI Design Systems, and ETL/EDW migrations.
+3. **SWAT Intervention (Helping Projects in Need):** Steps directly into high-priority or troubled deliveries across the organization—running BA quality check-ups, stabilizing ambiguous requirements, and clearing delivery bottlenecks so project teams can recover.
+4. **Pre-Sales Leadership:** Active lead and partner in pre-sales opportunities—driving client discovery workshops, domain consulting, solution framing, and effort estimation across insurance and fintech bids.
+5. **AI Transformation — BA Agent & Skill Harness:** Architected and built a **BA-specific AI agent and skill harness** for the BA line, engineered around four core lifecycle stages:
+   - **Human-in-Control Decision-Making:** Keeps BAs in authority over domain rules, edge-case validation, and sign-off gates.
+   - **Quick Operation:** Streamlines elicitation, user story drafting, and API/data spec verification into rapid, repeatable workflows.
+   - **Token Optimization:** Structures context and skill prompts to minimize token burn while preserving architectural accuracy.
+   - **Full Agent Monitor Dashboard Lifecycle:** Provides end-to-end observability across agent runs, skill usage, and quality outcomes.
 
 ## Experience
 
@@ -27,35 +32,36 @@ Business Analyst Manager and BA Lead at NashTech in Hanoi, Vietnam, specializing
 *Full-time · Oct 2017 – Present (9 yrs 2 mos per LinkedIn) · Hanoi Capital Region · Hybrid*
 
 #### Dimension 1 — Role Progression Spine
-- **May 2024 – Present (`2 yrs 7 mos`) · BA Team Manager & BA Lead** — Line manager for Hanoi's BA department (21 BAs), AI transformation lead, pre-sales lead, and ongoing full-time hands-on ODC BA Lead (UK Insurance).
-- **Mar 2021 – May 2024 (`3 yrs 3 mos`) · Senior Business Analyst** — Launched & scaled the UK Insurance account (~20 to >40 headcount), account BA Lead & proxy PO, UI Design System, and early Fintech pre-sales bid support.
-- **Oct 2017 – Feb 2021 (`3 yrs 5 mos`) · Business Analyst** — Enterprise Reporting & legacy Oracle DW → SQL Server EDW migration for a Top-50 global AUM asset management firm (~100-headcount account).
+- **May 2024 – Present (`2 yrs 7 mos`) · BA Team Manager & BA Lead** — Line manager for Hanoi's 21-BA department, AI transformation & SWAT lead, pre-sales lead, and ongoing full-time hands-on ODC BA Lead (UK Insurance).
+- **Mar 2021 – May 2024 (`3 yrs 3 mos`) · Senior Business Analyst** — Launched & scaled the UK Insurance ODC account (~20 to >40 headcount), served as Account BA Lead & Proxy PO, co-created the UI Design System, and supported Fintech pre-sales bids.
+- **Oct 2017 – Feb 2021 (`3 yrs 5 mos`) · Business Analyst** — Delivered Enterprise Reporting & legacy Oracle DW → SQL Server EDW migration for a Top-50 global AUM asset management firm (~100-headcount account across 5 time zones).
 
 #### Dimension 2 — Core Workstream Tracks
 
-##### Track 1: Department Leadership, AI Transformation & Pre-Sales
-*Role: BA Team Manager (`May 2024 – Present`) · Pre-Sales: `SBA → Mainly BAM` · Scope: `21 BAs`*
+##### Track 1: Department Leadership, SWAT Recovery, AI Transformation & Pre-Sales
+*Role: BA Team Manager (`May 2024 – Present`) · Pre-Sales: `Senior BA → BA Manager` · Scope: `21 BAs`*
 
-- **Close, Hands-On Line Management (21 BAs):** Lead Hanoi's BA team with a close, hands-on style—coaching, unblocking, and reviewing team members directly while staying active on full-time project delivery; define and conduct annual performance assessments, mentor junior BAs toward independence, and align management and employees.
-- **Enablement, RMO, SWAT & Talent Operations:** Coordinate internal stakeholders on line activities (training, domain sharing, certifications, team building, career development, fresher & QC-to-BA training programs, and Resource Management Office / RMO alignment); lead SWAT activities—stepping in to help projects in need, stabilizing requirements, and performing BA project check-ups on request—and interview/assess BA candidates.
-- **AI Transformation (BA Agent & Skill Harness):** Designed and built a **BA-specific agent and skill harness** for the BA line—engineered around **human-in-control decision-making**, **quick operation**, **token optimization**, and a **full agent monitor dashboard lifecycle**.
-- **Pre-Sales Leadership:** Drive BA pre-sales across NashTech opportunities—leading client discovery, solution framing, effort estimation, and domain proposals (expanding early Senior BA bid support into a core manager pillar).
+- **Close, Hands-On Line Management (21 BAs):** Lead Hanoi's 21-BA department while staying active on full-time project delivery—working directly alongside team members to review deliverables, unblock complex requirements, mentor junior BAs toward independence, and conduct annual KPI & performance assessments.
+- **SWAT Intervention & Project Health Check-ups:** Step into high-priority or troubled projects across the organization to help teams in need—performing BA quality check-ups, stabilizing ambiguous requirements, and clearing delivery bottlenecks.
+- **AI Transformation (BA Agent & Skill Harness):** Architected and built a BA-specific AI agent and skill harness for the BA line—engineered around **human-in-control decision-making**, **quick operation**, **token optimization**, and a **full agent monitor dashboard lifecycle**.
+- **Pre-Sales Discovery & Solution Framing:** Lead BA pre-sales across prospective client opportunities—driving discovery workshops, domain consulting, solution framing, and effort estimation (evolving early Senior BA bid support into a core manager pillar).
+- **Talent Pipeline, Training & RMO Operations:** Partner with the Resource Management Office (RMO) on capacity and project staffing alignment, interview and hire BA candidates, and lead department enablement (fresher bootcamps, QC-to-BA career transition programs, domain sharing, and certifications).
 
 ##### Track 2: UK Non-Life Insurtech Platform (2nd Largest UK Insurance Company)
 *Role: Senior BA → Hands-On ODC BA Lead · Period: `Mar 2021 – Present (Continuous)` · Scale: `~20 → >40 Headcount`*
 
 *Platform: White-labeled, scalable B2B microservices platform (clean architecture) powering a broker Quote & Buy (Q&B) selling platform, customer policy lifecycle management, and a component-driven UI Design System across multiple brands and product types.*
 
-- **Ongoing Hands-On ODC BA Lead (`May 2024 – Present`):** Continue as full-time hands-on BA Lead for the Hanoi ODC—owning **Policy Service API specifications**, **UK FCA regulatory compliance**, and end-to-end technical integration alongside business functionalities.
-- **Account Growth & Product Ownership (`Mar 2021 – May 2024`):** Launched and scaled the BA practice (growing the account from ~20 to >40 headcount), advising US- and UK-based stakeholders; served as account BA Lead and proxy Product Owner across departments (product backlogs, User Stories, requirement traceability, client workshops, stakeholder interviews, Scrum events, and release/scope management with the PM) while supporting company-wide BA training.
-- **Platform Architecture, Design System & Delivery Automation:** Partnered with client and NashTech architects on clean-architecture system/database design, 3rd-party integration, and API specs; contributed to technical/architecture decisions from a business view and supported DEV/QA test reviews; co-created the component-driven UI Design System with designers, marketers, and developers; improved Scrum processes, automated issue-tracking workflows, and served as Jira/Confluence admin and power user.
+- **Full-Time Hands-On ODC BA Lead (`May 2024 – Present`):** Continue full-time as hands-on BA Lead for the Hanoi ODC alongside department management—owning **Policy Service API specifications**, **UK FCA regulatory compliance**, and end-to-end technical integration alongside core insurance functionalities.
+- **Account Scaling & Proxy Product Ownership (`Mar 2021 – May 2024`):** Launched and scaled the account's BA practice from **~20 to >40 headcount**, advising UK- and US-based stakeholders; served as Account BA Lead and Proxy Product Owner across departments—owning product backlogs, User Stories, requirement traceability, client discovery workshops, Scrum ceremonies, and release scope with the PM.
+- **Clean Architecture, API Integration & UI Design System:** Partnered with client and NashTech architects on B2B microservice boundaries, database schemas, and 3rd-party API specifications; reviewed DEV/QA test coverage from a domain lens; co-created the multi-brand **component-driven UI Design System** with designers, marketers, and developers; automated Jira/Confluence delivery workflows as project admin.
 
 ##### Track 3: Global Asset Management (Top-50 Global AUM) & Enterprise Data
-*Role: Business Analyst (`Oct 2017 – Feb 2021`) + SBA Pre-Sales Bid (`2021 – 2024`) · Scale: `~100-Headcount Account`*
+*Role: Business Analyst (`Oct 2017 – Feb 2021`) + Senior BA Pre-Sales (`2021 – 2024`) · Scale: `~100-Headcount Account`*
 
-- **Reporting & EDW Delivery (`BA · Oct 2017 – Feb 2021`):** Simultaneously drove two core finance workstreams (**Reporting and Enterprise Data Warehouse / EDW**)—analyzing, migrating, and automating reports while authoring ETL documentation and data models for large data warehouses; gathered reporting logic/data sources from business users and reconciled discrepancies across the data lineage.
-- **Database Migration & Multi-Timezone Execution (`BA · Oct 2017 – Feb 2021`):** Reverse-engineered a legacy Oracle DW during migration to a new SQL Server EDW (data mappings, stored procedure specs, tables/views for datamarts and reports); reviewed test cases, supported DEV/QA, trained project BAs, and collaborated across 5 time zones (UK, US, Taiwan, India, Vietnam).
-- **Fintech Pre-Sales Solutioning (`SBA · Mar 2021 – May 2024`):** Contributed early pre-sales bid support for Fintech / Asset Management opportunities—producing data mappings, stored procedure specifications, and datamart/report models.
+- **Enterprise Reporting & EDW Delivery (`BA · Oct 2017 – Feb 2021`):** Concurrently drove **Enterprise Reporting** and **Enterprise Data Warehouse (EDW)** workstreams—eliciting business reporting logic, migrating and automating reports, authoring ETL specifications and data models, and reconciling discrepancies across the data lineage.
+- **Oracle DW → SQL Server EDW Migration (`BA · Oct 2017 – Feb 2021`):** Reverse-engineered a legacy Oracle Data Warehouse during migration to SQL Server EDW (defining source-to-target data mappings, stored procedure specs, and datamart tables/views); reviewed QA test cases, trained project BAs, and collaborated across **5 time zones (UK, US, Taiwan, India, Vietnam)**.
+- **Fintech Pre-Sales Solutioning (`Senior BA · Mar 2021 – May 2024`):** Produced source-to-target data mappings, stored procedure specifications, and datamart/reporting models for Fintech and Asset Management pre-sales bids.
 
 ---
 
@@ -63,36 +69,33 @@ Business Analyst Manager and BA Lead at NashTech in Hanoi, Vietnam, specializing
 *Aug 2014 – Sep 2016 (2 yrs 2 mos) · Hanoi, Vietnam*
 
 #### Project Coordinator / Business Analyst
-**Company Context:** Công ty Cổ phần Hệ thống Công nghệ ETC (ETC) — IT solutions and equipment provider for Government, Banking, and Large Enterprise clients.  
-**Project:** Collateral & Credit Limit Management System for a major bank.
+**Company Context:** Công ty Cổ phần Hệ thống Công nghệ ETC (ETC) — IT solutions and systems integration provider for Government, Banking, and Large Enterprise clients.  
+**Project:** Collateral & Credit Limit Management System for a major commercial bank.
 
 **Main responsibilities:**
-- Monitor the project timeline, keep track, and settle any pending document/process.
-- Study URDs, write Functional Specifications, verify Interface mapping docs, and push them to sign-off.
-- Negotiate with clients to maintain project scope.
-- Perform testing, some automated with Sahi.
-- Schedule meetings and conferences between both parties.
-- Attribute sufficient human resources for each project phase.
+- **Functional Specifications & Interface Mapping:** Analyzed User Requirement Documents (URDs), authored Functional Specification Documents (FSDs), and verified system interface mapping specifications through formal client sign-off.
+- **Scope Governance & Project Coordination:** Negotiated scope boundaries with banking stakeholders, tracked milestone schedules, resolved documentation and process bottlenecks, and coordinated phase resource allocation and governance meetings.
+- **Verification & Automated Testing:** Executed functional testing and automated regression suites using **Sahi**.
 
 ## Skills & Tools
 
 ### Leadership & Operations
 - Department Management (21 BAs)
 - Mentorship & Coaching
-- Pre-Sales
-- Resource Management
-- Performance Assessment
-- KPI Development
+- SWAT Support (Projects in Need)
+- Pre-Sales Discovery & Estimation
+- Resource Management (RMO)
+- Performance & KPI Assessment
 - BA Training & Curriculum Design
 - Hiring & Candidate Interviewing
 
 ### Domain & Technical Skills
-- UK Non-Life Insurance Lifecycle
+- UK Non-Life Insurance & FCA Compliance
 - Fintech, Asset Management & Payment Service Migrations
 - B2B Microservices & System Integration
-- API Specification Management
+- API Specification Management (Policy Service APIs)
 - Business Process Analysis & Optimization
-- ETL, EDW Data Modeling, Normalization & Reporting (Oracle DW / SQL Server EDW)
+- ETL, EDW Data Modeling & Normalization (Oracle DW / SQL Server EDW)
 - Requirement Elicitation & Functional Decomposition
 - System Diagramming & UI/UX Prototyping (Figma, Balsamiq)
 - AI Agent & Skill Harness Design
@@ -116,7 +119,7 @@ Business Analyst Manager and BA Lead at NashTech in Hanoi, Vietnam, specializing
 
 ## Licenses & Certifications
 - **Certification in Business Data Analytics (CBDA)** — IIBA · Issued Oct 2023 · Credential ID: `813304` · [Credential](https://badges.iiba.org/8d9064d9-b989-4437-ab2e-67056d963cc5) *(Skills: Analytics and Stakeholder Management)*
-- **IELTS - 8.0** — IDP Education Ltd · Issued Sep 2017
+- **IELTS — 8.0** — IDP Education Ltd · Issued Sep 2017
 
 ## Education
 
@@ -130,10 +133,10 @@ Business Analyst Manager and BA Lead at NashTech in Hanoi, Vietnam, specializing
 - **Period:** 2010 – 2014
 - **Activities and societies:** Securities Club
 
-## Honors & Awards (4 total)
-1. **BA of the Year 2019** — Issued by NashTech · Jan 2020 (Associated with NashTech Limited)
-2. **BA of the Year 2018 - Nomination** — Jan 2019 (Associated with NashTech Limited)
+## Honors & Awards
+1. **BA of the Year 2019** — Issued by NashTech Limited · Jan 2020
+2. **BA of the Year 2018 — Nomination** — Issued by NashTech Limited · Jan 2019
 
 ## Languages
-- **English:** Full professional proficiency
+- **English:** Full professional proficiency (IELTS 8.0)
 - **Vietnamese:** Native or bilingual proficiency

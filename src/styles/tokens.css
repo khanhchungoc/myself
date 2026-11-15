@@ -1,18 +1,26 @@
 /* "Architectural Blueprint" Executive Design System (see DESIGN.md) */
 :root {
-  /* Color Tokens */
+  /* Light Mode (Parchment Executive Blueprint — Default & Print) */
   --color-navy: #2a2e3a;
   --color-cream: #faf8f5;
   --color-bg: #ffffff;
   --color-surface: #ffffff;
+  --color-surface-elevated: #fdfcfb;
   --color-surface-callout: #faf8f5;
 
   --color-text: #1e2229;
   --color-text-muted: #5a6270;
   --color-accent: #2563eb;
-  --color-accent-warm: #b45309;
+  --color-accent-warm: #9a3412;
+  --color-accent-warm-soft: #fff7ed;
   --color-accent-soft: #eff6ff;
   --color-border: #d1d5db;
+  --color-border-strong: #9ca3af;
+  --color-ring: #2563eb;
+
+  --blueprint-grid: radial-gradient(rgba(37, 99, 235, 0.12) 1px, transparent 1px);
+  --shadow-sm: 0 1px 2px rgba(42, 46, 58, 0.05);
+  --shadow-md: 0 6px 18px -4px rgba(42, 46, 58, 0.08);
 
   /* Typography */
   --font-heading: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -26,10 +34,35 @@
   --space-4: 1rem;
   --space-5: 1.5rem;
   --space-6: 2rem;
+  --space-7: 2.75rem;
 
   --radius-sm: 0.25rem;
   --radius-md: 0.5rem;
   --radius-lg: 0.625rem;
 
-  --max-width: 54rem;
+  --max-width: 64rem;
+}
+
+/* CAD Night Blueprint Mode (Web-Only Toggle) */
+[data-theme='dark'] {
+  --color-navy: #f8fafc;
+  --color-cream: #111827;
+  --color-bg: #0b1120;
+  --color-surface: #131c31;
+  --color-surface-elevated: #1e293b;
+  --color-surface-callout: #111827;
+
+  --color-text: #e2e8f0;
+  --color-text-muted: #94a3b8;
+  --color-accent: #38bdf8;
+  --color-accent-warm: #fb923c;
+  --color-accent-warm-soft: rgba(251, 146, 60, 0.12);
+  --color-accent-soft: rgba(56, 189, 248, 0.13);
+  --color-border: #26354d;
+  --color-border-strong: #475569;
+  --color-ring: #38bdf8;
+
+  --blueprint-grid: radial-gradient(rgba(56, 189, 248, 0.14) 1px, transparent 1px);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 10px 24px -6px rgba(0, 0, 0, 0.5);
 }
