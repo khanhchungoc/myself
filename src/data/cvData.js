@@ -10,7 +10,7 @@ export const cvData = {
   linkedinLabel: 'linkedin.com/in/khanhchungoc',
 
   summary:
-    'Business Analyst Manager and BA Lead with 10+ years across insurance, enterprise data, and banking systems. Leads a 23-BA department in Hanoi via close, hands-on coaching while delivering full-time - combining technical integration with domain logic, recovering troubled projects, driving pre-sales, and building BA AI workflows.',
+    'Business Analyst Manager and Lead BA with 10+ years across international insurance, global asset management, and commercial banking projects. Leads a 23-BA department in Hanoi while remaining full-time on project delivery - combining BA practice governance, system integration, troubled-project recovery (SWAT), and AI-native BA workflows.',
 
   timeline: [
     {
@@ -25,24 +25,38 @@ export const cvData = {
       trackTitle: 'BA Department & Practice Leadership',
       bullets: [
         {
-          lead: 'Team Management & Coaching:',
-          text: 'Lead a 23-BA department alongside active project delivery - working directly with team members to review deliverables, mentor junior BAs to independence, set up and review KPIs, resolve stakeholder/team conflicts, and address BA performance issues.',
+          lead: 'Team Management & BA Standards:',
+          text: 'Lead a 23-BA department while staying active on full-time delivery - setting shared BA review standards, reviewing deliverables side-by-side, mentoring junior BAs to independence, and managing KPIs and career progression.',
         },
         {
-          lead: 'Project Support, Recovery & AI Coaching (SWAT):',
-          text: 'Step into projects across the organization to review BA deliverables, clarify ambiguous scope with stakeholders, resolve delivery bottlenecks, and coach project teams on practical AI workflow adoption.',
+          lead: 'Project Health Checks & Recovery (SWAT):',
+          text: 'Step into at-risk deliveries across the organization - auditing requirement quality, working with solution architects, PMs, and engineering leads to restructure unclear scope and system boundaries for faster time-to-market, and coaching squads on governed AI adoption.',
         },
         {
-          lead: 'Staffing, Hiring & Training:',
-          text: 'Partner with the Resource Management Office (RMO) on project staffing and candidate interviewing; run fresher bootcamps, QC-to-BA transition programs, and internal domain training.',
+          lead: 'Capacity, Staffing & Capability Growth:',
+          text: 'Coordinate project workload allocation and staffing capacity with the Resource Management Office (RMO); lead BA hiring, Fresher bootcamps, and QA-to-BA cross-skilling programs.',
         },
         {
-          lead: 'Pre-Sales Support & Estimation:',
-          text: 'Contribute to pre-sales proposals across various business domains - analyzing client requirements, preparing sample specifications, and estimating BA delivery effort.',
+          lead: 'Pre-Sales Discovery & Estimation:',
+          text: 'Support pre-sales bids across business domains - framing client problems into MVP scope, building interactive prototypes, and estimating BA delivery effort.',
         },
         {
           lead: 'BA AI Agent & Skill Harness:',
-          text: 'Built an internal AI agent and skill workflow for the BA line to speed up elicitation, user story drafting, and spec verification while ensuring responsible AI use across four principles:',
+          text: 'Architected an internal full-lifecycle BA workflow governed by four operating principles, enforced with Definition of Ready (DoR) gates, and structured for both human and AI agent consumption:',
+          subBullets: [
+            {
+              lead: 'Discovery & Analysis:',
+              text: 'Maintain project/product knowledge bases, conduct stakeholder interviews, and drive requirement elicitation and analysis.',
+            },
+            {
+              lead: 'Specification & Design:',
+              text: 'Manage epic/story artifact CRUD, UI prototyping, system diagramming, and API specifications.',
+            },
+            {
+              lead: 'Developer Handoff:',
+              text: 'Package DoR-verified specifications and project context for clean engineering handoff.',
+            },
+          ],
           tags: [
             'Human-in-Control Decisions',
             'Fast Workflow Operation',
@@ -57,31 +71,33 @@ export const cvData = {
       company: 'NashTech',
       period: 'Mar 2021 - Present',
       role: 'Senior BA → BA Lead',
-      badge: 'UK Insurance',
+      badge: 'UK Insurance · Concurrent',
       icon: 'shield',
       trackTitle: 'UK Non-Life Insurtech Platform (Top-10 UK Insurance Broker)',
-      context:
-        'B2B microservices, multi-brand Quote & Buy sites across insurance products, and a multi-brand self-service policy management portal.',
       bullets: [
         {
-          lead: 'Hands-On BA Lead (2024 - Present):',
-          text: 'Continue on full-time project delivery alongside department management - owning API specifications and end-to-end integration across core insurance services (policy, payment, vehicle, address, and reference data) as well as customer and broker workflows.',
+          lead: 'ODC BA Lead (2024 - Present):',
+          text: 'Continue full-time on project delivery alongside department management - authoring epics, user stories, API specs, and E2E automation scenarios; maintaining the project knowledge base, rolling out BA AI workflows, reviewing work, tracking progress, and serving as the trusted bridge for business and technical decisions.',
         },
         {
-          lead: 'Account Growth & Scrum Backlog Practices (2021 - 2024):',
-          text: 'Established and grew the BA team as the account expanded from ~20 to over 40 members; served as Proxy Product Owner with UK and US stakeholders, introducing best practices in Scrum backlog management, prioritization, functional decomposition, User Stories and Acceptance Criteria, and dependency and requirement traceability.',
+          lead: 'Account Growth & Proxy PO (2021 - 2024):',
+          text: 'Helped grow the account from ~20 to 40+ members by earning UK stakeholder trust; acted as Proxy PO with client product and delivery leads on release prioritization, functional slicing, backlog traceability, and proactive platform improvements.',
         },
         {
-          lead: 'B2B Microservices & System Integration:',
-          text: 'Worked with architects to define B2B microservice boundaries, database schemas, and internal/3rd-party API contracts, and reviewed QA test coverage from a domain perspective.',
+          lead: 'B2B Microservices & Self-Service Policy Backend:',
+          text: 'Partnered with solution architects and engineering leads on microservice boundaries, schemas, and internal/3rd-party API contracts across multi-brand, multi-product (car, van, motorcycle, motorhome, home & contents, pet), and multi-provider (policy admin systems) services (policy, payment, vehicle, address, reference data) powering B2B partners, Quote & Buy, and the customer self-service policy portal; reviewed DEV/QA domain coverage.',
         },
         {
-          lead: 'Process Improvement & Delivery Automation (Pre-AI):',
-          text: 'Streamlined project operations prior to AI adoption by building automated Excel project reports and configuring Jira and Confluence workflow automations.',
+          lead: 'Multi-Brand Quote & Buy Sites:',
+          text: 'Defined multi-brand Quote & Buy journeys across insurance products - reducing cost per quote, increasing conversion rates, and speeding up new brand and product launches.',
         },
         {
-          lead: 'Multi-Brand UI Design System:',
-          text: 'Collaborated with designers, marketers, and developers to co-create a component-driven UI Design System shared across multiple brands and product lines.',
+          lead: 'Shared UI Design System:',
+          text: 'Defined component scope, documentation, and the collaboration workflow between designers and developers to build a WCAG AA-compliant UI Design System across both portals, embedding analytics and A/B testing capabilities to improve reusability and time-to-market.',
+        },
+        {
+          lead: 'Delivery Workflow Automation (Pre-AI):',
+          text: 'Built automated Excel project reporting and automated Jira workflow and monitoring rules to streamline cross-team handoffs.',
         },
       ],
     },
@@ -92,19 +108,19 @@ export const cvData = {
       role: 'Business Analyst',
       badge: 'Global Asset Management',
       icon: 'database',
-      trackTitle: 'Enterprise Reporting & Data Warehouse Migration (Top-50 Global AUM)',
+      trackTitle: 'Enterprise Reporting & EDW Migration (Top-50 Global AUM)',
       bullets: [
         {
-          lead: 'Enterprise Reporting & EDW:',
-          text: 'Drove concurrent reporting and Enterprise Data Warehouse workstreams for a ~100-member global account - eliciting financial reporting logic, migrating and automating reports, authoring ETL specifications and data models, and reconciling data lineage.',
+          lead: 'Enterprise Reporting (Custom, Internal & External):',
+          text: 'Delivered custom, internal, and external financial reports - interviewing stakeholders to elicit reporting logic, migrating and automating reports, reconciling data discrepancies and trial balance imbalances, triaging defects, and acting as L3 incident support.',
         },
         {
-          lead: 'Oracle DW to SQL Server Migration:',
-          text: 'Studied legacy data structures and documentation, interviewed stakeholders to uncover business rules, and authored source-to-target mappings, stored procedure specifications, and datamarts for the SQL Server EDW migration.',
+          lead: 'EDW Migration (Oracle DW to SQL Server):',
+          text: 'Reverse-engineered legacy Oracle DW across system docs, data structures, and data meanings by interviewing stakeholders and upstream/downstream data owners - authoring ETL specs, source-to-target mappings, stored procedure specs, and datamarts for the SQL Server migration.',
         },
         {
-          lead: 'Global Collaboration Across 5 Time Zones:',
-          text: 'Coordinated requirement alignment, QA test case reviews, and project BA onboarding across distributed teams in 5 time zones (UK, US, Taiwan, India, and Vietnam).',
+          lead: 'Global Alignment Across 5 Time Zones:',
+          text: 'Coordinated requirement sign-offs, QA test case reviews, and BA onboarding on a ~100-member global account across 5 time zones (UK, US, Taiwan, India, and Vietnam).',
         },
       ],
     },
@@ -121,15 +137,15 @@ export const cvData = {
       bullets: [
         {
           lead: 'Banking Functional Specifications (URD/FSD):',
-          text: 'Analyzed User Requirement Documents (URDs), authored Functional Specification Documents (FSDs), and obtained client sign-off on core banking interface mappings.',
+          text: 'Analyzed User Requirement Documents (URDs), authored Functional Specification Documents (FSDs), and secured formal client sign-off on core banking interface mappings.',
         },
         {
-          lead: 'Scope & Schedule Coordination:',
-          text: 'Aligned scope boundaries with commercial banking stakeholders, tracked milestone schedules, resolved documentation bottlenecks, and coordinated phase resource allocation.',
+          lead: 'Scope Governance & Delivery Coordination:',
+          text: 'Negotiated scope boundaries with commercial banking stakeholders, tracked milestone schedules, resolved documentation bottlenecks, and coordinated phase resource allocation.',
         },
         {
           lead: 'Functional Verification & Test Automation:',
-          text: 'Executed functional testing and automated regression test suites using Sahi ahead of banking UAT.',
+          text: 'Executed functional testing and automated regression test suites using Sahi ahead of banking UAT sign-off.',
         },
       ],
     },
@@ -150,100 +166,57 @@ export const cvData = {
       description:
         'Open-source AI workflow skill for generating, verifying, and editing interactive swimlane flowcharts and sequence diagrams for BA documentation.',
     },
-    {
-      name: 'Private & Internal BA/AI Workflow Projects',
-      description:
-        'Additional custom AI agent workflows, prompt pipelines, and BA automation tools developed for private and internal use (undisclosed).',
-    },
   ],
 
   skillGroups: [
     {
-      category: 'Leadership & Operations',
-      icon: 'users',
-      items: [
-        'BA Department Management',
-        'Mentorship & Deliverable Coaching',
-        'Project Health Checks & Recovery',
-        'Pre-Sales Support & Effort Estimation',
-        'Resource Management (RMO)',
-        'KPI & Performance Appraisal',
-        'BA Training & Curriculum Design',
-        'Candidate Interviewing & Hiring',
-      ],
-    },
-    {
-      category: 'Domain & Architecture',
-      icon: 'building',
-      items: [
-        'Commercial Banking (Credit & Collateral)',
-        'UK Non-Life Insurance & Policy Lifecycle',
-        'Asset Management & Payment Migrations',
-        'B2B Microservices & System Integration',
-        'REST API & Core Service Specifications',
-        'ETL, EDW & Relational Data Modeling',
-        'Functional Specifications (URD / FSD / User Stories)',
-        'UI Design Systems & Prototyping (Figma, Balsamiq)',
-      ],
-    },
-    {
-      category: 'Methods, Data & Tooling',
+      category: 'Methodologies & AI Stack',
       icon: 'cpu',
       items: [
-        'BA AI Agent & Skill Harness Design',
+        'SAFe · Agile · Scrum · Kanban',
         'AWS AI-DLC',
-        'SAFe / Agile / Scrum',
-        'SQL & Power BI',
-        'Postman',
-        'Jira, Confluence & Azure DevOps',
-        'Git / GitHub',
-        'AI-Assisted Workflows (Claude Code, Codex, Antigravity)',
+        'VS Code · GitHub Copilot · Claude Code · Codex · Antigravity',
+      ],
+    },
+    {
+      category: 'Modeling, Data & Delivery Tools',
+      icon: 'compass',
+      items: [
+        'Camunda (BPMN) · Visio',
+        'Figma · Balsamiq',
+        'Postman · SoapUI',
+        'SQL · Power BI',
+        'Jira · Confluence · Azure DevOps',
+        'Microsoft Office Suite',
       ],
     },
   ],
 
   education: [
     {
-      school: 'Hasselt University (Belgium)',
+      school: 'Hasselt University (Belgium) · Graduated with Distinction',
       degree: "Master's Degree in Business Process Management",
       period: '2016 - 2017',
-      detail: 'Graduated with Distinction',
     },
     {
       school: 'Banking Academy of Vietnam',
       degree: "Bachelor's Degree in Corporate Finance",
       period: '2010 - 2014',
-      detail: 'Activities & Societies: Securities Club',
     },
   ],
 
   certifications: [
     {
-      name: 'Certification in Business Data Analytics (IIBA® - CBDA)',
-      issuer: 'International Institute of Business Analysis (IIBA)',
-      date: 'Issued Oct 2023 · Credential ID: 813304',
+      name: 'IIBA® Certification in Business Data Analytics',
+      period: '2023',
       url: 'https://badges.iiba.org/8d9064d9-b989-4437-ab2e-67056d963cc5',
     },
     {
       name: 'IELTS Academic - Overall Band 8.0',
-      issuer: 'IDP Education Ltd',
-      date: 'Issued Sep 2017',
-    },
-  ],
-
-  awards: [
-    {
-      title: 'BA of the Year 2019',
-      issuer: 'NashTech Limited · Jan 2020',
     },
     {
-      title: 'BA of the Year 2018 (Nomination)',
-      issuer: 'NashTech Limited · Jan 2019',
+      name: 'BA of the Year 2019 & 2018 (Nomination)',
+      period: 'NashTech',
     },
-  ],
-
-  languages: [
-    { language: 'English', proficiency: 'Full Professional Proficiency' },
-    { language: 'Vietnamese', proficiency: 'Native Proficiency' },
   ],
 };

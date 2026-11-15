@@ -37,6 +37,12 @@ export function Icon({ name, size = 15 }) {
         <line x1="12" y1="15" x2="12" y2="3" />
       </>
     ),
+    arrowUp: (
+      <>
+        <line x1="12" y1="19" x2="12" y2="5" />
+        <polyline points="5 12 12 5 19 12" />
+      </>
+    ),
     print: (
       <>
         <polyline points="6 9 6 2 18 2 18 9" />

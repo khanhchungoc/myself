@@ -86,7 +86,7 @@ async function generateWithPlaywright(url, outPath) {
         path: outPath,
         format: 'A4',
         printBackground: true,
-        margin: { top: '16mm', right: '16mm', bottom: '16mm', left: '16mm' },
+        margin: { top: '22mm', right: '18mm', bottom: '22mm', left: '18mm' },
       });
     } finally {
       await browser.close();
@@ -205,10 +205,10 @@ async function generateWithCdp(browserPath, url, outPath) {
       printBackground: true,
       paperWidth: 8.27,
       paperHeight: 11.69,
-      marginTop: 0.63,
-      marginBottom: 0.63,
-      marginLeft: 0.63,
-      marginRight: 0.63,
+      marginTop: 0.87,
+      marginBottom: 0.87,
+      marginLeft: 0.71,
+      marginRight: 0.71,
       displayHeaderFooter: false,
     });
 

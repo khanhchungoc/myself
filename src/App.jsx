@@ -6,7 +6,9 @@ import {
   motion,
   useMotionTemplate,
   useMotionValue,
+  useMotionValueEvent,
   useReducedMotion,
+  useScroll,
   useSpring,
   useTransform,
 } from 'motion/react';
@@ -463,20 +465,34 @@ function ExperienceTimeline({ items }) {
                   {item.bullets.map((b) => (
                     <li key={b.lead}>
                       <strong>{b.lead}</strong> {b.text}
+                      {b.subBullets && (
+                        <ul className="exec-subbullets">
+                          {b.subBullets.map((sb) => (
+                            <li key={sb.lead}>
+                              <strong>{sb.lead}</strong> {sb.text}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
                       {b.tags && (
                         <ul
                           className="harness-tags"
                           aria-label="AI Harness Operating Principles"
                         >
                           {b.tags.map((tag, tagIdx) => (
-                            <li key={tag} className="harness-tag">
+                            <motion.li
+                              key={tag}
+                              className="harness-tag"
+                              whileHover={{ y: -1.5 }}
+                              transition={criticalSpring}
+                            >
                               <span className="harness-tag__content">
                                 <span className="harness-tag__step">
                                   0{tagIdx + 1}
                                 </span>
                                 <span>{tag}</span>
                               </span>
-                            </li>
+                            </motion.li>
                           ))}
                         </ul>
                       )}
@@ -489,6 +505,64 @@ function ExperienceTimeline({ items }) {
         );
       })}
     </div>
+  );
+}
+
+function ScrollControls() {
+  const shouldReduceMotion = useReducedMotion();
+  const { scrollY, scrollYProgress } = useScroll();
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 320,
+    damping: 34,
+    restDelta: 0.001,
+  });
+  const [showTop, setShowTop] = useState(false);
+
+  useMotionValueEvent(scrollY, 'change', (latest) => {
+    const next = latest > 260;
+    setShowTop((prev) => (prev === next ? prev : next));
+  });
+
+  const handleScrollTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: shouldReduceMotion ? 'auto' : 'smooth',
+    });
+  };
+
+  return (
+    <>
+      <div className="scroll-rail no-print" aria-hidden="true">
+        <motion.div
+          className="scroll-rail__fill"
+          style={{ scaleY: shouldReduceMotion ? scrollYProgress : smoothProgress }}
+        />
+      </div>
+
+      <AnimatePresence>
+        {showTop && (
+          <motion.div
+            key="scroll-top"
+            className="scroll-top-wrap no-print"
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
+            transition={criticalSpring}
+          >
+            <MagneticButton
+              as="button"
+              type="button"
+              className="btn btn--secondary scroll-top-btn"
+              aria-label="Back to top"
+              onClick={handleScrollTop}
+            >
+              <Icon name="arrowUp" size={14} />
+              <span>Top</span>
+            </MagneticButton>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
 
@@ -556,6 +630,8 @@ export default function App() {
       <a href="#main-content" className="skip-link no-print">
         Skip to CV content
       </a>
+
+      <ScrollControls />
 
       <div className="page-wrapper">
         {/* Minimal Web Utility Bar (Hidden in Print) */}
@@ -679,45 +755,7 @@ export default function App() {
             <ExperienceTimeline items={cvData.timeline} />
           </section>
 
-          {/* 3. Side Projects (BA & AI Workflows) */}
-          <section className="cv-section" aria-labelledby="heading-projects">
-            <div className="section-head">
-              <div className="section-head__group">
-                <span className="section-head__icon">
-                  <Icon name="cpu" size={17} />
-                </span>
-                <h2 id="heading-projects" className="section-head__title">
-                  Side Projects &mdash; BA &amp; AI Workflows
-                </h2>
-              </div>
-            </div>
-
-            <ul className="exec-bullets">
-              {cvData.sideProjects.map((proj) => (
-                <li key={proj.name}>
-                  <strong>
-                    {proj.url ? (
-                      <a
-                        href={proj.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="cred-link"
-                      >
-                        <span>{proj.repoLabel || proj.name}</span>
-                        <Icon name="external" size={13} />
-                      </a>
-                    ) : (
-                      proj.name
-                    )}
-                    :
-                  </strong>{' '}
-                  {proj.description}
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          {/* 4. Core Competencies */}
+          {/* 3. Methodologies & Tooling */}
           <section className="cv-section" aria-labelledby="heading-skills">
             <div className="section-head">
               <div className="section-head__group">
@@ -725,7 +763,7 @@ export default function App() {
                   <Icon name="layers" size={17} />
                 </span>
                 <h2 id="heading-skills" className="section-head__title">
-                  Core Competencies &amp; Domain Expertise
+                  Methodologies &amp; Tooling
                 </h2>
               </div>
             </div>
@@ -756,8 +794,8 @@ export default function App() {
             </div>
           </section>
 
-          {/* 5. Education, Certifications, Awards & Languages */}
-          <section className="cv-section cv-section--last" aria-labelledby="heading-credentials">
+          {/* 4. Education, Certifications & Honors */}
+          <section className="cv-section" aria-labelledby="heading-credentials">
             <div className="section-head">
               <div className="section-head__group">
                 <span className="section-head__icon">
@@ -770,49 +808,40 @@ export default function App() {
             </div>
 
             <div className="credentials-columns">
-              {/* Left Column: Education & Languages */}
+              {/* Left Column: Academic Education */}
               <div className="cred-col">
                 <h3 className="cred-col__heading">
-                  <Icon name="graduation" size={14} />
+                  <span className="competency-row__icon">
+                    <Icon name="graduation" size={15} />
+                  </span>
                   <span>Academic Education</span>
                 </h3>
                 <ul className="cred-entries">
                   {cvData.education.map((edu) => (
-                    <li key={edu.school} className="cred-entry">
+                    <li key={edu.degree} className="cred-entry">
                       <div className="cred-entry__top">
-                        <strong className="cred-entry__title">{edu.degree}</strong>
+                        <span className="cred-entry__title">{edu.degree}</span>
                         <span className="cred-entry__date">{edu.period}</span>
                       </div>
                       <div className="cred-entry__org">{edu.school}</div>
-                      <div className="cred-entry__detail">{edu.detail}</div>
-                    </li>
-                  ))}
-                </ul>
-
-                <h3 className="cred-col__heading cred-col__heading--spaced">
-                  <Icon name="globe" size={14} />
-                  <span>Languages</span>
-                </h3>
-                <ul className="cred-entries cred-entries--compact">
-                  {cvData.languages.map((lang) => (
-                    <li key={lang.language} className="cred-entry cred-entry--inline">
-                      <strong>{lang.language}:</strong> <span>{lang.proficiency}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              {/* Right Column: Licenses & Honors */}
+              {/* Right Column: Certifications & Honors */}
               <div className="cred-col">
                 <h3 className="cred-col__heading">
-                  <Icon name="award" size={14} />
-                  <span>Licenses &amp; Certifications</span>
+                  <span className="competency-row__icon">
+                    <Icon name="award" size={15} />
+                  </span>
+                  <span>Certifications &amp; Honors</span>
                 </h3>
                 <ul className="cred-entries">
                   {cvData.certifications.map((cert) => (
                     <li key={cert.name} className="cred-entry">
                       <div className="cred-entry__top">
-                        <strong className="cred-entry__title">
+                        <span className="cred-entry__title">
                           {cert.url ? (
                             <motion.a
                               href={cert.url}
@@ -828,28 +857,54 @@ export default function App() {
                           ) : (
                             cert.name
                           )}
-                        </strong>
+                        </span>
+                        {cert.period && (
+                          <span className="cred-entry__date">{cert.period}</span>
+                        )}
                       </div>
-                      <div className="cred-entry__org">{cert.issuer}</div>
-                      <div className="cred-entry__detail">{cert.date}</div>
-                    </li>
-                  ))}
-                </ul>
-
-                <h3 className="cred-col__heading cred-col__heading--spaced">
-                  <Icon name="trophy" size={14} />
-                  <span>Honors &amp; Awards</span>
-                </h3>
-                <ul className="cred-entries cred-entries--compact">
-                  {cvData.awards.map((award) => (
-                    <li key={award.title} className="cred-entry">
-                      <strong className="cred-entry__title">{award.title}</strong>
-                      <div className="cred-entry__detail">{award.issuer}</div>
                     </li>
                   ))}
                 </ul>
               </div>
             </div>
+          </section>
+
+          {/* 5. Open-Source Projects */}
+          <section className="cv-section cv-section--last" aria-labelledby="heading-projects">
+            <div className="section-head">
+              <div className="section-head__group">
+                <span className="section-head__icon">
+                  <Icon name="cpu" size={17} />
+                </span>
+                <h2 id="heading-projects" className="section-head__title">
+                  Open-Source Projects
+                </h2>
+              </div>
+            </div>
+
+            <ul className="exec-bullets">
+              {cvData.sideProjects.map((proj) => (
+                <li key={proj.name}>
+                  <strong>
+                    {proj.url ? (
+                      <a
+                        href={proj.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="cred-link"
+                      >
+                        <span>{proj.repoLabel || proj.name}</span>
+                        <Icon name="external" size={13} />
+                      </a>
+                    ) : (
+                      proj.name
+                    )}
+                    :
+                  </strong>{' '}
+                  {proj.description}
+                </li>
+              ))}
+            </ul>
           </section>
         </main>
       </div>
