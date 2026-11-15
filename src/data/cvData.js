@@ -7,7 +7,7 @@ export const cvData = {
   phoneHref: 'tel:+84869628692',
   email: 'khanhcn.299@gmail.com',
   linkedin: 'https://www.linkedin.com/in/khanhchungoc/',
-  linkedinLabel: 'linkedin.com/in/khanhchungoc',
+  linkedinLabel: 'khanhchungoc',
 
   summary: [
     'Business Analyst Manager and Lead BA with 10+ years across international insurance, global asset management, and commercial banking projects.',
@@ -52,7 +52,7 @@ export const cvData = {
             },
             {
               lead: 'Specification & Design:',
-              text: 'Manage epic/story artifact CRUD, UI prototyping, system diagramming, and API specifications.',
+              text: 'Author and refine epics and user stories, UI prototypes, system diagrams, and API specifications.',
             },
             {
               lead: 'Developer Handoff:',
@@ -156,17 +156,15 @@ export const cvData = {
   sideProjects: [
     {
       name: 'craft-agent-skill',
-      repoLabel: 'github.com/khanhchungoc/craft-agent-skill',
       url: 'https://github.com/khanhchungoc/craft-agent-skill',
       description:
-        'Open-source skill and template framework for creating, updating, and auditing AI agents and reusable skills across BA and engineering workflows.',
+        'Open-source framework for anyone building, auditing, and refining custom AI agents and skills across runtimes - featuring shared principles, templates, and a feedback-driven teaching loop.',
     },
     {
       name: 'ultimate-diagraming-skill',
-      repoLabel: 'github.com/khanhchungoc/ultimate-diagraming-skill',
       url: 'https://github.com/khanhchungoc/ultimate-diagraming-skill',
       description:
-        'Open-source AI workflow skill for generating, verifying, and editing interactive swimlane flowcharts and sequence diagrams for BA documentation.',
+        'Open-source tool for generating fast, lightweight, shareable HTML diagrams (swimlane flowcharts and sequence diagrams) that support manual editing while remaining AI-friendly.',
     },
   ],
 

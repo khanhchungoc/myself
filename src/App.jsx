@@ -223,6 +223,10 @@ function PortraitQuoteModal({
                   </span>
                 </blockquote>
                 <p className="portrait-modal__attribution">- Murphy&apos;s Law</p>
+                <p className="portrait-modal__clarification">
+                  In product design, I anticipate how things might fail and
+                  weigh every decision against that risk.
+                </p>
               </div>
             </motion.div>
           </motion.div>
@@ -358,7 +362,7 @@ function InteractivePortrait({ src, alt }) {
         <img
           src={src}
           alt={alt}
-          width="244"
+          width="192"
           height="214"
           className="exec-header__photo"
         />
@@ -606,18 +610,19 @@ export default function App() {
   };
 
   // GPU-translated pointer spotlight across .cv-sheet (avoids per-frame gradient/mask repaints)
-  const sheetMouseX = useMotionValue(-300);
-  const sheetMouseY = useMotionValue(-300);
+  const sheetMouseX = useMotionValue(-320);
+  const sheetMouseY = useMotionValue(-320);
   const sheetActive = useMotionValue(0);
-  const smoothSheetX = useSpring(sheetMouseX, { stiffness: 220, damping: 30 });
-  const smoothSheetY = useSpring(sheetMouseY, { stiffness: 220, damping: 30 });
-  const sheetOpacity = useSpring(sheetActive, { stiffness: 220, damping: 30 });
+  const sheenFollowSpring = { stiffness: 45, damping: 20, mass: 1.3 };
+  const smoothSheetX = useSpring(sheetMouseX, sheenFollowSpring);
+  const smoothSheetY = useSpring(sheetMouseY, sheenFollowSpring);
+  const sheetOpacity = useSpring(sheetActive, { stiffness: 80, damping: 22 });
 
   const handleSheetPointerMove = (e) => {
     if (shouldReduceMotion) return;
     const rect = e.currentTarget.getBoundingClientRect();
-    sheetMouseX.set(e.clientX - rect.left - 240);
-    sheetMouseY.set(e.clientY - rect.top - 240);
+    sheetMouseX.set(e.clientX - rect.left - 320);
+    sheetMouseY.set(e.clientY - rect.top - 320);
     sheetActive.set(1);
   };
 
@@ -636,30 +641,26 @@ export default function App() {
       <div className="page-wrapper">
         {/* Minimal Web Utility Bar (Hidden in Print) */}
         <header className="utility-bar no-print" aria-label="Document actions">
-          <div className="utility-bar__title">
-            <strong>{cvData.name}</strong>
-            <span>- Curriculum Vitae</span>
-          </div>
           <div className="utility-bar__actions">
+            <MagneticButton
+              as="button"
+              type="button"
+              onClick={() => window.print()}
+              className="btn btn--secondary"
+            >
+              <Icon name="print" size={14} />
+              <span>Print A4</span>
+            </MagneticButton>
             <MagneticButton
               as="a"
               href="./cv.pdf"
               download="Ngoc-Khanh-Chu-CV.pdf"
               onClick={handleDownloadPdf}
               aria-busy={isDownloadingPdf || undefined}
-              className="btn btn--secondary"
+              className="btn btn--primary"
             >
               <Icon name="download" size={14} />
               <span>{isDownloadingPdf ? 'Preparing PDF...' : 'Download PDF'}</span>
-            </MagneticButton>
-            <MagneticButton
-              as="button"
-              type="button"
-              onClick={() => window.print()}
-              className="btn btn--primary"
-            >
-              <Icon name="print" size={14} />
-              <span>Print A4</span>
             </MagneticButton>
           </div>
         </header>
@@ -700,7 +701,7 @@ export default function App() {
                 {/* Clean Single-Line Contact Bar */}
                 <div className="exec-header__contacts">
                   <span className="contact-item">
-                    <Icon name="location" size={14} />
+                    <Icon name="location" size={15} />
                     <span>{cvData.location}</span>
                   </span>
                   <motion.a
@@ -709,7 +710,7 @@ export default function App() {
                     whileHover={{ y: -2 }}
                     transition={criticalSpring}
                   >
-                    <Icon name="phone" size={14} />
+                    <Icon name="phone" size={15} />
                     <span>{cvData.phone}</span>
                   </motion.a>
                   <motion.a
@@ -718,18 +719,19 @@ export default function App() {
                     whileHover={{ y: -2 }}
                     transition={criticalSpring}
                   >
-                    <Icon name="mail" size={14} />
+                    <Icon name="mail" size={15} />
                     <span>{cvData.email}</span>
                   </motion.a>
                   <motion.a
                     href={cvData.linkedin}
                     target="_blank"
                     rel="noreferrer"
+                    aria-label="LinkedIn profile"
                     className="contact-item"
                     whileHover={{ y: -2 }}
                     transition={criticalSpring}
                   >
-                    <Icon name="linkedin" size={14} />
+                    <Icon name="linkedin" size={15} />
                     <span>{cvData.linkedinLabel}</span>
                   </motion.a>
                 </div>
@@ -903,7 +905,7 @@ export default function App() {
                         rel="noreferrer"
                         className="cred-link"
                       >
-                        <span>{proj.repoLabel || proj.name}</span>
+                        <span>{proj.name}</span>
                         <Icon name="external" size={13} />
                       </a>
                     ) : (
