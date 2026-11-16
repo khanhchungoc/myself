@@ -88,12 +88,12 @@ export const cvData = {
           text: 'Helped grow the account from ~20 to 40+ members. As Proxy PO, worked with client product and delivery leads on release priorities, functional slicing, and backlog traceability.',
         },
         {
-          lead: 'Microservices & APIs:',
-          text: 'Worked with solution architects and engineering leads on microservice boundaries, schemas, and internal/third-party API contracts for policy, payment, vehicle, address, and reference-data services. Covers multiple brands, six products (car, van, motorcycle, motorhome, home & contents, pet), and multiple policy admin systems; used by B2B partners, Quote & Buy, and the self-service policy portal. Reviewed DEV/QA domain coverage.',
+          lead: 'Quote & Buy Journeys:',
+          text: 'Defined the multi-brand Quote & Buy journeys (~20 brand/product combinations) behind a team result of conversion up 200%, cost per quote down 75%, and new launches cut from 6 months to weeks.',
         },
         {
-          lead: 'Quote & Buy Sites:',
-          text: 'Defined multi-brand Quote & Buy journeys across insurance products, lowering cost per quote, raising conversion, and speeding up new brand and product launches.',
+          lead: 'Platform Services & APIs:',
+          text: "Agreed microservice boundaries and API contracts with solution architects across the platform's core services (such as policy, payment, vehicle, and address), shared by B2B partners, Quote & Buy, and the self-service portal.",
         },
         {
           lead: 'UI Design System:',
