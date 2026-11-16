@@ -19,9 +19,9 @@ export const cvData = {
     {
       id: 'tl-bam',
       company: 'NashTech',
-      companyMeta: 'Hanoi · Oct 2017 – Present',
+      companyMeta: 'Hanoi · Oct 2017 - Present',
       isCompanyStart: true,
-      period: 'May 2024 – Present',
+      period: 'May 2024 - Present',
       role: 'Hanoi BA Manager & BA Lead',
       badge: '23-BA Department',
       icon: 'users',
@@ -73,18 +73,18 @@ export const cvData = {
     {
       id: 'tl-insurtech',
       company: 'NashTech',
-      period: 'Mar 2021 – Present',
+      period: 'Mar 2021 - Present',
       role: 'Senior BA → BA Lead',
       badge: 'UK Insurance · Concurrent',
       icon: 'shield',
       trackTitle: 'UK Non-Life Insurtech Platform (Top-10 UK Insurance Broker)',
       bullets: [
         {
-          lead: 'Delivery BA Lead (2024 – Present):',
+          lead: 'Delivery BA Lead (2024 - Present):',
           text: 'Full-time on delivery alongside department management. Write epics, user stories, API specs, and E2E automation scenarios; maintain the project knowledge base; roll out BA AI workflows; review team output and track progress.',
         },
         {
-          lead: 'Account Growth & Proxy PO (2021 – 2024):',
+          lead: 'Account Growth & Proxy PO (2021 - 2024):',
           text: 'Helped grow the account from ~20 to 40+ members. As Proxy PO, worked with client product and delivery leads on release priorities, functional slicing, and backlog traceability.',
         },
         {
@@ -97,7 +97,7 @@ export const cvData = {
         },
         {
           lead: 'UI Design System:',
-          text: 'Defined component scope, documentation, and the designer–developer workflow for a WCAG AA UI Design System shared by both portals, with built-in analytics and A/B testing.',
+          text: 'Defined component scope, documentation, and the designer-developer workflow for a WCAG AA UI Design System shared by both portals, with built-in analytics and A/B testing.',
         },
         {
           lead: 'Delivery Automation (pre-AI):',
@@ -108,7 +108,7 @@ export const cvData = {
     {
       id: 'tl-aum',
       company: 'NashTech',
-      period: 'Oct 2017 – Feb 2021',
+      period: 'Oct 2017 - Feb 2021',
       role: 'Business Analyst',
       badge: 'Global Asset Management',
       icon: 'database',
@@ -131,9 +131,9 @@ export const cvData = {
     {
       id: 'tl-etc',
       company: 'ETC Technology Systems JSC',
-      companyMeta: 'Hanoi · Aug 2014 – Sep 2016',
+      companyMeta: 'Hanoi · Aug 2014 - Sep 2016',
       isCompanyStart: true,
-      period: 'Aug 2014 – Sep 2016',
+      period: 'Aug 2014 - Sep 2016',
       role: 'Project Coordinator / BA',
       badge: 'Commercial Banking',
       icon: 'building',
@@ -198,12 +198,12 @@ export const cvData = {
     {
       school: 'Hasselt University (Belgium) · Graduated with Distinction',
       degree: "Master's Degree in Business Process Management",
-      period: '2016 – 2017',
+      period: '2016 - 2017',
     },
     {
       school: 'Banking Academy of Vietnam',
       degree: "Bachelor's Degree in Corporate Finance",
-      period: '2010 – 2014',
+      period: '2010 - 2014',
     },
   ],
 
