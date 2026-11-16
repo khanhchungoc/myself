@@ -384,7 +384,9 @@ function TimelineRow({ item, isHovered, onHover }) {
 
   return (
     <div
-      className={`timeline-row ${isHovered ? 'timeline-row--hovered' : ''}`}
+      className={`timeline-row ${isHovered ? 'timeline-row--hovered' : ''} ${
+        isCurrent ? 'timeline-row--current' : ''
+      }`}
       onPointerEnter={onHover}
     >
       <div className="timeline-row__left">

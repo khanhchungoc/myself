@@ -11,7 +11,8 @@ export const cvData = {
 
   summary: [
     'Business Analyst Manager with 10+ years on international insurance, global asset management, and commercial banking projects.',
-    'Leads a 23-BA department in Hanoi while working full-time on project delivery: BA standards, system integration, recovery of at-risk projects, pre-sales, and AI-native BA workflows.',
+    'Leads a 23-BA department in Hanoi: BA standards, project recovery, pre-sales, and AI‑native BA workflows.',
+    'Still works full-time as an ODC BA Lead, covering both system integration and business functionality.',
   ],
 
   timeline: [

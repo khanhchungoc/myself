@@ -619,6 +619,26 @@ a.contact-item:hover svg {
   position: relative;
 }
 
+/* Mobile: dot on the left rail for each role (desktop uses the axis column) */
+.timeline-row::before {
+  content: '';
+  position: absolute;
+  top: calc(var(--space-2) + 5px);
+  left: -6.5px;
+  width: 11px;
+  height: 11px;
+  border-radius: 9999px;
+  background: var(--color-sheet);
+  border: 2.5px solid var(--color-border-strong);
+  box-sizing: border-box;
+}
+
+.timeline-row--current::before {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  box-shadow: 0 0 0 4px var(--color-accent-soft);
+}
+
 
 .exp-timeline__group:last-child .timeline-row {
   padding-bottom: 0;
@@ -1031,6 +1051,10 @@ a.contact-item:hover svg {
     border-left: none;
   }
 
+  .timeline-row::before {
+    display: none;
+  }
+
   .timeline-row__left {
     flex-direction: column;
     flex-wrap: nowrap;
@@ -1216,6 +1240,10 @@ a.contact-item:hover svg {
     gap: 0 4pt;
     padding: 3pt 0 7pt;
     border-left: none;
+  }
+
+  .timeline-row::before {
+    display: none;
   }
 
   .timeline-row__left {
