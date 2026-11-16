@@ -1205,6 +1205,15 @@ a.contact-item:hover svg {
     page-break-after: avoid;
   }
 
+  /* PDF only: start the earliest employer (ETC) on a fresh page so its banner never dangles */
+  .exp-timeline__group:last-child .exp-org-banner {
+    break-before: page;
+    page-break-before: always;
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+  }
+
   .section-head__title {
     font-size: 11.5pt;
   }

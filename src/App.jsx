@@ -643,15 +643,6 @@ export default function App() {
         <header className="utility-bar no-print" aria-label="Document actions">
           <div className="utility-bar__actions">
             <MagneticButton
-              as="button"
-              type="button"
-              onClick={() => window.print()}
-              className="btn btn--secondary"
-            >
-              <Icon name="print" size={14} />
-              <span>Print A4</span>
-            </MagneticButton>
-            <MagneticButton
               as="a"
               href="./cv.pdf"
               download="Ngoc-Khanh-Chu-CV.pdf"
