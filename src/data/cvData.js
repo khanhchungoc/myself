@@ -10,7 +10,7 @@ export const cvData = {
   linkedinLabel: 'khanhchungoc',
 
   summary: [
-    'Business Analyst Manager with 10+ years on international insurance, global asset management, and commercial banking projects.',
+    'Business Analyst Manager with 10+ years in financial services, mainly international insurance and global asset management.',
     'Leads a 23-BA department in Hanoi: BA standards, project recovery, pre-sales, and AI‑native BA workflows.',
     'In parallel, works full-time as a Delivery BA Lead, covering both system integration and business functionality.',
   ],

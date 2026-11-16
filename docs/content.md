@@ -13,7 +13,7 @@
 - **Photo:** `src/assets/profile.jpg`
 
 ## Executive Summary & Confirmed Scope
-Business Analyst Manager and Lead BA with 10+ years across international insurance, global asset management, and commercial banking projects. Leads a **23-BA department** in Hanoi while remaining **full-time on project delivery**—combining BA practice governance, system integration, troubled-project recovery (SWAT), and AI-native BA workflows.
+Business Analyst Manager with 10+ years in financial services, mainly international insurance and global asset management. Leads a **23-BA department** in Hanoi while remaining **full-time on project delivery**—combining BA practice governance, system integration, troubled-project recovery (SWAT), and AI-native BA workflows.
 
 ### Core Operating Pillars
 1. **Department Leadership & BA Standards (23 BAs):** Sets shared BA review standards, reviews deliverables side-by-side, mentors junior BAs to independence, runs annual KPI & performance assessments, coordinates Fresher & QA-to-BA transition programs, and aligns workload and staffing capacity with the Resource Management Office (RMO).
