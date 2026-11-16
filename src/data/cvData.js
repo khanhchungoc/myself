@@ -80,7 +80,7 @@ export const cvData = {
       trackTitle: 'UK Non-Life Insurtech Platform (Top-10 UK Insurance Broker)',
       bullets: [
         {
-          lead: 'ODC BA Lead (2024 – Present):',
+          lead: 'Delivery BA Lead (2024 – Present):',
           text: 'Full-time on delivery alongside department management. Write epics, user stories, API specs, and E2E automation scenarios; maintain the project knowledge base; roll out BA AI workflows; review team output and track progress.',
         },
         {
