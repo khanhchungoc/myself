@@ -11,7 +11,7 @@ export const cvData = {
 
   summary: [
     'Business Analyst Manager with 10+ years in financial services, mainly international insurance and global asset management.',
-    'Leads a BA department of up to 26 BAs in Hanoi: BA standards, project recovery, pre-sales, and AI‑native BA workflows.',
+    'Leads a 23-BA department in Hanoi: BA standards, project recovery, pre-sales, and AI‑native BA workflows.',
     'In parallel, works full-time as a Delivery BA Lead, covering both system integration and business functionality.',
   ],
 
@@ -23,13 +23,13 @@ export const cvData = {
       isCompanyStart: true,
       period: 'May 2024 - Present',
       role: 'Hanoi BA Manager & BA Lead',
-      badge: 'Up to 26 BAs',
+      badge: '23-BA Department',
       icon: 'users',
       trackTitle: 'BA Department Leadership',
       bullets: [
         {
           lead: 'Team Management:',
-          text: 'Lead up to 26 BAs while staying on full-time delivery. Set BA review standards, review deliverables side-by-side, mentor junior BAs to independence, and run KPIs and career progression.',
+          text: 'Lead 23 BAs while staying on full-time delivery. Set BA review standards, review deliverables side-by-side, mentor junior BAs to independence, and run KPIs and career progression.',
         },
         {
           lead: 'Project Recovery (SWAT):',
