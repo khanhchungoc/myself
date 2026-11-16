@@ -619,16 +619,6 @@ a.contact-item:hover svg {
   position: relative;
 }
 
-/* Mobile rail fill (desktop uses the axis column instead) */
-.timeline-row__rail-fill {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: -2px;
-  width: 2px;
-  background: var(--color-accent);
-  transform-origin: top center;
-}
 
 .exp-timeline__group:last-child .timeline-row {
   padding-bottom: 0;
@@ -706,7 +696,7 @@ a.contact-item:hover svg {
   left: calc(50% - 1px);
   width: 2px;
   background-color: var(--color-accent);
-  transform-origin: top center;
+  border-radius: 9999px;
   z-index: 0;
 }
 
@@ -878,6 +868,17 @@ a.contact-item:hover svg {
   border: 1px solid var(--color-border);
   padding: 0.24rem 0.68rem;
   border-radius: var(--radius-sm);
+  cursor: default;
+  transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.competency-row__tags .skill-pill:hover,
+.harness-tags .skill-pill:hover {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+  color: var(--color-navy);
+  box-shadow: 0 2px 8px rgba(29, 78, 216, 0.08);
 }
 
 .harness-tags .skill-pill {
@@ -1028,10 +1029,6 @@ a.contact-item:hover svg {
     align-items: stretch;
     padding-left: 0;
     border-left: none;
-  }
-
-  .timeline-row__rail-fill {
-    display: none;
   }
 
   .timeline-row__left {

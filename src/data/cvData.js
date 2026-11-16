@@ -11,7 +11,7 @@ export const cvData = {
 
   summary: [
     'Business Analyst Manager with 10+ years on international insurance, global asset management, and commercial banking projects.',
-    'Leads a 23-BA department in Hanoi while working full-time on project delivery: BA standards, system integration, recovery of at-risk projects, pre-sales, and AI-assisted BA workflows.',
+    'Leads a 23-BA department in Hanoi while working full-time on project delivery: BA standards, system integration, recovery of at-risk projects, pre-sales, and AI-native BA workflows.',
   ],
 
   timeline: [
@@ -43,7 +43,7 @@ export const cvData = {
           text: 'Support bids across business domains: turn client problems into MVP scope, build interactive prototypes, and estimate BA effort.',
         },
         {
-          lead: 'BA AI Workflow:',
+          lead: 'BA AI Workflow & Harness:',
           text: 'Built an internal BA workflow, usable by BAs and AI agents, that covers the full BA lifecycle with Definition of Ready (DoR) gates between stages:',
           subBullets: [
             {

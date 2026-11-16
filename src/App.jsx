@@ -380,33 +380,13 @@ function InteractivePortrait({ src, alt }) {
 
 function TimelineRow({ item, isHovered, onHover }) {
   const shouldReduceMotion = useReducedMotion();
-  const rowRef = useRef(null);
   const isCurrent = item.period.includes('Present');
-
-  // The axis line fills in accent blue as the reader scrolls through each role.
-  const { scrollYProgress } = useScroll({
-    target: rowRef,
-    offset: ['start 70%', 'end 70%'],
-  });
-  const fill = useSpring(scrollYProgress, {
-    stiffness: 260,
-    damping: 40,
-    restDelta: 0.001,
-  });
-  const fillStyle = { scaleY: shouldReduceMotion ? 1 : fill };
 
   return (
     <div
-      ref={rowRef}
       className={`timeline-row ${isHovered ? 'timeline-row--hovered' : ''}`}
       onPointerEnter={onHover}
     >
-      <motion.span
-        className="timeline-row__rail-fill no-print"
-        style={fillStyle}
-        aria-hidden="true"
-      />
-
       <div className="timeline-row__left">
         <div className="timeline-row__period">{item.period}</div>
         <div className="timeline-row__role">{item.role}</div>
@@ -414,10 +394,13 @@ function TimelineRow({ item, isHovered, onHover }) {
       </div>
 
       <div className="timeline-row__axis" aria-hidden="true">
-        <motion.span
-          className="timeline-row__axis-fill no-print"
-          style={fillStyle}
-        />
+        {isHovered && (
+          <motion.span
+            layoutId="timeline-axis-active"
+            className="timeline-row__axis-fill no-print"
+            transition={criticalSpring}
+          />
+        )}
         {isCurrent && !shouldReduceMotion && (
           <motion.span
             className="timeline-row__node-ring no-print"
@@ -432,10 +415,12 @@ function TimelineRow({ item, isHovered, onHover }) {
             }}
           />
         )}
-        <span
+        <motion.span
           className={`timeline-row__dot ${
             isCurrent ? 'timeline-row__dot--current' : ''
           }`}
+          animate={{ scale: isHovered ? 1.25 : 1 }}
+          transition={criticalSpring}
         />
       </div>
 
@@ -469,14 +454,19 @@ function TimelineRow({ item, isHovered, onHover }) {
                   )}
                   <ul className="harness-tags" aria-label={b.tagsLabel}>
                     {b.tags.map((tag, tagIdx) => (
-                      <li key={tag} className="skill-pill">
+                      <motion.li
+                        key={tag}
+                        className="skill-pill"
+                        whileHover={{ y: -2, scale: 1.015 }}
+                        transition={criticalSpring}
+                      >
                         <span className="harness-tag__content">
                           <span className="harness-tag__step">
                             0{tagIdx + 1}
                           </span>
                           <span>{tag}</span>
                         </span>
-                      </li>
+                      </motion.li>
                     ))}
                   </ul>
                 </>
@@ -755,9 +745,14 @@ export default function App() {
                   </h3>
                   <ul className="competency-row__tags">
                     {group.items.map((item) => (
-                      <li key={item} className="skill-pill">
+                      <motion.li
+                        key={item}
+                        className="skill-pill"
+                        whileHover={{ y: -2, scale: 1.015 }}
+                        transition={criticalSpring}
+                      >
                         {item}
-                      </li>
+                      </motion.li>
                     ))}
                   </ul>
                 </div>
