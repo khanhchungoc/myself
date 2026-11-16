@@ -13,10 +13,10 @@
 - **Photo:** `src/assets/profile.jpg`
 
 ## Executive Summary & Confirmed Scope
-Business Analyst Manager with 10+ years in financial services, mainly international insurance and global asset management. Leads a **23-BA department** in Hanoi while remaining **full-time on project delivery**—combining BA practice governance, system integration, troubled-project recovery (SWAT), and AI-native BA workflows.
+Business Analyst Manager with 10+ years in financial services, mainly international insurance and global asset management. Leads a **BA department of up to 26 BAs** (peak 26, currently 23) in Hanoi while remaining **full-time on project delivery**—combining BA practice governance, system integration, troubled-project recovery (SWAT), and AI-native BA workflows.
 
 ### Core Operating Pillars
-1. **Department Leadership & BA Standards (23 BAs):** Sets shared BA review standards, reviews deliverables side-by-side, mentors junior BAs to independence, runs annual KPI & performance assessments, coordinates Fresher & QA-to-BA transition programs, and aligns workload and staffing capacity with the Resource Management Office (RMO).
+1. **Department Leadership & BA Standards (up to 26 BAs):** Sets shared BA review standards, reviews deliverables side-by-side, mentors junior BAs to independence, runs annual KPI & performance assessments, coordinates Fresher & QA-to-BA transition programs, and aligns workload and staffing capacity with the Resource Management Office (RMO).
 2. **Full-Time ODC Delivery — System Integration & Domain Workflows:** Continues full-time as ODC BA Lead for a Top-10 UK insurance broker (helping grow the account from ~20 to 40+ members alongside the team) and previously delivered for a Top-50 global AUM asset manager (~100 headcount)—owning core insurance service & API specifications, B2B microservices, UI Design Systems, and ETL/EDW migrations.
 3. **SWAT Intervention (Helping Projects in Need):** Steps directly into at-risk deliveries across the organization—auditing requirement quality, working with solution architects, PMs, and engineering leads to restructure unclear scope and system boundaries for faster time-to-market, and coaching squads on governed AI adoption.
 4. **Pre-Sales Discovery & Estimation:** Supports pre-sales bids across business domains—framing client problems into MVP scope, building interactive prototypes, and estimating BA delivery effort.
@@ -32,16 +32,16 @@ Business Analyst Manager with 10+ years in financial services, mainly internatio
 *Full-time · Oct 2017 – Present (9 yrs 2 mos per LinkedIn) · Hanoi Capital Region · Hybrid*
 
 #### Dimension 1 — Role Progression Spine
-- **May 2024 – Present (`2 yrs 7 mos`) · BA Team Manager & BA Lead** — Line manager for Hanoi's 23-BA department, AI transformation & SWAT lead, pre-sales lead, and ongoing full-time ODC BA Lead (UK Insurance).
+- **May 2024 – Present (`2 yrs 7 mos`) · BA Team Manager & BA Lead** — Line manager for Hanoi's BA department (up to 26 BAs), AI transformation & SWAT lead, pre-sales lead, and ongoing full-time ODC BA Lead (UK Insurance).
 - **Mar 2021 – May 2024 (`3 yrs 3 mos`) · Senior Business Analyst** — Helped grow the UK Insurance ODC account (~20 to 40+ headcount), served as Account BA Lead & Proxy PO, and helped shape the shared UI Design System.
 - **Oct 2017 – Feb 2021 (`3 yrs 5 mos`) · Business Analyst** — Delivered Enterprise Reporting & legacy Oracle DW → SQL Server EDW migration for a Top-50 global AUM asset management firm (~100-headcount account across 5 time zones).
 
 #### Dimension 2 — Core Workstream Tracks
 
 ##### Track 1: Department Leadership, SWAT Recovery, AI Transformation & Pre-Sales
-*Role: BA Team Manager (`May 2024 – Present`) · Scope: `23 BAs`*
+*Role: BA Team Manager (`May 2024 – Present`) · Scope: `up to 26 BAs (peak 26, currently 23)`*
 
-- **Team Management & BA Standards (23 BAs):** Lead a 23-BA department while staying active on full-time delivery—setting shared BA review standards, reviewing deliverables side-by-side, mentoring junior BAs to independence, and managing KPIs and career progression.
+- **Team Management & BA Standards (up to 26 BAs):** Lead a BA department of up to 26 BAs while staying active on full-time delivery—setting shared BA review standards, reviewing deliverables side-by-side, mentoring junior BAs to independence, and managing KPIs and career progression.
 - **Project Health Checks & Recovery (SWAT):** Step into at-risk deliveries across the organization—auditing requirement quality, working with solution architects, PMs, and engineering leads to restructure unclear scope and system boundaries for faster time-to-market, and coaching squads on governed AI adoption.
 - **Capacity, Staffing & Capability Growth:** Coordinate project workload allocation and staffing capacity with the Resource Management Office (RMO); lead BA hiring, Fresher bootcamps, and QA-to-BA cross-skilling programs.
 - **Pre-Sales Discovery & Estimation:** Support pre-sales bids across business domains—framing client problems into MVP scope, building interactive prototypes, and estimating BA delivery effort.
