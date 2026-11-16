@@ -517,7 +517,12 @@ function ExperienceTimeline({ items }) {
 
 function ScrollControls() {
   const shouldReduceMotion = useReducedMotion();
-  const { scrollY } = useScroll();
+  const { scrollY, scrollYProgress } = useScroll();
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 320,
+    damping: 34,
+    restDelta: 0.001,
+  });
   const [showTop, setShowTop] = useState(false);
 
   useMotionValueEvent(scrollY, 'change', (latest) => {
@@ -534,6 +539,13 @@ function ScrollControls() {
 
   return (
     <>
+      <div className="scroll-rail no-print" aria-hidden="true">
+        <motion.div
+          className="scroll-rail__fill"
+          style={{ scaleY: shouldReduceMotion ? scrollYProgress : smoothProgress }}
+        />
+      </div>
+
       <AnimatePresence>
         {showTop && (
           <motion.div
