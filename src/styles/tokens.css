@@ -10,6 +10,11 @@
   --color-text-muted: #525d6f;
   --color-accent: #1d4ed8;
   --color-accent-soft: #eff6ff;
+  --color-accent-border: #93c5fd;
+
+  /* Quote card (portrait flip) */
+  --color-paper: #f6f1e7;
+  --color-paper-border: #dfd8ca;
 
   --color-border: #e2e8f0;
   --color-border-strong: #cbd5e1;

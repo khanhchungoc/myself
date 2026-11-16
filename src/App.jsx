@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import {
   AnimatePresence,
@@ -27,55 +27,47 @@ const portraitModalTransition = {
   ease: [0.22, 1, 0.36, 1],
 };
 
-function MagneticButton({
-  as = 'button',
-  strength = 3,
-  className,
-  children,
-  ...props
-}) {
-  const shouldReduceMotion = useReducedMotion();
-  const pullX = useMotionValue(0);
-  const pullY = useMotionValue(0);
+const revealEase = [0.22, 1, 0.36, 1];
 
-  const smoothX = useSpring(pullX, { stiffness: 320, damping: 24 });
-  const smoothY = useSpring(pullY, { stiffness: 320, damping: 24 });
+// One-time fade-up used for the header and each section. Print CSS forces
+// [data-reveal] visible so the PDF never captures a half-revealed state.
+const revealVariants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: revealEase } },
+};
 
-  const handlePointerMove = (e) => {
-    if (shouldReduceMotion) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const relX = (e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2);
-    const relY = (e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2);
-    const clampedX = Math.max(-1, Math.min(1, relX));
-    const clampedY = Math.max(-1, Math.min(1, relY));
-    pullX.set(clampedX * strength);
-    pullY.set(clampedY * strength);
-  };
+const headerStagger = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.05 } },
+};
 
-  const handlePointerLeave = () => {
-    pullX.set(0);
-    pullY.set(0);
-  };
-
-  const Component = as === 'a' ? motion.a : motion.button;
-
+function Reveal({ as = 'section', children, ...props }) {
+  const Component = as === 'div' ? motion.div : motion.section;
   return (
-    <motion.div
-      className="magnetic-wrap"
-      onPointerMove={handlePointerMove}
-      onPointerLeave={handlePointerLeave}
-      style={shouldReduceMotion ? undefined : { x: smoothX, y: smoothY }}
+    <Component
+      data-reveal=""
+      variants={revealVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.08 }}
+      {...props}
     >
-      <Component
-        className={className}
-        whileHover={{ y: -2 }}
-        whileTap={{ scale: 0.98 }}
-        transition={criticalSpring}
-        {...props}
-      >
-        {children}
-      </Component>
-    </motion.div>
+      {children}
+    </Component>
+  );
+}
+
+function ActionButton({ as = 'button', className, children, ...props }) {
+  const Component = as === 'a' ? motion.a : motion.button;
+  return (
+    <Component
+      className={className}
+      whileTap={{ scale: 0.98 }}
+      transition={criticalSpring}
+      {...props}
+    >
+      {children}
+    </Component>
   );
 }
 
@@ -386,140 +378,146 @@ function InteractivePortrait({ src, alt }) {
   );
 }
 
+function TimelineRow({ item, isHovered, onHover }) {
+  const shouldReduceMotion = useReducedMotion();
+  const rowRef = useRef(null);
+  const isCurrent = item.period.includes('Present');
+
+  // The axis line fills in accent blue as the reader scrolls through each role.
+  const { scrollYProgress } = useScroll({
+    target: rowRef,
+    offset: ['start 70%', 'end 70%'],
+  });
+  const fill = useSpring(scrollYProgress, {
+    stiffness: 260,
+    damping: 40,
+    restDelta: 0.001,
+  });
+  const fillStyle = { scaleY: shouldReduceMotion ? 1 : fill };
+
+  return (
+    <div
+      ref={rowRef}
+      className={`timeline-row ${isHovered ? 'timeline-row--hovered' : ''}`}
+      onPointerEnter={onHover}
+    >
+      <motion.span
+        className="timeline-row__rail-fill no-print"
+        style={fillStyle}
+        aria-hidden="true"
+      />
+
+      <div className="timeline-row__left">
+        <div className="timeline-row__period">{item.period}</div>
+        <div className="timeline-row__role">{item.role}</div>
+        {item.badge && <span className="timeline-row__badge">{item.badge}</span>}
+      </div>
+
+      <div className="timeline-row__axis" aria-hidden="true">
+        <motion.span
+          className="timeline-row__axis-fill no-print"
+          style={fillStyle}
+        />
+        {isCurrent && !shouldReduceMotion && (
+          <motion.span
+            className="timeline-row__node-ring no-print"
+            initial={{ scale: 1, opacity: 0.55 }}
+            animate={{ scale: 2.2, opacity: 0 }}
+            transition={{
+              duration: 1.8,
+              ease: 'easeOut',
+              repeat: 2,
+              repeatDelay: 0.6,
+              delay: 0.8,
+            }}
+          />
+        )}
+        <span
+          className={`timeline-row__dot ${
+            isCurrent ? 'timeline-row__dot--current' : ''
+          }`}
+        />
+      </div>
+
+      <div className="timeline-row__body">
+        <h4 className="workstream__title">
+          <span className="workstream__icon">
+            <Icon name={item.icon} size={15} />
+          </span>
+          <span>{item.trackTitle}</span>
+        </h4>
+
+        {item.context && <p className="workstream__context">{item.context}</p>}
+
+        <ul className="exec-bullets">
+          {item.bullets.map((b) => (
+            <li key={b.lead}>
+              <strong>{b.lead}</strong> {b.text}
+              {b.subBullets && (
+                <ul className="exec-subbullets">
+                  {b.subBullets.map((sb) => (
+                    <li key={sb.lead}>
+                      <strong>{sb.lead}</strong> {sb.text}
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {b.tags && (
+                <>
+                  {b.tagsLabel && (
+                    <p className="harness-tags__label">{b.tagsLabel}</p>
+                  )}
+                  <ul className="harness-tags" aria-label={b.tagsLabel}>
+                    {b.tags.map((tag, tagIdx) => (
+                      <li key={tag} className="skill-pill">
+                        <span className="harness-tag__content">
+                          <span className="harness-tag__step">
+                            0{tagIdx + 1}
+                          </span>
+                          <span>{tag}</span>
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
 function ExperienceTimeline({ items }) {
   const [hoveredTimelineId, setHoveredTimelineId] = useState(null);
 
   return (
-    <div
-      className="exp-timeline"
-      onPointerLeave={() => setHoveredTimelineId(null)}
-    >
-      {items.map((item, idx) => {
-        const isHovered = hoveredTimelineId === item.id;
-        const isPrimaryCurrent = idx === 0;
-
-        return (
-          <div key={item.id} className="exp-timeline__group">
-            {item.isCompanyStart && (
-              <div
-                className={`exp-org-banner ${
-                  idx > 0 ? 'exp-org-banner--spaced' : ''
-                }`}
-              >
-                <h3 className="exp-org-banner__name">{item.company}</h3>
-                <span className="exp-org-banner__meta">{item.companyMeta}</span>
-              </div>
-            )}
-
+    <div className="exp-timeline" onPointerLeave={() => setHoveredTimelineId(null)}>
+      {items.map((item, idx) => (
+        <div key={item.id} className="exp-timeline__group">
+          {item.isCompanyStart && (
             <div
-              className={`timeline-row ${
-                isHovered ? 'timeline-row--hovered' : ''
-              }`}
-              onPointerEnter={() => setHoveredTimelineId(item.id)}
+              className={`exp-org-banner ${idx > 0 ? 'exp-org-banner--spaced' : ''}`}
             >
-              <div className="timeline-row__left">
-                <div className="timeline-row__period">{item.period}</div>
-                <div className="timeline-row__role">{item.role}</div>
-                {item.badge && (
-                  <span className="timeline-row__badge">{item.badge}</span>
-                )}
-              </div>
-
-              <div className="timeline-row__axis" aria-hidden="true">
-                {isHovered && (
-                  <motion.span
-                    layoutId="timeline-axis-active"
-                    className="timeline-row__axis-glow no-print"
-                    transition={criticalSpring}
-                  />
-                )}
-                <motion.span
-                  className="timeline-row__node-ring no-print"
-                  initial={false}
-                  animate={{
-                    scale: isHovered ? 1.85 : isPrimaryCurrent ? 1.4 : 0.75,
-                    opacity: isHovered ? 1 : isPrimaryCurrent ? 0.5 : 0,
-                  }}
-                  transition={criticalSpring}
-                />
-                <motion.span
-                  className={`timeline-row__dot ${
-                    isPrimaryCurrent ? 'timeline-row__dot--current' : ''
-                  }`}
-                  animate={{
-                    scale: isHovered ? 1.25 : 1,
-                  }}
-                  transition={criticalSpring}
-                />
-              </div>
-
-              <div className="timeline-row__body">
-                <h4 className="workstream__title">
-                  <span className="workstream__icon">
-                    <Icon name={item.icon} size={15} />
-                  </span>
-                  <span>{item.trackTitle}</span>
-                </h4>
-
-                {item.context && (
-                  <p className="workstream__context">{item.context}</p>
-                )}
-
-                <ul className="exec-bullets">
-                  {item.bullets.map((b) => (
-                    <li key={b.lead}>
-                      <strong>{b.lead}</strong> {b.text}
-                      {b.subBullets && (
-                        <ul className="exec-subbullets">
-                          {b.subBullets.map((sb) => (
-                            <li key={sb.lead}>
-                              <strong>{sb.lead}</strong> {sb.text}
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                      {b.tags && (
-                        <ul
-                          className="harness-tags"
-                          aria-label="AI Harness Operating Principles"
-                        >
-                          {b.tags.map((tag, tagIdx) => (
-                            <motion.li
-                              key={tag}
-                              className="skill-pill"
-                              whileHover={{ y: -2, scale: 1.015 }}
-                              transition={criticalSpring}
-                            >
-                              <span className="harness-tag__content">
-                                <span className="harness-tag__step">
-                                  0{tagIdx + 1}
-                                </span>
-                                <span>{tag}</span>
-                              </span>
-                            </motion.li>
-                          ))}
-                        </ul>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <h3 className="exp-org-banner__name">{item.company}</h3>
+              <span className="exp-org-banner__meta">{item.companyMeta}</span>
             </div>
-          </div>
-        );
-      })}
+          )}
+          <TimelineRow
+            item={item}
+            isHovered={hoveredTimelineId === item.id}
+            onHover={() => setHoveredTimelineId(item.id)}
+          />
+        </div>
+      ))}
     </div>
   );
 }
 
 function ScrollControls() {
   const shouldReduceMotion = useReducedMotion();
-  const { scrollY, scrollYProgress } = useScroll();
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 320,
-    damping: 34,
-    restDelta: 0.001,
-  });
+  const { scrollY } = useScroll();
   const [showTop, setShowTop] = useState(false);
 
   useMotionValueEvent(scrollY, 'change', (latest) => {
@@ -536,13 +534,6 @@ function ScrollControls() {
 
   return (
     <>
-      <div className="scroll-rail no-print" aria-hidden="true">
-        <motion.div
-          className="scroll-rail__fill"
-          style={{ scaleY: shouldReduceMotion ? scrollYProgress : smoothProgress }}
-        />
-      </div>
-
       <AnimatePresence>
         {showTop && (
           <motion.div
@@ -553,7 +544,7 @@ function ScrollControls() {
             exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
             transition={criticalSpring}
           >
-            <MagneticButton
+            <ActionButton
               as="button"
               type="button"
               className="btn btn--secondary scroll-top-btn"
@@ -562,7 +553,7 @@ function ScrollControls() {
             >
               <Icon name="arrowUp" size={14} />
               <span>Top</span>
-            </MagneticButton>
+            </ActionButton>
           </motion.div>
         )}
       </AnimatePresence>
@@ -571,7 +562,6 @@ function ScrollControls() {
 }
 
 export default function App() {
-  const shouldReduceMotion = useReducedMotion();
   const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
 
   const handleDownloadPdf = async (e) => {
@@ -609,27 +599,6 @@ export default function App() {
     }
   };
 
-  // GPU-translated pointer spotlight across .cv-sheet (avoids per-frame gradient/mask repaints)
-  const sheetMouseX = useMotionValue(-320);
-  const sheetMouseY = useMotionValue(-320);
-  const sheetActive = useMotionValue(0);
-  const sheenFollowSpring = { stiffness: 45, damping: 20, mass: 1.3 };
-  const smoothSheetX = useSpring(sheetMouseX, sheenFollowSpring);
-  const smoothSheetY = useSpring(sheetMouseY, sheenFollowSpring);
-  const sheetOpacity = useSpring(sheetActive, { stiffness: 80, damping: 22 });
-
-  const handleSheetPointerMove = (e) => {
-    if (shouldReduceMotion) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    sheetMouseX.set(e.clientX - rect.left - 320);
-    sheetMouseY.set(e.clientY - rect.top - 320);
-    sheetActive.set(1);
-  };
-
-  const handleSheetPointerLeave = () => {
-    sheetActive.set(0);
-  };
-
   return (
     <MotionConfig reducedMotion="user">
       <a href="#main-content" className="skip-link no-print">
@@ -642,7 +611,7 @@ export default function App() {
         {/* Minimal Web Utility Bar (Hidden in Print) */}
         <header className="utility-bar no-print" aria-label="Document actions">
           <div className="utility-bar__actions">
-            <MagneticButton
+            <ActionButton
               as="a"
               href="./cv.pdf"
               download="Ngoc-Khanh-Chu-CV.pdf"
@@ -652,98 +621,90 @@ export default function App() {
             >
               <Icon name="download" size={14} />
               <span>{isDownloadingPdf ? 'Preparing PDF...' : 'Download PDF'}</span>
-            </MagneticButton>
+            </ActionButton>
           </div>
         </header>
 
         {/* Single-Sheet Document */}
-        <main
-          id="main-content"
-          className="cv-sheet"
-          onPointerMove={handleSheetPointerMove}
-          onPointerLeave={handleSheetPointerLeave}
-        >
-          <div className="cv-sheet__blueprint no-print" aria-hidden="true" />
-          <motion.div
-            className="cv-sheet__sheen no-print"
-            style={{
-              x: smoothSheetX,
-              y: smoothSheetY,
-              opacity: sheetOpacity,
-            }}
-            aria-hidden="true"
-          />
+        <main id="main-content" className="cv-sheet">
 
           {/* 1. Profile Header */}
-          <section
+          <motion.section
             className="exec-header"
             aria-label="Profile"
+            variants={headerStagger}
+            initial="hidden"
+            animate="visible"
           >
             <div className="exec-header__top">
-              <InteractivePortrait src={profilePhoto} alt={cvData.name} />
+              <motion.div data-reveal="" variants={revealVariants}>
+                <InteractivePortrait src={profilePhoto} alt={cvData.name} />
+              </motion.div>
 
               <div className="exec-header__identity">
-                <h1 className="exec-header__name">{cvData.name}</h1>
-                <p className="exec-header__role">
+                <motion.h1
+                  className="exec-header__name"
+                  data-reveal=""
+                  variants={revealVariants}
+                >
+                  {cvData.name}
+                </motion.h1>
+                <motion.p
+                  className="exec-header__role"
+                  data-reveal=""
+                  variants={revealVariants}
+                >
                   {cvData.role} <span className="exec-header__sep">·</span>{' '}
                   <span>{cvData.company}</span>
-                </p>
+                </motion.p>
 
-                {/* Clean Single-Line Contact Bar */}
-                <div className="exec-header__contacts">
+                <motion.div
+                  className="exec-header__contacts"
+                  data-reveal=""
+                  variants={revealVariants}
+                >
                   <span className="contact-item">
                     <Icon name="location" size={15} />
                     <span>{cvData.location}</span>
                   </span>
-                  <motion.a
-                    href={cvData.phoneHref}
-                    className="contact-item"
-                    whileHover={{ y: -2 }}
-                    transition={criticalSpring}
-                  >
+                  <a href={cvData.phoneHref} className="contact-item">
                     <Icon name="phone" size={15} />
                     <span>{cvData.phone}</span>
-                  </motion.a>
-                  <motion.a
-                    href={`mailto:${cvData.email}`}
-                    className="contact-item"
-                    whileHover={{ y: -2 }}
-                    transition={criticalSpring}
-                  >
+                  </a>
+                  <a href={`mailto:${cvData.email}`} className="contact-item">
                     <Icon name="mail" size={15} />
                     <span>{cvData.email}</span>
-                  </motion.a>
-                  <motion.a
+                  </a>
+                  <a
                     href={cvData.linkedin}
                     target="_blank"
                     rel="noreferrer"
                     aria-label="LinkedIn profile"
                     className="contact-item"
-                    whileHover={{ y: -2 }}
-                    transition={criticalSpring}
                   >
                     <Icon name="linkedin" size={15} />
                     <span>{cvData.linkedinLabel}</span>
-                  </motion.a>
-                </div>
+                  </a>
+                </motion.div>
 
-                <p className="exec-header__summary">
+                <motion.ul
+                  className="exec-header__summary"
+                  data-reveal=""
+                  variants={revealVariants}
+                >
                   {(Array.isArray(cvData.summary)
                     ? cvData.summary
                     : cvData.summary.split('\n')
-                  ).map((line, idx) => (
-                    <Fragment key={line}>
-                      {idx > 0 && <br />}
-                      {line}
-                    </Fragment>
+                  ).map((line) => (
+                    <li key={line}>{line}</li>
                   ))}
-                </p>
+                </motion.ul>
               </div>
             </div>
-          </section>
+          </motion.section>
 
           {/* 2. Professional Experience (Left Vertical Timeline) */}
-          <section className="cv-section" aria-labelledby="heading-experience">
+          <Reveal className="cv-section" aria-labelledby="heading-experience">
             <div className="section-head">
               <div className="section-head__group">
                 <span className="section-head__icon">
@@ -756,10 +717,10 @@ export default function App() {
             </div>
 
             <ExperienceTimeline items={cvData.timeline} />
-          </section>
+          </Reveal>
 
           {/* 3. Methodologies & Tooling */}
-          <section className="cv-section" aria-labelledby="heading-skills">
+          <Reveal className="cv-section" aria-labelledby="heading-skills">
             <div className="section-head">
               <div className="section-head__group">
                 <span className="section-head__icon">
@@ -782,23 +743,18 @@ export default function App() {
                   </h3>
                   <ul className="competency-row__tags">
                     {group.items.map((item) => (
-                      <motion.li
-                        key={item}
-                        className="skill-pill"
-                        whileHover={{ y: -2, scale: 1.015 }}
-                        transition={criticalSpring}
-                      >
+                      <li key={item} className="skill-pill">
                         {item}
-                      </motion.li>
+                      </li>
                     ))}
                   </ul>
                 </div>
               ))}
             </div>
-          </section>
+          </Reveal>
 
           {/* 4. Education, Certifications & Honors */}
-          <section className="cv-section" aria-labelledby="heading-credentials">
+          <Reveal className="cv-section" aria-labelledby="heading-credentials">
             <div className="section-head">
               <div className="section-head__group">
                 <span className="section-head__icon">
@@ -846,17 +802,15 @@ export default function App() {
                       <div className="cred-entry__top">
                         <span className="cred-entry__title">
                           {cert.url ? (
-                            <motion.a
+                            <a
                               href={cert.url}
                               target="_blank"
                               rel="noreferrer"
                               className="cred-link"
-                              whileHover={{ y: -1.5 }}
-                              transition={criticalSpring}
                             >
                               <span>{cert.name}</span>
                               <Icon name="external" size={13} />
-                            </motion.a>
+                            </a>
                           ) : (
                             cert.name
                           )}
@@ -870,10 +824,10 @@ export default function App() {
                 </ul>
               </div>
             </div>
-          </section>
+          </Reveal>
 
           {/* 5. Open-Source Projects */}
-          <section className="cv-section cv-section--last" aria-labelledby="heading-projects">
+          <Reveal className="cv-section cv-section--last" aria-labelledby="heading-projects">
             <div className="section-head">
               <div className="section-head__group">
                 <span className="section-head__icon">
@@ -908,7 +862,7 @@ export default function App() {
                 </li>
               ))}
             </ul>
-          </section>
+          </Reveal>
         </main>
       </div>
     </MotionConfig>

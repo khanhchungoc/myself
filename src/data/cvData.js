@@ -10,60 +10,61 @@ export const cvData = {
   linkedinLabel: 'khanhchungoc',
 
   summary: [
-    'Business Analyst Manager and Lead BA with 10+ years across international insurance, global asset management, and commercial banking projects.',
-    'Leads a 23-BA department in Hanoi while remaining full-time on project delivery - combining BA practice governance, system integration, troubled-project recovery (SWAT), and AI-native BA workflows.',
+    'Business Analyst Manager with 10+ years on international insurance, global asset management, and commercial banking projects.',
+    'Leads a 23-BA department in Hanoi while working full-time on project delivery: BA standards, system integration, recovery of at-risk projects, pre-sales, and AI-assisted BA workflows.',
   ],
 
   timeline: [
     {
       id: 'tl-bam',
       company: 'NashTech',
-      companyMeta: 'Hanoi · Oct 2017 - Present',
+      companyMeta: 'Hanoi · Oct 2017 – Present',
       isCompanyStart: true,
-      period: 'May 2024 - Present',
+      period: 'May 2024 – Present',
       role: 'Hanoi BA Manager & BA Lead',
       badge: '23-BA Department',
       icon: 'users',
-      trackTitle: 'BA Department & Practice Leadership',
+      trackTitle: 'BA Department Leadership',
       bullets: [
         {
-          lead: 'Team Management & BA Standards:',
-          text: 'Lead a 23-BA department while staying active on full-time delivery - setting shared BA review standards, reviewing deliverables side-by-side, mentoring junior BAs to independence, and managing KPIs and career progression.',
+          lead: 'Team Management:',
+          text: 'Lead 23 BAs while staying on full-time delivery. Set BA review standards, review deliverables side-by-side, mentor junior BAs to independence, and run KPIs and career progression.',
         },
         {
-          lead: 'Project Health Checks & Recovery (SWAT):',
-          text: 'Step into at-risk deliveries across the organization - auditing requirement quality, working with solution architects, PMs, and engineering leads to restructure unclear scope and system boundaries for faster time-to-market, and coaching squads on governed AI adoption.',
+          lead: 'Project Recovery (SWAT):',
+          text: 'Step into at-risk projects across the company. Audit requirement quality and work with solution architects, PMs, and engineering leads to clarify scope and system boundaries; coach teams on AI adoption.',
         },
         {
-          lead: 'Capacity, Staffing & Capability Growth:',
-          text: 'Coordinate project workload allocation and staffing capacity with the Resource Management Office (RMO); lead BA hiring, Fresher bootcamps, and QA-to-BA cross-skilling programs.',
+          lead: 'Staffing & Hiring:',
+          text: 'Plan workload and staffing with the Resource Management Office (RMO); lead BA hiring, Fresher bootcamps, and QA-to-BA cross-skilling.',
         },
         {
-          lead: 'Pre-Sales Discovery & Estimation:',
-          text: 'Support pre-sales bids across business domains - framing client problems into MVP scope, building interactive prototypes, and estimating BA delivery effort.',
+          lead: 'Pre-Sales:',
+          text: 'Support bids across business domains: turn client problems into MVP scope, build interactive prototypes, and estimate BA effort.',
         },
         {
-          lead: 'BA AI Agent & Skill Harness:',
-          text: 'Architected an internal full-lifecycle BA workflow governed by four operating principles, enforced with Definition of Ready (DoR) gates, and structured for both human and AI agent consumption:',
+          lead: 'BA AI Workflow:',
+          text: 'Built an internal BA workflow, usable by BAs and AI agents, that covers the full BA lifecycle with Definition of Ready (DoR) gates between stages:',
           subBullets: [
             {
               lead: 'Discovery & Analysis:',
-              text: 'Maintain project/product knowledge bases, conduct stakeholder interviews, and drive requirement elicitation and analysis.',
+              text: 'project/product knowledge bases, stakeholder interviews, requirement elicitation and analysis.',
             },
             {
               lead: 'Specification & Design:',
-              text: 'Author and refine epics and user stories, UI prototypes, system diagrams, and API specifications.',
+              text: 'epics, user stories, UI prototypes, system diagrams, and API specs.',
             },
             {
               lead: 'Developer Handoff:',
-              text: 'Package DoR-verified specifications and project context for clean engineering handoff.',
+              text: 'DoR-checked specs and project context for engineering.',
             },
           ],
+          tagsLabel: 'Design principles',
           tags: [
-            'Human-Owned Decisions',
-            'Streamlined Workflow Operation',
-            'Token Optimization',
-            'Monitoring & Improvement Loop',
+            'Human-owned decisions',
+            'Fast daily operation',
+            'Token optimization',
+            'Monitoring & improvement loop',
           ],
         },
       ],
@@ -71,83 +72,83 @@ export const cvData = {
     {
       id: 'tl-insurtech',
       company: 'NashTech',
-      period: 'Mar 2021 - Present',
+      period: 'Mar 2021 – Present',
       role: 'Senior BA → BA Lead',
       badge: 'UK Insurance · Concurrent',
       icon: 'shield',
       trackTitle: 'UK Non-Life Insurtech Platform (Top-10 UK Insurance Broker)',
       bullets: [
         {
-          lead: 'ODC BA Lead (2024 - Present):',
-          text: 'Continue full-time on project delivery alongside department management - authoring epics, user stories, API specs, and E2E automation scenarios; maintaining the project knowledge base, rolling out BA AI workflows, reviewing work, tracking progress, and serving as the trusted bridge for business and technical decisions.',
+          lead: 'ODC BA Lead (2024 – Present):',
+          text: 'Full-time on delivery alongside department management. Write epics, user stories, API specs, and E2E automation scenarios; maintain the project knowledge base; roll out BA AI workflows; review team output and track progress.',
         },
         {
-          lead: 'Account Growth & Proxy PO (2021 - 2024):',
-          text: 'Helped grow the account from ~20 to 40+ members by earning UK stakeholder trust; acted as Proxy PO with client product and delivery leads on release prioritization, functional slicing, backlog traceability, and proactive platform improvements.',
+          lead: 'Account Growth & Proxy PO (2021 – 2024):',
+          text: 'Helped grow the account from ~20 to 40+ members. As Proxy PO, worked with client product and delivery leads on release priorities, functional slicing, and backlog traceability.',
         },
         {
-          lead: 'B2B Microservices & Self-Service Policy Backend:',
-          text: 'Partnered with solution architects and engineering leads on microservice boundaries, schemas, and internal/3rd-party API contracts across multi-brand, multi-product (car, van, motorcycle, motorhome, home & contents, pet), and multi-provider (policy admin systems) services (policy, payment, vehicle, address, reference data) powering B2B partners, Quote & Buy, and the customer self-service policy portal; reviewed DEV/QA domain coverage.',
+          lead: 'Microservices & APIs:',
+          text: 'Worked with solution architects and engineering leads on microservice boundaries, schemas, and internal/third-party API contracts for policy, payment, vehicle, address, and reference-data services. Covers multiple brands, six products (car, van, motorcycle, motorhome, home & contents, pet), and multiple policy admin systems; used by B2B partners, Quote & Buy, and the self-service policy portal. Reviewed DEV/QA domain coverage.',
         },
         {
-          lead: 'Multi-Brand Quote & Buy Sites:',
-          text: 'Defined multi-brand Quote & Buy journeys across insurance products - reducing cost per quote, increasing conversion rates, and speeding up new brand and product launches.',
+          lead: 'Quote & Buy Sites:',
+          text: 'Defined multi-brand Quote & Buy journeys across insurance products, lowering cost per quote, raising conversion, and speeding up new brand and product launches.',
         },
         {
-          lead: 'Shared UI Design System:',
-          text: 'Defined component scope, documentation, and the collaboration workflow between designers and developers to build a WCAG AA-compliant UI Design System across both portals, embedding analytics and A/B testing capabilities to improve reusability and time-to-market.',
+          lead: 'UI Design System:',
+          text: 'Defined component scope, documentation, and the designer–developer workflow for a WCAG AA UI Design System shared by both portals, with built-in analytics and A/B testing.',
         },
         {
-          lead: 'Delivery Workflow Automation (Pre-AI):',
-          text: 'Built automated Excel project reporting and automated Jira workflow and monitoring rules to streamline cross-team handoffs.',
+          lead: 'Delivery Automation (pre-AI):',
+          text: 'Built automated Excel project reporting and Jira workflow and monitoring rules for cross-team handoffs.',
         },
       ],
     },
     {
       id: 'tl-aum',
       company: 'NashTech',
-      period: 'Oct 2017 - Feb 2021',
+      period: 'Oct 2017 – Feb 2021',
       role: 'Business Analyst',
       badge: 'Global Asset Management',
       icon: 'database',
       trackTitle: 'Enterprise Reporting & EDW Migration (Top-50 Global AUM)',
       bullets: [
         {
-          lead: 'Enterprise Reporting (Custom, Internal & External):',
-          text: 'Delivered custom, internal, and external financial reports - interviewing stakeholders to elicit reporting logic, migrating and automating reports, reconciling data discrepancies and trial balance imbalances, triaging defects, and acting as L3 incident support.',
+          lead: 'Enterprise Reporting:',
+          text: 'Delivered custom, internal, and external financial reports. Elicited reporting logic from stakeholders, migrated and automated reports, reconciled data discrepancies and trial-balance breaks, triaged defects, and provided L3 incident support.',
         },
         {
-          lead: 'EDW Migration (Oracle DW to SQL Server):',
-          text: 'Reverse-engineered legacy Oracle DW across system docs, data structures, and data meanings by interviewing stakeholders and upstream/downstream data owners - authoring ETL specs, source-to-target mappings, stored procedure specs, and datamarts for the SQL Server migration.',
+          lead: 'EDW Migration (Oracle → SQL Server):',
+          text: 'Reverse-engineered the legacy Oracle DW (documentation, data structures, data meanings) by interviewing stakeholders and upstream/downstream data owners; wrote ETL specs, source-to-target mappings, stored procedure specs, and datamart specs for the SQL Server migration.',
         },
         {
-          lead: 'Global Alignment Across 5 Time Zones:',
-          text: 'Coordinated requirement sign-offs, QA test case reviews, and BA onboarding on a ~100-member global account across 5 time zones (UK, US, Taiwan, India, and Vietnam).',
+          lead: 'Global Coordination:',
+          text: 'Coordinated requirement sign-offs, QA test case reviews, and BA onboarding on a ~100-member account across 5 time zones (UK, US, Taiwan, India, Vietnam).',
         },
       ],
     },
     {
       id: 'tl-etc',
       company: 'ETC Technology Systems JSC',
-      companyMeta: 'Hanoi · Aug 2014 - Sep 2016',
+      companyMeta: 'Hanoi · Aug 2014 – Sep 2016',
       isCompanyStart: true,
-      period: 'Aug 2014 - Sep 2016',
+      period: 'Aug 2014 – Sep 2016',
       role: 'Project Coordinator / BA',
       badge: 'Commercial Banking',
       icon: 'building',
       trackTitle: 'Collateral & Credit Limit Management System (Commercial Bank)',
       bullets: [
         {
-          lead: 'Banking Functional Specifications (URD/FSD):',
-          text: 'Analyzed User Requirement Documents (URDs), authored Functional Specification Documents (FSDs), and secured formal client sign-off on core banking interface mappings.',
+          lead: 'Functional Specs (URD/FSD):',
+          text: 'Analyzed User Requirement Documents (URDs), wrote Functional Specification Documents (FSDs), and obtained client sign-off on core banking interface mappings.',
         },
         {
-          lead: 'Scope Governance & Delivery Coordination:',
-          text: 'Negotiated scope boundaries with commercial banking stakeholders, tracked milestone schedules, resolved documentation bottlenecks, and coordinated phase resource allocation.',
+          lead: 'Scope & Coordination:',
+          text: 'Agreed scope boundaries with bank stakeholders, tracked milestones, cleared documentation bottlenecks, and coordinated resources for each phase.',
         },
         {
-          lead: 'Functional Verification & Test Automation:',
-          text: 'Executed functional testing and automated regression test suites using Sahi ahead of banking UAT sign-off.',
+          lead: 'Testing:',
+          text: 'Ran functional testing and automated regression suites (Sahi) before banking UAT sign-off.',
         },
       ],
     },
@@ -158,13 +159,13 @@ export const cvData = {
       name: 'craft-agent-skill',
       url: 'https://github.com/khanhchungoc/craft-agent-skill',
       description:
-        'Open-source framework for anyone building, auditing, and refining custom AI agents and skills across runtimes - featuring shared principles, templates, and a feedback-driven teaching loop.',
+        'Open-source framework for building, auditing, and refining AI agents and skills across runtimes, with shared principles, templates, and a feedback loop.',
     },
     {
       name: 'ultimate-diagraming-skill',
       url: 'https://github.com/khanhchungoc/ultimate-diagraming-skill',
       description:
-        'Open-source tool for generating fast, lightweight, shareable HTML diagrams (swimlane flowcharts and sequence diagrams) that support manual editing while remaining AI-friendly.',
+        'Open-source tool that generates lightweight, shareable HTML diagrams (swimlane flowcharts, sequence diagrams) that people and AI tools can both edit.',
     },
   ],
 
@@ -196,12 +197,12 @@ export const cvData = {
     {
       school: 'Hasselt University (Belgium) · Graduated with Distinction',
       degree: "Master's Degree in Business Process Management",
-      period: '2016 - 2017',
+      period: '2016 – 2017',
     },
     {
       school: 'Banking Academy of Vietnam',
       degree: "Bachelor's Degree in Corporate Finance",
-      period: '2010 - 2014',
+      period: '2010 – 2014',
     },
   ],
 
@@ -212,7 +213,7 @@ export const cvData = {
       url: 'https://badges.iiba.org/8d9064d9-b989-4437-ab2e-67056d963cc5',
     },
     {
-      name: 'IELTS Academic - Overall Band 8.0',
+      name: 'IELTS Academic · Overall Band 8.0',
     },
     {
       name: 'BA of the Year 2019 & 2018 (Nomination)',
