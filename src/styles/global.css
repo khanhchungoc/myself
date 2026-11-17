@@ -1109,10 +1109,10 @@ a.contact-item:hover svg {
    ========================================================================== */
 @page {
   size: A4;
-  margin: 12mm 16mm 16mm;
+  margin: 22mm 18mm;
 
   @bottom-center {
-    content: 'View online version: khanhchungoc.github.io/myself';
+    content: 'View online version here';
     font-family: var(--font-sans, sans-serif);
     font-size: 7.5pt;
     color: #5a6577;
