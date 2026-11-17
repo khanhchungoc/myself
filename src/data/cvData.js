@@ -8,8 +8,6 @@ export const cvData = {
   email: 'khanhcn.299@gmail.com',
   linkedin: 'https://www.linkedin.com/in/khanhchungoc/',
   linkedinLabel: 'khanhchungoc',
-  onlineUrl: 'https://khanhchungoc.github.io/myself/',
-  onlineLabel: 'khanhchungoc.github.io/myself',
 
   summary: [
     'Business Analyst Manager with 10+ years in financial services, mainly international insurance and global asset management.',
