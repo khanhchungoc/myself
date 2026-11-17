@@ -689,6 +689,12 @@ export default function App() {
                     <Icon name="linkedin" size={15} />
                     <span>{cvData.linkedinLabel}</span>
                   </a>
+                  <a
+                    href="https://khanhchungoc.github.io/myself/"
+                    className="contact-item print-only"
+                  >
+                    <span>View online version here</span>
+                  </a>
                 </motion.div>
 
                 <motion.ul

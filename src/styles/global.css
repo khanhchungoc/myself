@@ -1104,23 +1104,24 @@ a.contact-item:hover svg {
   }
 }
 
+/* Web: hide print-only elements */
+.print-only {
+  display: none;
+}
+
 /* ==========================================================================
    A4 Print & PDF Export Styles
    ========================================================================== */
 @page {
   size: A4;
   margin: 22mm 18mm;
-
-  @bottom-center {
-    content: 'View online version here';
-    font-family: var(--font-sans, sans-serif);
-    font-size: 7.5pt;
-    color: #5a6577;
-    padding-top: 3mm;
-  }
 }
 
 @media print {
+  .print-only {
+    display: inline-flex !important;
+  }
+
   * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
