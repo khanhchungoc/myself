@@ -684,16 +684,18 @@ export default function App() {
                     target="_blank"
                     rel="noreferrer"
                     aria-label="LinkedIn profile"
-                    className="contact-item"
+                    className="contact-item no-print"
                   >
                     <Icon name="linkedin" size={15} />
                     <span>{cvData.linkedinLabel}</span>
                   </a>
                   <a
                     href="https://khanhchungoc.github.io/myself/"
+                    aria-label="View the live online CV"
                     className="contact-item print-only"
                   >
-                    <span>View online version here</span>
+                    <Icon name="globe" size={15} />
+                    <span>View live CV</span>
                   </a>
                 </motion.div>
 
