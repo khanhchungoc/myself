@@ -689,6 +689,12 @@ export default function App() {
                     <Icon name="linkedin" size={15} />
                     <span>{cvData.linkedinLabel}</span>
                   </a>
+                  <a
+                    href={cvData.onlineUrl}
+                    className="contact-item contact-item--online print-only"
+                  >
+                    <span>Online CV: {cvData.onlineLabel}</span>
+                  </a>
                 </motion.div>
 
                 <motion.ul

@@ -1104,15 +1104,24 @@ a.contact-item:hover svg {
   }
 }
 
+/* Web: hide print-only elements */
+.print-only {
+  display: none;
+}
+
 /* ==========================================================================
    A4 Print & PDF Export Styles
    ========================================================================== */
 @page {
   size: A4;
-  margin: 22mm 18mm;
+  margin: 12mm 16mm;
 }
 
 @media print {
+  .print-only {
+    display: inline-flex !important;
+  }
+
   * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
@@ -1145,7 +1154,7 @@ a.contact-item:hover svg {
     border: none;
     border-top: 2.5pt solid var(--color-navy);
     border-radius: 0;
-    padding: 14pt 0 0;
+    padding: 6pt 0 0;
   }
 
   .exec-header {
@@ -1194,7 +1203,7 @@ a.contact-item:hover svg {
   }
 
   .cv-section {
-    padding: 8pt 0;
+    padding: 6pt 0;
   }
 
   .section-head {
